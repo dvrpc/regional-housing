@@ -4,14 +4,19 @@
 module.exports = {
   siteMetadata: {
     title: `regional-housing`,
-    siteUrl: `https://www.yourdomain.tld`
+    siteUrl: `https://www.yourdomain.tld`,
   },
-  plugins: ["gatsby-plugin-postcss", "gatsby-plugin-google-gtag", "gatsby-plugin-mdx", {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "pages",
-      "path": "./src/pages/"
+  plugins: [
+    "gatsby-plugin-postcss",
+    "gatsby-plugin-mdx",
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `submarkets`,
+        path: `${__dirname}/src/submarkets-markdown/`,
+      },
     },
-    __key: "pages"
-  }]
+    `gatsby-plugin-layout`,
+    `gatsby-transformer-remark`,
+  ],
 };
