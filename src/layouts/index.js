@@ -5,7 +5,10 @@ const Layout = ({ children }) => {
   return (
     <>
       <header className="flex">
-        <ul className="flex space-x-4" style={{ marginLeft: "auto" }}>
+        <ul
+          className="flex space-x-4 text-lg p-4"
+          style={{ marginLeft: "auto" }}
+        >
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -14,7 +17,7 @@ const Layout = ({ children }) => {
           </li>
         </ul>
       </header>
-      <div className="flex"> {children}</div>
+      <div className="flex">{children}</div>
     </>
   );
 };
