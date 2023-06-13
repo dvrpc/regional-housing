@@ -46,7 +46,7 @@ export default function Submarkets({ data }) {
 
 export const pageQuery = graphql`
   query MyQuery {
-    allMarkdownRemark {
+    allMarkdownRemark(sort: { frontmatter: { title: ASC } }) {
       edges {
         node {
           frontmatter {

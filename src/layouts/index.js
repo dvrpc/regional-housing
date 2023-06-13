@@ -5,11 +5,8 @@ const Layout = ({ children }) => {
   return (
     <>
       <header className="flex">
-        <ul
-          className="flex space-x-4 text-lg p-4"
-          style={{ marginLeft: "auto" }}
-        >
-          <li>
+        <ul className="flex text-lg p-4" style={{ marginLeft: "auto" }}>
+          <li style={{ marginRight: "1rem" }}>
             <Link to="/">Home</Link>
           </li>
           <li>
