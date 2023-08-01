@@ -3,7 +3,7 @@ import Input from "../components/Input";
 
 const IndexPage = () => {
   return (
-    <div className="min-h-screen w-full">
+    <div className="w-full">
       <div className="bg-gray-300 px-36 py-20 text-center">
         <h1 className="text-xl">
           Introductory text to provide context on the submarket analysis and
