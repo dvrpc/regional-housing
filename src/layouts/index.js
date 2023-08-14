@@ -3,10 +3,7 @@ import Header from "../components/Header";
 
 const Layout = ({ children }) => {
   return (
-    <div
-      className="min-h-screen flex px-36"
-      style={{ flexDirection: "column" }}
-    >
+    <div className="min-h-screen flex " style={{ flexDirection: "column" }}>
       <Header />
       {children}
     </div>
