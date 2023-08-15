@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
+import MedianViz from "../../components/MedianViz";
 
 export default function Submarket({ data }) {
   const {
@@ -40,13 +41,33 @@ export default function Submarket({ data }) {
       </ul>
       <h3 className="text-lg mt-6 font-bold text-[#015ab8]">How it Compares</h3>
       <div className="flex justify-end">
-        <div className="flex items-center">
+        <div className="flex items-center text-[#015ab8]">
           <div className="p-2 m-2 rounded-full border-2 border-[#015ab8]" />
           {frontmatter.title}
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center text-gray-500">
           <div className="p-2 m-2 rounded-full border-2 border-gray-500" />
           Regional average
+        </div>
+      </div>
+      <div className="flex flex-col space-y-12 mt-8">
+        <div className="grid grid-cols-3">
+          <div className="col-span-1 text-gray-500 font-bold">
+            MEDIAN SALES PRICE
+          </div>
+          <MedianViz type="median" value={res.result.records[0].median_sales} />
+        </div>
+        <div className="grid grid-cols-3">
+          <div className="col-span-1 text-gray-500 font-bold">
+            CHANGE IN SALES PRICE
+          </div>
+          <MedianViz type="change" value={res.result.records[0].price_change} />
+        </div>
+        <div className="grid grid-cols-3">
+          <div className="col-span-1 text-gray-500 font-bold">
+            PERCENT OWNER-OCCUPIED
+          </div>
+          <MedianViz type="percent" value={res.result.records[0].pct_owner} />
         </div>
       </div>
     </div>
