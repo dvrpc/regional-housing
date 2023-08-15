@@ -9,7 +9,7 @@ export default function Submarkets({ data }) {
   edges = useRef(Array.from(edges, ({ node: { frontmatter } }) => frontmatter));
 
   return (
-    <div className="px-12">
+    <div>
       <h3 className="text-2xl font-bold">Submarkets Overview</h3>
       {edges.current.map((submarket) => (
         <div className="flex py-2 items-start" key={submarket.title}>

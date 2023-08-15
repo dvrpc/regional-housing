@@ -42,6 +42,8 @@ const Layout = ({ children }) => {
             overflow: "auto",
             borderColor: "#f15a21",
             borderWidth: "0 2px 0 2px",
+            paddingLeft: "3rem",
+            paddingRight: "3rem",
           }}
         >
           {children}

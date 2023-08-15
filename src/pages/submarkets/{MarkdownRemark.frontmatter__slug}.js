@@ -28,29 +28,26 @@ export default function Submarket({ data }) {
   const { result } = res;
 
   return (
-    <div className="grow">
-      <h3 className="text-3xl">{frontmatter.title}</h3>
-      <div className="flex">
-        <div className="w-1/2">
-          <div className="text-lg">{frontmatter.description}</div>
-          <ul className="list-disc ml-8 mt-2">
-            {frontmatter.highlights.map((highlight) => (
-              <li>{highlight}</li>
-            ))}
-          </ul>
-          <h3 className="text-lg mt-6">How it Compares</h3>
-          <div className="flex justify-end">
-            <div className="flex items-center">
-              <div className="h-4 w-4 p-4 m-2 rounded-full border-2 border-cyan-300" />
-              Submarket Name
-            </div>
-            <div className="flex items-center">
-              <div className="h-4 w-4 p-4 m-2 rounded-full border-2 border-gray-500" />
-              Regional average
-            </div>
-          </div>
+    <div>
+      <h3 className="text-2xl my-4 font-bold text-[#015ab8]">
+        {frontmatter.title}
+      </h3>
+      <div className="text-lg">{frontmatter.description}</div>
+      <ul className="list-disc ml-8 mt-4">
+        {frontmatter.highlights.map((highlight) => (
+          <li>{highlight}</li>
+        ))}
+      </ul>
+      <h3 className="text-lg mt-6 font-bold text-[#015ab8]">How it Compares</h3>
+      <div className="flex justify-end">
+        <div className="flex items-center">
+          <div className="p-2 m-2 rounded-full border-2 border-[#015ab8]" />
+          {frontmatter.title}
         </div>
-        <div className="border-2 bg-gray-300 h-[500px] w-1/2" />
+        <div className="flex items-center">
+          <div className="p-2 m-2 rounded-full border-2 border-gray-500" />
+          Regional average
+        </div>
       </div>
     </div>
   );
