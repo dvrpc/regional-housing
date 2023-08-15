@@ -1,21 +1,16 @@
 import React from "react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Header from "../components/Header";
-import Map, { Source, Layer, NavigationControl } from "react-map-gl";
+import Map, { Source, Layer } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
+import { boundaryLayers } from "../map-layers";
 
 const Layout = ({ children }) => {
   const mapRef = useRef();
   const maxExtent = new LngLatBounds([
-    [-76.22863800000046, 39.20737082851355],
-    [-73.61526500000066, 40.68729040007025],
+    [-77.92498363575237, 39.40815950072073],
+    [-74.3760451631676, 40.88377285238582],
   ]);
-
-  useEffect(() => {
-    if (mapRef.current) {
-      mapRef.current.resize();
-    }
-  }, []);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -26,8 +21,8 @@ const Layout = ({ children }) => {
       <Header />
       <Map
         style={{ height: "85vh" }}
-        ursor="pointer"
-        initialViewState={maxExtent}
+        cursor="pointer"
+        initialViewState={{ bounds: maxExtent }}
         mapStyle="mapbox://styles/mapbox/light-v11"
         mapboxAccessToken="pk.eyJ1IjoibW1vbHRhIiwiYSI6ImNqZDBkMDZhYjJ6YzczNHJ4cno5eTcydnMifQ.RJNJ7s7hBfrJITOBZBdcOA"
         ref={mapRef}
@@ -48,6 +43,15 @@ const Layout = ({ children }) => {
         >
           {children}
         </div>
+        {boundaryLayers.map((source) => {
+          const { key, layer, ...props } = source;
+
+          return (
+            <Source key={key} {...props}>
+              <Layer {...layer} />
+            </Source>
+          );
+        })}
       </Map>
     </div>
   );
