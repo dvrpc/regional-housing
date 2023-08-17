@@ -1,8 +1,21 @@
-import React from "react";
-import { submarketHex } from "../../../utils/index";
+import React, { useRef } from "react";
+import { graphql } from "gatsby";
+import PercentageViz from "../../../components/PercentageViz";
 
 const MunicipalityPage = (props) => {
-  const { county, municipality } = props.params;
+  const { county, data, municipality } = props;
+  // destructure array of submarkets
+  const {
+    allMarkdownRemark: { edges },
+  } = data;
+  // build object of submarket properties using submarket id as key
+  const submarkets = Object.assign(
+    {},
+    ...Object.entries({ ...edges }).map(([, b]) => ({
+      [parseInt(b.node.frontmatter.slug)]: { ...b.node.frontmatter },
+    }))
+  );
+
   const res = {
     help: "https://catalog.dvrpc.org/api/3/action/help_show?name=datastore_search_sql",
     success: true,
@@ -34,8 +47,26 @@ const MunicipalityPage = (props) => {
       <h3 className="text-xl">
         {municipality[0].toUpperCase() + municipality.substr(1)}
       </h3>
+      <PercentageViz submarkets={submarkets} values={res.result.records[0]} />
     </div>
   );
 };
+
+export const query = graphql`
+  query MyQuery {
+    allMarkdownRemark {
+      edges {
+        node {
+          frontmatter {
+            title
+            slug
+            hex
+            description
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default MunicipalityPage;
