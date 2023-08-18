@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { graphql } from "gatsby";
 import PercentageViz from "../../../components/PercentageViz";
 
