@@ -44,10 +44,14 @@ const MunicipalityPage = (props) => {
 
   return (
     <div>
-      <h3 className="text-xl">
+      <h3 className="text-xl font-bold">
         {municipality[0].toUpperCase() + municipality.substr(1)}
       </h3>
-      <PercentageViz submarkets={submarkets} values={res.result.records[0]} />
+      <PercentageViz
+        res={res.result.records[0]}
+        submarkets={submarkets}
+        title={municipality}
+      />
     </div>
   );
 };
