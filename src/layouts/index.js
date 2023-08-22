@@ -35,7 +35,7 @@ const Layout = ({ children }) => {
             maxWidth: "30%",
             left: "15%",
             overflow: "auto",
-            borderColor: "#f15a21",
+            borderColor: "#f05a22",
             borderWidth: "0 2px 0 2px",
             paddingLeft: "3rem",
             paddingRight: "3rem",

@@ -5,7 +5,7 @@ import DVRPCMini from "../images/dvrpc-mini.svg";
 
 const Header = () => {
   return (
-    <header className="bg-[#f15a21] text-white flex drop-shadow-lg px-36 h-[15vh] z-[999]">
+    <header className="bg-[#f05a22] text-white flex drop-shadow-lg px-36 h-[15vh] z-[999]">
       <div className="flex items-center">
         <img src={DVRPCMini} alt="dvrpc logo" className="md:h-16 opacity-50" />
       </div>
