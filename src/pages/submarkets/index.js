@@ -11,10 +11,6 @@ export default function Submarkets({ data }) {
 
   return (
     <div className="my-4">
-      <label className=" text-lg">
-        Find a community
-        <Input placeholder="Search by county or municipality" />
-      </label>
       <h3 className="text-2xl font-bold mt-4">Submarkets Overview</h3>
       {edges.current.map((submarket) => (
         <div className="flex py-2 items-start" key={submarket.title}>

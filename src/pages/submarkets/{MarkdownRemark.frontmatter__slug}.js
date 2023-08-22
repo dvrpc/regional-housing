@@ -29,7 +29,7 @@ export default function Submarket({ data }) {
   const { result } = res;
 
   return (
-    <div>
+    <div className="text-[#5A5A5A]">
       <h3 className="text-2xl my-4 font-bold text-[#015ab8]">
         {frontmatter.title}
       </h3>
