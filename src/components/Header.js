@@ -16,10 +16,10 @@ const Header = () => {
         <img
           src={Logo}
           alt="housing submarkets logo"
-          className="md:h-32 mx-24"
+          className="md:h-24 mx-24"
         />
       </div>
-      <div className="ml-auto p-4 md:w-2/5 flex flex-col justify-center pt-[3.25rem]">
+      <div className="ml-auto p-4 md:w-2/5 flex flex-col justify-center pt-11">
         <ul className="flex divide-x justify-end [&>*]:px-2.5 font-bold">
           <li>
             <Link to="/">Home</Link>
