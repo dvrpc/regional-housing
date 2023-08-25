@@ -38,7 +38,7 @@ const DVRPCMap = (props) => {
       if (features.length) {
         if (!hoveredFeature.current) {
           hoveredFeature.current = features && features[0];
-          mapRef.setFeatureState(
+          mapRef.current.setFeatureState(
             {
               source: "municipalities",
               sourceLayer: "municipalities",
