@@ -1,6 +1,7 @@
 import React from "react";
 import { graphql } from "gatsby";
 import PercentageViz from "../../components/PercentageViz";
+import { titleCase } from "../../utils";
 
 const CountyPage = (props) => {
   const { county, data } = props;
@@ -44,12 +45,12 @@ const CountyPage = (props) => {
   return (
     <div>
       <h3 className="text-xl font-bold">
-        {county[0].toUpperCase() + county.substr(1)}
+        {titleCase(county.replaceAll("-", " "))}
       </h3>
       <PercentageViz
         res={res.result.records[0]}
         submarkets={submarkets}
-        title={county}
+        title={titleCase(county.replaceAll("-", " "))}
       />
     </div>
   );
