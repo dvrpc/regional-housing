@@ -18,7 +18,7 @@ const Layout = (props) => {
             style={{
               position: "absolute",
               width: "100%",
-              zIndex: 999,
+              zIndex: 100,
             }}
           >
             {props.children}
