@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "gatsby";
-import Input from "./Input";
 import DVRPCMini from "../images/dvrpc-mini.svg";
 import Logo from "../images/logo.png";
+import Search from "./Search";
 
 const Header = () => {
   return (
@@ -19,7 +19,7 @@ const Header = () => {
           className="md:h-24 mx-24"
         />
       </div>
-      <div className="ml-auto p-4 md:w-2/5 flex flex-col justify-center pt-11">
+      <div className="right-0 p-4 md:w-2/5 flex flex-col justify-center pt-11 absolute">
         <ul className="flex divide-x justify-end [&>*]:px-2.5 font-bold">
           <li>
             <Link to="/">Home</Link>
@@ -31,12 +31,7 @@ const Header = () => {
             <Link to="/about">About</Link>
           </li>
         </ul>
-        <div className="flex pr-2 space-x-4 my-4 items-center">
-          <span className="font-bold whitespace-nowrap tracking-widest">
-            FIND A COMMUNITY:
-          </span>
-          <Input placeholder="Search by county or municipality" />
-        </div>
+        <Search />
       </div>
     </header>
   );
