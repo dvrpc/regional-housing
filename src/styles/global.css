@@ -11,3 +11,8 @@ body {
 .mapboxgl-map {
   font-family: Myriad, sans-serif !important;
 }
+
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}
