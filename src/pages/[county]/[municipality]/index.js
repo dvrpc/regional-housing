@@ -4,7 +4,7 @@ import PercentageViz from "../../../components/PercentageViz";
 import { titleCase } from "../../../utils/index";
 
 const MunicipalityPage = (props) => {
-  const { county, data, municipality } = props;
+  const { data, municipality } = props;
   // destructure array of submarkets
   const {
     allMarkdownRemark: { edges },

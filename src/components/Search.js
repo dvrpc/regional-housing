@@ -24,7 +24,7 @@ const Search = () => {
 
   useEffect(() => {
     if (debounceInput.length > 0) {
-      const counties = mapRef.querySourceFeatures("county", {
+      const counties = mapRef.current.querySourceFeatures("county", {
         sourceLayer: "county",
         filter: [
           "all",
@@ -32,10 +32,13 @@ const Search = () => {
           ["==", "Yes", ["get", "dvrpc"]],
         ],
       });
-      const municipalities = mapRef.querySourceFeatures("municipalities", {
-        sourceLayer: "municipalities",
-        filter: ["in", titleCase(debounceInput), ["get", "name"]],
-      });
+      const municipalities = mapRef.current.querySourceFeatures(
+        "municipalities",
+        {
+          sourceLayer: "municipalities",
+          filter: ["in", titleCase(debounceInput), ["get", "name"]],
+        }
+      );
       setSuggestions([...counties, ...municipalities]);
     } else {
       setSuggestions([]);
@@ -53,7 +56,10 @@ const Search = () => {
         <div className="bg-white divide-y max-h-[20vh] overflow-y-scroll text-black rounded-b-lg">
           {suggestions.map((suggestion) => (
             <div className="py-2 px-3" key={suggestion.id}>
-              <div onClick={() => linkClick(suggestion)}>
+              <button
+                className="cursor-pointer"
+                onClick={() => linkClick(suggestion)}
+              >
                 <div
                   dangerouslySetInnerHTML={{
                     __html: suggestion.properties.name.replace(
@@ -64,7 +70,7 @@ const Search = () => {
                     ),
                   }}
                 />
-              </div>
+              </button>
             </div>
           ))}
         </div>

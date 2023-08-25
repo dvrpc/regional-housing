@@ -6,15 +6,15 @@ import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
 import { navigate } from "gatsby";
 import { kebabCase } from "../utils";
+import { useRef } from "react";
 
 const DVRPCMap = (props) => {
-  const { mapRef, setMapRef, activeFeature, setActiveFeature } =
-    useContext(AppContext);
+  const { mapRef, activeFeature, setActiveFeature } = useContext(AppContext);
   const maxExtent = new LngLatBounds([
     [-77.92498363575237, 39.40815950072073],
     [-74.3760451631676, 40.88377285238582],
   ]);
-  let hoveredFeature = null;
+  let hoveredFeature = useRef(null);
 
   const onClick = useCallback(
     (event) => {
@@ -36,31 +36,31 @@ const DVRPCMap = (props) => {
     (event) => {
       const { features } = event;
       if (features.length) {
-        if (!hoveredFeature) {
-          hoveredFeature = features && features[0];
+        if (!hoveredFeature.current) {
+          hoveredFeature.current = features && features[0];
           mapRef.setFeatureState(
             {
               source: "municipalities",
               sourceLayer: "municipalities",
-              id: hoveredFeature.id,
+              id: hoveredFeature.current.id,
             },
             { hover: true }
           );
         } else {
-          mapRef.setFeatureState(
+          mapRef.current.setFeatureState(
             {
               source: "municipalities",
               sourceLayer: "municipalities",
-              id: hoveredFeature.id,
+              id: hoveredFeature.current.id,
             },
             { hover: false }
           );
-          hoveredFeature = features && features[0];
-          mapRef.setFeatureState(
+          hoveredFeature.current = features && features[0];
+          mapRef.current.setFeatureState(
             {
               source: "municipalities",
               sourceLayer: "municipalities",
-              id: hoveredFeature.id,
+              id: hoveredFeature.current.id,
             },
             { hover: true }
           );
@@ -71,12 +71,12 @@ const DVRPCMap = (props) => {
   );
 
   const onMouseLeave = useCallback(() => {
-    if (hoveredFeature) {
-      mapRef.setFeatureState(
+    if (hoveredFeature.current) {
+      mapRef.current.setFeatureState(
         {
           source: "municipalities",
           sourceLayer: "municipalities",
-          id: hoveredFeature.id,
+          id: hoveredFeature.current.id,
         },
         { hover: false }
       );
@@ -90,14 +90,14 @@ const DVRPCMap = (props) => {
       for (const coord of coords) {
         bounds.extend(coord);
       }
-      mapRef.fitBounds(bounds, { padding: { left: 700 } });
+      mapRef.current.fitBounds(bounds, { padding: { left: 700 } });
     }
   }, [activeFeature, mapRef]);
 
   return (
     <Map
       interactiveLayerIds={["municipalities"]}
-      ref={(ref) => setMapRef(ref)}
+      ref={mapRef}
       initialViewState={{ bounds: maxExtent }}
       mapStyle="mapbox://styles/mapbox/light-v11"
       mapboxAccessToken="pk.eyJ1IjoibW1vbHRhIiwiYSI6ImNqZDBkMDZhYjJ6YzczNHJ4cno5eTcydnMifQ.RJNJ7s7hBfrJITOBZBdcOA"
