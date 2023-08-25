@@ -1,19 +1,17 @@
 import React from "react";
-import Header from "../components/Header";
 import Input from "../components/Input";
 import DVRPC from "../images/dvrpc.svg";
 
 const IndexPage = () => {
   return (
     <div className="min-h-screen">
-      <Header />
-      <div className="w-full">
-        <div className="bg-slate-300 px-36 py-20 text-center">
-          <h1 className="text-5xl font-bold text-white leading-snug">
+      <div className="w-full bg-slate-300 text-white">
+        <div className="px-36 py-20 text-center">
+          <h1 className="text-5xl font-bold leading-snug">
             Diagnosing the housing crisis in <br /> Greater Philadelphia
           </h1>
         </div>
-        <div className="px-36 py-20 text-center border-b-4 border-[#A198D1]">
+        <div className="px-36 py-20 text-center border-b-4 border-[#A198D1] bg-white">
           <p className="text-2xl text-[#f05a22] leading-snug tracking-wide">
             The lack of affordable housing is one of the most significant
             challenges facing our region. <br />
@@ -21,7 +19,7 @@ const IndexPage = () => {
             how to address it.
           </p>
         </div>
-        <div className="px-36 py-20 border-b-4 border-[#A198D1]">
+        <div className="px-36 py-20 border-b-4 border-[#A198D1] bg-white">
           <div className="grid grid-cols-2 text-[#f05a22]">
             <p>
               <strong className="block">What is a submarket?</strong>
@@ -37,7 +35,7 @@ const IndexPage = () => {
             </p>
           </div>
         </div>
-        <div className="px-36 py-20 text-center">
+        <div className="px-36 py-20 text-center bg-white">
           <h3 className="font-bold text-2xl text-[#6C9CCD]">
             REACH OUT WITH QUESTIONS, COMMENTS, OR UPDATES
           </h3>
