@@ -33,19 +33,23 @@ const DVRPCMap = (props) => {
     [-74.3760451631676, 40.88377285238582],
   ]);
   let hoveredFeature = useRef(null);
+  const prevActiveFeature = useRef(activeFeature);
 
   const onClick = useCallback(
     (event) => {
       const { features } = event;
-      const feature = features && features[0];
-      navigate(
-        feature.properties.cty
-          ? `/${kebabCase(feature.properties.cty)}/${kebabCase(
-              feature.properties.name
-            )}`
-          : `/${kebabCase(feature.properties.name)}`
-      );
-      setActiveFeature(features && features[0]);
+      if (features.length) {
+        const feature = features && features[0];
+        navigate(
+          feature.properties.cty
+            ? `/${kebabCase(feature.properties.cty)}/${kebabCase(
+                feature.properties.name
+              )}`
+            : `/${kebabCase(feature.properties.name)}`
+        );
+
+        setActiveFeature(features && features[0]);
+      }
     },
     [setActiveFeature]
   );
@@ -65,13 +69,13 @@ const DVRPCMap = (props) => {
             { hover: true }
           );
         } else {
-          mapRef.current.setFeatureState(
+          mapRef.current.removeFeatureState(
             {
               source: "municipalities",
               sourceLayer: "municipalities",
               id: hoveredFeature.current.id,
             },
-            { hover: false }
+            "hover"
           );
           hoveredFeature.current = features && features[0];
           mapRef.current.setFeatureState(
@@ -122,13 +126,39 @@ const DVRPCMap = (props) => {
 
   useEffect(() => {
     if (activeFeature) {
+      const layer = activeFeature.properties.cty ? "municipalities" : "county";
+      if (prevActiveFeature.current) {
+        const prevLayer = prevActiveFeature.current.properties.cty
+          ? "municipalities"
+          : "county";
+
+        mapRef.current.removeFeatureState(
+          {
+            source: prevLayer,
+            sourceLayer: prevLayer,
+            id: prevActiveFeature.current.id,
+          },
+          "clicked"
+        );
+      }
+      mapRef.current.setFeatureState(
+        {
+          source: layer,
+          sourceLayer: layer,
+          id: activeFeature.id,
+        },
+        { clicked: true }
+      );
+
       if (activeFeature.geometry.type !== "MultiPolygon") {
         const coords = activeFeature.geometry.coordinates[0];
         const bounds = new LngLatBounds(coords[0], coords[0]);
         for (const coord of coords) {
           bounds.extend(coord);
         }
-        mapRef.current.fitBounds(bounds, { padding: { left: 700 } });
+        mapRef.current.fitBounds(bounds, {
+          padding: { left: 700, right: 100, top: 100, bottom: 100 },
+        });
       } else {
         const bbox = getBoundingBox(activeFeature);
         const { xMin, xMax, yMin, yMax } = bbox;
@@ -139,17 +169,20 @@ const DVRPCMap = (props) => {
               [xMax, yMax],
             ],
             {
-              maxZoom: activeFeature.properties.cty ? 11 : 10,
-              padding: { left: 700 },
+              maxZoom: activeFeature.properties.cty ? 12 : 9,
+              padding: {
+                left: 700,
+              },
             }
           );
       }
+      prevActiveFeature.current = activeFeature;
     }
-  }, [activeFeature, mapRef]);
+  }, [activeFeature, mapRef, prevActiveFeature]);
 
   return (
     <Map
-      interactiveLayerIds={["municipalities"]}
+      interactiveLayerIds={["municipalities", "county"]}
       ref={mapRef}
       initialViewState={{ bounds: maxExtent }}
       mapStyle="mapbox://styles/mapbox/light-v11"
@@ -172,18 +205,23 @@ const DVRPCMap = (props) => {
             <Layer
               id={`highlight-${source.id}`}
               type="line"
-              source-layer="municipalities"
+              source-layer={source.id}
               paint={{
                 "line-color": "#0159b8",
                 "line-width": [
                   "case",
-                  ["boolean", ["feature-state", "hover"], false],
+                  [
+                    "boolean",
+                    ["feature-state", "hover"],
+                    ["feature-state", "clicked"],
+                    false,
+                  ],
                   3,
                   0,
                 ],
               }}
             />
-            <Layer {...layer} />
+            <Layer beforeId={`highlight-${source.id}`} {...layer} />
           </Source>
         );
       })}

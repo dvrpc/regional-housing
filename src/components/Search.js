@@ -13,6 +13,8 @@ const Search = () => {
 
   const linkClick = (suggestion) => {
     setActiveFeature(suggestion);
+    setInput("");
+    setSuggestions([]);
     navigate(
       suggestion.properties.cty
         ? `/${kebabCase(suggestion.properties.cty)}/${kebabCase(

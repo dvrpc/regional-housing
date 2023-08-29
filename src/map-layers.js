@@ -1,5 +1,18 @@
 const boundaryLayers = [
   {
+    id: "county",
+    type: "vector",
+    url: "https://tiles.dvrpc.org/data/dvrpc-municipal.json",
+    promoteId: "geoid",
+    layer: {
+      id: "county",
+      "source-layer": "county",
+      type: "line",
+      paint: { "line-width": 3, "line-color": "#606569" },
+      filter: ["==", "dvrpc", "Yes"],
+    },
+  },
+  {
     id: "municipalities",
     type: "vector",
     url: "https://tiles.dvrpc.org/data/dvrpc-municipal.json",
@@ -13,19 +26,6 @@ const boundaryLayers = [
         "fill-opacity": 1,
         "fill-outline-color": "#777",
       },
-    },
-  },
-  {
-    id: "county",
-    type: "vector",
-    url: "https://tiles.dvrpc.org/data/dvrpc-municipal.json",
-    promoteId: "geoid",
-    layer: {
-      id: "county",
-      "source-layer": "county",
-      type: "line",
-      paint: { "line-width": 3, "line-color": "#606569" },
-      filter: ["==", "dvrpc", "Yes"],
     },
   },
 ];
