@@ -3,10 +3,10 @@ import Input from "./Input";
 import AppContext from "../utils/AppContext";
 import useDebounce from "../utils/useDebounce";
 import { navigate } from "gatsby";
-import { titleCase, kebabCase } from "../utils";
+import { kebabCase } from "../utils";
 
 const Search = () => {
-  const { mapRef, setActiveFeature } = useContext(AppContext);
+  const { setActiveFeature, counties, municipalities } = useContext(AppContext);
   const [suggestions, setSuggestions] = useState([]);
   const [input, setInput] = useState("");
   const debounceInput = useDebounce(input);
@@ -23,27 +23,26 @@ const Search = () => {
   };
 
   useEffect(() => {
-    if (debounceInput.length > 0) {
-      const counties = mapRef.current.querySourceFeatures("county", {
-        sourceLayer: "county",
-        filter: [
-          "all",
-          ["in", titleCase(debounceInput), ["get", "name"]],
-          ["==", "Yes", ["get", "dvrpc"]],
-        ],
-      });
-      const municipalities = mapRef.current.querySourceFeatures(
-        "municipalities",
-        {
-          sourceLayer: "municipalities",
-          filter: ["in", titleCase(debounceInput), ["get", "name"]],
+    if (debounceInput.length) {
+      setSuggestions((prev) => {
+        if (prev.length) {
+          return prev.filter((location) =>
+            location.properties.name
+              .toLowerCase()
+              .includes(debounceInput.toLowerCase())
+          );
+        } else {
+          return [...counties, ...municipalities].filter((location) =>
+            location.properties.name
+              .toLowerCase()
+              .includes(debounceInput.toLowerCase())
+          );
         }
-      );
-      setSuggestions([...counties, ...municipalities]);
+      });
     } else {
       setSuggestions([]);
     }
-  }, [debounceInput, mapRef]);
+  }, [debounceInput, counties, municipalities, setSuggestions]);
 
   return (
     <>
@@ -52,29 +51,25 @@ const Search = () => {
         value={input}
         onChange={(event) => setInput(event.target.value)}
       />
-      {suggestions.length > 0 && (
-        <div className="bg-white divide-y max-h-[20vh] overflow-y-scroll text-black rounded-b-lg">
-          {suggestions.map((suggestion) => (
-            <div className="py-2 px-3" key={suggestion.id}>
-              <button
-                className="cursor-pointer"
-                onClick={() => linkClick(suggestion)}
-              >
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: suggestion.properties.name.replace(
-                      titleCase(debounceInput),
-                      `<span class="highlight">${titleCase(
-                        debounceInput
-                      )}</span>`
-                    ),
-                  }}
-                />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="bg-white divide-y max-h-[20vh] overflow-y-scroll text-black rounded-b-lg">
+        {suggestions.map((suggestion) => (
+          <div className="py-2 px-3">
+            <button
+              className="cursor-pointer"
+              onClick={() => linkClick(suggestion)}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: suggestion.properties.name.replace(
+                    new RegExp(debounceInput, "gi"),
+                    (match) => `<span class="highlight">${match}</span>`
+                  ),
+                }}
+              />
+            </button>
+          </div>
+        ))}
+      </div>
     </>
   );
 };

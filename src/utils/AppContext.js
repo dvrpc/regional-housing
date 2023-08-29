@@ -5,6 +5,8 @@ const AppContext = createContext();
 export const AppProvider = (props) => {
   const mapRef = useRef(null);
   const [activeFeature, setActiveFeature] = useState(null);
+  const [counties, setCounties] = useState([]);
+  const [municipalities, setMunicipalities] = useState([]);
 
   return (
     <AppContext.Provider
@@ -12,6 +14,10 @@ export const AppProvider = (props) => {
         mapRef,
         activeFeature,
         setActiveFeature,
+        counties,
+        setCounties,
+        municipalities,
+        setMunicipalities,
       }}
     >
       {props.children}

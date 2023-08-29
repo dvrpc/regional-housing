@@ -5,11 +5,29 @@ import { boundaryLayers } from "../map-layers";
 import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
 import { navigate } from "gatsby";
-import { kebabCase } from "../utils";
+import { kebabCase, getBoundingBox } from "../utils";
 import { useRef } from "react";
 
+const reducerFunc = (a, c) => {
+  const obj = a.find((obj) => obj.id === c.id);
+  if (!obj) {
+    a.push(c);
+  } else {
+    if (obj.geometry.type !== "MultiPolygon")
+      obj.geometry.type = "MultiPolygon";
+    obj.geometry.coordinates.push(c.geometry.coordinates[0]);
+  }
+  return a;
+};
+
 const DVRPCMap = (props) => {
-  const { mapRef, activeFeature, setActiveFeature } = useContext(AppContext);
+  const {
+    mapRef,
+    activeFeature,
+    setActiveFeature,
+    setCounties,
+    setMunicipalities,
+  } = useContext(AppContext);
   const maxExtent = new LngLatBounds([
     [-77.92498363575237, 39.40815950072073],
     [-74.3760451631676, 40.88377285238582],
@@ -83,14 +101,49 @@ const DVRPCMap = (props) => {
     }
   }, [mapRef]);
 
+  const onLoad = useCallback(() => {
+    if (mapRef.current) {
+      let counties = mapRef.current
+        .querySourceFeatures("county", {
+          sourceLayer: "county",
+          filter: ["==", "dvrpc", "Yes"],
+        })
+        .reduce(reducerFunc, []);
+      let municipalities = mapRef.current
+        .querySourceFeatures("municipalities", {
+          sourceLayer: "municipalities",
+        })
+        .reduce(reducerFunc, []);
+
+      setCounties(counties);
+      setMunicipalities(municipalities);
+    }
+  }, [mapRef, setCounties, setMunicipalities]);
+
   useEffect(() => {
     if (activeFeature) {
-      const coords = activeFeature.geometry.coordinates[0];
-      const bounds = new LngLatBounds(coords[0], coords[0]);
-      for (const coord of coords) {
-        bounds.extend(coord);
+      if (activeFeature.geometry.type !== "MultiPolygon") {
+        const coords = activeFeature.geometry.coordinates[0];
+        const bounds = new LngLatBounds(coords[0], coords[0]);
+        for (const coord of coords) {
+          bounds.extend(coord);
+        }
+        mapRef.current.fitBounds(bounds, { padding: { left: 700 } });
+      } else {
+        const bbox = getBoundingBox(activeFeature);
+        const { xMin, xMax, yMin, yMax } = bbox;
+        xMin &&
+          mapRef.current.fitBounds(
+            [
+              [xMin, yMin],
+              [xMax, yMax],
+            ],
+            {
+              maxZoom: activeFeature.properties.cty ? 11 : 10,
+              padding: { left: 700 },
+            }
+          );
       }
-      mapRef.current.fitBounds(bounds, { padding: { left: 700 } });
     }
   }, [activeFeature, mapRef]);
 
@@ -104,6 +157,7 @@ const DVRPCMap = (props) => {
       onClick={onClick}
       onMouseMove={onHover}
       onMouseLeave={onMouseLeave}
+      onLoad={onLoad}
     >
       {props.children && (
         <div className="absolute h-full max-w-[30%] bg-white left-[15%] border-x-2 border-[#f05a22] px-12">
