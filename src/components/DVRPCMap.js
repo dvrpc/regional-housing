@@ -5,7 +5,7 @@ import { boundaryLayers } from "../map-layers";
 import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
 import { navigate } from "gatsby";
-import { kebabCase, getBoundingBox, reducerFunc } from "../utils";
+import { kebabCase, getBoundingBox, reducerFunc, titleCase } from "../utils";
 import { useRef } from "react";
 
 const DVRPCMap = (props) => {
@@ -15,6 +15,7 @@ const DVRPCMap = (props) => {
     setActiveFeature,
     setCounties,
     setMunicipalities,
+    counties,
   } = useContext(AppContext);
   const maxExtent = new LngLatBounds([
     [-77.92498363575237, 39.40815950072073],
@@ -63,7 +64,7 @@ const DVRPCMap = (props) => {
         setActiveFeature(feature);
       }
     },
-    [activeFeature, setActiveFeature, prevActiveFeature, mapRef]
+    [setActiveFeature, prevActiveFeature, mapRef]
   );
 
   const onHover = useCallback(
@@ -131,11 +132,25 @@ const DVRPCMap = (props) => {
         })
         .reduce(reducerFunc, []);
 
+      const { county, municipality } = props.params;
+      if (municipality) {
+        let name = titleCase(municipality);
+        let feature = municipalities.filter(
+          (municipality) =>
+            municipality.properties.name === name &&
+            municipality.properties.cty === titleCase(county)
+        );
+
+        feature = feature.reduce(reducerFunc);
+        setActiveFeature(feature);
+      }
+
       setCounties(counties);
       setMunicipalities(municipalities);
     }
-  }, [mapRef, setCounties, setMunicipalities]);
+  }, [mapRef, setActiveFeature, setCounties, setMunicipalities, props.params]);
 
+  // zoom to effect
   useEffect(() => {
     if (activeFeature) {
       if (activeFeature.geometry.type !== "MultiPolygon") {
@@ -166,6 +181,31 @@ const DVRPCMap = (props) => {
       }
     }
   }, [activeFeature, mapRef]);
+
+  useEffect(() => {
+    if (counties.length) {
+      const { county, municipality } = props.params;
+      if (county && !municipality) {
+        let feature = counties.filter(
+          (location) => location.properties.name === titleCase(county)
+        );
+
+        if (prevActiveFeature.current) {
+          mapRef.current.removeFeatureState(
+            {
+              source: prevActiveFeature.current.source,
+              sourceLayer: prevActiveFeature.current.sourceLayer,
+              id: prevActiveFeature.current.id,
+            },
+            "clicked"
+          );
+        }
+
+        feature = feature.reduce(reducerFunc);
+        setActiveFeature(feature);
+      }
+    }
+  }, [props.params, counties, prevActiveFeature, mapRef]);
 
   return (
     <Map

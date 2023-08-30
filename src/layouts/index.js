@@ -24,7 +24,7 @@ const Layout = (props) => {
             {props.children}
           </div>
         )}
-        <DVRPCMap>{!overlay && props.children}</DVRPCMap>
+        <DVRPCMap params={props.params}>{!overlay && props.children}</DVRPCMap>
       </div>
     </div>
   );
