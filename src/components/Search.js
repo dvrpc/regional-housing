@@ -55,7 +55,7 @@ const Search = () => {
       />
       <div className="bg-white divide-y max-h-[20vh] overflow-y-scroll text-black rounded-b-lg">
         {suggestions.map((suggestion) => (
-          <div className="py-2 px-3">
+          <div className="py-2 px-3" key={suggestion.id}>
             <button
               className="cursor-pointer"
               onClick={() => linkClick(suggestion)}

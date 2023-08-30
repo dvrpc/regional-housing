@@ -19,3 +19,15 @@ export function getBoundingBox(feature) {
 
   return bounds;
 }
+
+export const reducerFunc = (a, c) => {
+  const obj = a.find((obj) => obj.id === c.id);
+  if (!obj) {
+    a.push(c);
+  } else {
+    if (obj.geometry.type !== "MultiPolygon")
+      obj.geometry.type = "MultiPolygon";
+    obj.geometry.coordinates.push(c.geometry.coordinates[0]);
+  }
+  return a;
+};

@@ -5,20 +5,8 @@ import { boundaryLayers } from "../map-layers";
 import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
 import { navigate } from "gatsby";
-import { kebabCase, getBoundingBox } from "../utils";
+import { kebabCase, getBoundingBox, reducerFunc } from "../utils";
 import { useRef } from "react";
-
-const reducerFunc = (a, c) => {
-  const obj = a.find((obj) => obj.id === c.id);
-  if (!obj) {
-    a.push(c);
-  } else {
-    if (obj.geometry.type !== "MultiPolygon")
-      obj.geometry.type = "MultiPolygon";
-    obj.geometry.coordinates.push(c.geometry.coordinates[0]);
-  }
-  return a;
-};
 
 const DVRPCMap = (props) => {
   const {
@@ -40,6 +28,29 @@ const DVRPCMap = (props) => {
       const { features } = event;
       if (features.length) {
         const feature = features && features[0];
+        const layer = feature.properties.cty ? "municipalities" : "county";
+        if (prevActiveFeature.current) {
+          const prevLayer = prevActiveFeature.current.properties.cty
+            ? "municipalities"
+            : "county";
+
+          mapRef.current.removeFeatureState(
+            {
+              source: prevLayer,
+              sourceLayer: prevLayer,
+              id: prevActiveFeature.current.id,
+            },
+            "clicked"
+          );
+        }
+        mapRef.current.setFeatureState(
+          {
+            source: layer,
+            sourceLayer: layer,
+            id: feature.id,
+          },
+          { clicked: true }
+        );
         navigate(
           feature.properties.cty
             ? `/${kebabCase(feature.properties.cty)}/${kebabCase(
@@ -48,10 +59,11 @@ const DVRPCMap = (props) => {
             : `/${kebabCase(feature.properties.name)}`
         );
 
-        setActiveFeature(features && features[0]);
+        prevActiveFeature.current = feature;
+        setActiveFeature(feature);
       }
     },
-    [setActiveFeature]
+    [activeFeature, setActiveFeature, prevActiveFeature, mapRef]
   );
 
   const onHover = useCallback(
@@ -126,30 +138,6 @@ const DVRPCMap = (props) => {
 
   useEffect(() => {
     if (activeFeature) {
-      const layer = activeFeature.properties.cty ? "municipalities" : "county";
-      if (prevActiveFeature.current) {
-        const prevLayer = prevActiveFeature.current.properties.cty
-          ? "municipalities"
-          : "county";
-
-        mapRef.current.removeFeatureState(
-          {
-            source: prevLayer,
-            sourceLayer: prevLayer,
-            id: prevActiveFeature.current.id,
-          },
-          "clicked"
-        );
-      }
-      mapRef.current.setFeatureState(
-        {
-          source: layer,
-          sourceLayer: layer,
-          id: activeFeature.id,
-        },
-        { clicked: true }
-      );
-
       if (activeFeature.geometry.type !== "MultiPolygon") {
         const coords = activeFeature.geometry.coordinates[0];
         const bounds = new LngLatBounds(coords[0], coords[0]);
@@ -176,9 +164,8 @@ const DVRPCMap = (props) => {
             }
           );
       }
-      prevActiveFeature.current = activeFeature;
     }
-  }, [activeFeature, mapRef, prevActiveFeature]);
+  }, [activeFeature, mapRef]);
 
   return (
     <Map
@@ -193,7 +180,7 @@ const DVRPCMap = (props) => {
       onLoad={onLoad}
     >
       {props.children && (
-        <div className="absolute h-full max-w-[30%] bg-white left-[15%] border-x-2 border-[#f05a22] px-12">
+        <div className="absolute h-full max-w-[30%] bg-white left-[15%] border-x-2 border-[#f05a22] px-12 py-8 overflow-y-scroll">
           {props.children}
         </div>
       )}

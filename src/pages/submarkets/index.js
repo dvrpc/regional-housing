@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { Link, graphql } from "gatsby";
-import Input from "../../components/Input";
 
 export default function Submarkets({ data }) {
   let {
