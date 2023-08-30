@@ -44,13 +44,11 @@ const CountyPage = (props) => {
 
   return (
     <div>
-      <h3 className="text-xl font-bold my-4">
-        {titleCase(county.replaceAll("-", " "))}
-      </h3>
+      <h3 className="text-xl font-bold my-4">{titleCase(county)}</h3>
       <PercentageViz
         res={res.result.records[0]}
         submarkets={submarkets}
-        title={titleCase(county.replaceAll("-", " "))}
+        title={titleCase(county)}
       />
     </div>
   );

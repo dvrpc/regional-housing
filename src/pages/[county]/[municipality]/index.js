@@ -47,13 +47,11 @@ const MunicipalityPage = (props) => {
   return (
     <div>
       <Breadcrumbs path={props.path} params={props.params} />
-      <h3 className="text-xl font-bold my-4">
-        {titleCase(municipality.replaceAll("-", " "))}
-      </h3>
+      <h3 className="text-xl font-bold my-4">{titleCase(municipality)}</h3>
       <PercentageViz
         res={res.result.records[0]}
         submarkets={submarkets}
-        title={titleCase(municipality.replaceAll("-", " "))}
+        title={titleCase(municipality)}
       />
     </div>
   );
