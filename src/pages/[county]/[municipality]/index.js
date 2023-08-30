@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import PercentageViz from "../../../components/PercentageViz";
 import { titleCase } from "../../../utils/index";
+import Breadcrumbs from "../../../components/Breadcrumbs";
 
 const MunicipalityPage = (props) => {
   const { data, municipality } = props;
@@ -45,7 +46,8 @@ const MunicipalityPage = (props) => {
 
   return (
     <div>
-      <h3 className="text-xl font-bold">
+      <Breadcrumbs path={props.path} params={props.params} />
+      <h3 className="text-xl font-bold my-4">
         {titleCase(municipality.replaceAll("-", " "))}
       </h3>
       <PercentageViz

@@ -1,11 +1,12 @@
 import React from "react";
 import { graphql } from "gatsby";
 import MedianViz from "../../components/MedianViz";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
-export default function Submarket({ data }) {
+export default function Submarket(props) {
   const {
     markdownRemark: { frontmatter, html },
-  } = data;
+  } = props.data;
 
   const res = {
     help: "https://catalog.dvrpc.org/api/3/action/help_show?name=datastore_search_sql",
@@ -30,6 +31,7 @@ export default function Submarket({ data }) {
 
   return (
     <div className="text-[#5A5A5A]">
+      <Breadcrumbs path={props.path} params={props.params} />
       <h3 className="text-2xl my-4 font-bold text-[#015ab8]">
         {frontmatter.title}
       </h3>
@@ -55,19 +57,19 @@ export default function Submarket({ data }) {
           <div className="col-span-1 text-gray-500 font-bold">
             MEDIAN SALES PRICE
           </div>
-          <MedianViz type="median" value={res.result.records[0].median_sales} />
+          <MedianViz type="median" value={result.records[0].median_sales} />
         </div>
         <div className="grid grid-cols-3">
           <div className="col-span-1 text-gray-500 font-bold">
             CHANGE IN SALES PRICE
           </div>
-          <MedianViz type="change" value={res.result.records[0].price_change} />
+          <MedianViz type="change" value={result.records[0].price_change} />
         </div>
         <div className="grid grid-cols-3">
           <div className="col-span-1 text-gray-500 font-bold">
             PERCENT OWNER-OCCUPIED
           </div>
-          <MedianViz type="percent" value={res.result.records[0].pct_owner} />
+          <MedianViz type="percent" value={result.records[0].pct_owner} />
         </div>
       </div>
     </div>
