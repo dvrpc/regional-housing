@@ -29,29 +29,29 @@ const DVRPCMap = (props) => {
       const { features } = event;
       if (features.length) {
         const feature = features && features[0];
-        const layer = feature.properties.cty ? "municipalities" : "county";
-        if (prevActiveFeature.current) {
-          const prevLayer = prevActiveFeature.current.properties.cty
-            ? "municipalities"
-            : "county";
-
+        if (
+          prevActiveFeature.current &&
+          prevActiveFeature.current.properties.cty
+        ) {
           mapRef.current.removeFeatureState(
             {
-              source: prevLayer,
-              sourceLayer: prevLayer,
+              source: "municipalities",
+              sourceLayer: "municipalities",
               id: prevActiveFeature.current.id,
             },
             "clicked"
           );
         }
-        mapRef.current.setFeatureState(
-          {
-            source: layer,
-            sourceLayer: layer,
-            id: feature.id,
-          },
-          { clicked: true }
-        );
+        if (feature.properties.cty) {
+          mapRef.current.setFeatureState(
+            {
+              source: "municipalities",
+              sourceLayer: "municipalities",
+              id: feature.id,
+            },
+            { clicked: true }
+          );
+        }
         navigate(
           feature.properties.cty
             ? `/${kebabCase(feature.properties.cty)}/${kebabCase(
@@ -139,16 +139,31 @@ const DVRPCMap = (props) => {
           (municipality) =>
             municipality.properties.name === name &&
             municipality.properties.cty === titleCase(county)
-        );
+        )[0];
 
-        feature = feature.reduce(reducerFunc);
+        mapRef.current.setFeatureState(
+          {
+            source: "municipalities",
+            sourceLayer: "municipalities",
+            id: feature.id,
+          },
+          { clicked: true }
+        );
+        prevActiveFeature.current = feature;
         setActiveFeature(feature);
       }
 
       setCounties(counties);
       setMunicipalities(municipalities);
     }
-  }, [mapRef, setActiveFeature, setCounties, setMunicipalities, props.params]);
+  }, [
+    mapRef,
+    setActiveFeature,
+    setCounties,
+    setMunicipalities,
+    props.params,
+    prevActiveFeature,
+  ]);
 
   // zoom to effect
   useEffect(() => {
@@ -160,7 +175,7 @@ const DVRPCMap = (props) => {
           bounds.extend(coord);
         }
         mapRef.current.fitBounds(bounds, {
-          padding: { left: 700, right: 100, top: 100, bottom: 100 },
+          padding: { left: 700 },
         });
       } else {
         const bbox = getBoundingBox(activeFeature);
@@ -188,24 +203,29 @@ const DVRPCMap = (props) => {
       if (county && !municipality) {
         let feature = counties.filter(
           (location) => location.properties.name === titleCase(county)
-        );
+        )[0];
 
         if (prevActiveFeature.current) {
+          const prevLayer =
+            prevActiveFeature.current.source ||
+            prevActiveFeature.current.properties.cty
+              ? "municipalities"
+              : "county";
+
           mapRef.current.removeFeatureState(
             {
-              source: prevActiveFeature.current.source,
-              sourceLayer: prevActiveFeature.current.sourceLayer,
+              source: prevLayer,
+              sourceLayer: prevLayer,
               id: prevActiveFeature.current.id,
             },
             "clicked"
           );
         }
 
-        feature = feature.reduce(reducerFunc);
         setActiveFeature(feature);
       }
     }
-  }, [props.params, counties, prevActiveFeature, mapRef]);
+  }, [props.params, counties, prevActiveFeature, mapRef, setActiveFeature]);
 
   return (
     <Map
