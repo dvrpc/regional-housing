@@ -240,7 +240,7 @@ const DVRPCMap = (props) => {
       onLoad={onLoad}
     >
       {props.children && (
-        <div className="absolute h-full max-w-[30%] bg-white left-[15%] border-x-2 border-[#f05a22] px-12 py-8 overflow-y-scroll">
+        <div className="absolute h-full max-w-[30%] bg-white left-[15%] border-x-2 border-[#f05a22] px-12 py-8 overflow-y-auto">
           {props.children}
         </div>
       )}

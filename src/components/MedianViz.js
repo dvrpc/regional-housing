@@ -3,7 +3,7 @@ import React from "react";
 const getPercent = (x, value) => {
   let ret = (value < 1 ? value * 100 : value) / (2 * x);
   ret *= 100;
-  if (Math.abs(ret - 50) < 15) ret += ret - 50;
+  if (Math.abs(ret - 50) < 20) ret += ret - 50;
   return ret;
 };
 
