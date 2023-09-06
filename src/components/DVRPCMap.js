@@ -16,6 +16,7 @@ const DVRPCMap = (props) => {
     setCounties,
     setMunicipalities,
     counties,
+    setPhlplanningareas,
   } = useContext(AppContext);
   const maxExtent = new LngLatBounds([
     [-77.92498363575237, 39.40815950072073],
@@ -35,8 +36,8 @@ const DVRPCMap = (props) => {
         ) {
           mapRef.current.removeFeatureState(
             {
-              source: "municipalities",
-              sourceLayer: "municipalities",
+              source: prevActiveFeature.current.source,
+              sourceLayer: prevActiveFeature.current.source,
               id: prevActiveFeature.current.id,
             },
             "clicked"
@@ -131,15 +132,27 @@ const DVRPCMap = (props) => {
           sourceLayer: "municipalities",
         })
         .reduce(reducerFunc, []);
+      let phlplanningareas = mapRef.current
+        .querySourceFeatures("phlplanningareas", {
+          sourceLayer: "phlplanningareas",
+        })
+        .reduce(reducerFunc, []);
 
       const { county, municipality } = props.params;
       if (municipality) {
         let name = titleCase(municipality);
-        let feature = municipalities.filter(
-          (municipality) =>
-            municipality.properties.name === name &&
-            municipality.properties.cty === titleCase(county)
-        )[0];
+        let feature = null;
+        if (county === "philadelphia") {
+          feature = phlplanningareas.filter(
+            (municipality) => municipality.properties.name === name
+          )[0];
+        } else {
+          feature = municipalities.filter(
+            (municipality) =>
+              municipality.properties.name === name &&
+              municipality.properties.cty === titleCase(county)
+          )[0];
+        }
 
         mapRef.current.setFeatureState(
           {
@@ -155,12 +168,14 @@ const DVRPCMap = (props) => {
 
       setCounties(counties);
       setMunicipalities(municipalities);
+      setPhlplanningareas(phlplanningareas);
     }
   }, [
     mapRef,
     setActiveFeature,
     setCounties,
     setMunicipalities,
+    setPhlplanningareas,
     props.params,
     prevActiveFeature,
   ]);

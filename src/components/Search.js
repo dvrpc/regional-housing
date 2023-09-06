@@ -6,7 +6,8 @@ import { navigate } from "gatsby";
 import { kebabCase } from "../utils";
 
 const Search = () => {
-  const { setActiveFeature, counties, municipalities } = useContext(AppContext);
+  const { setActiveFeature, counties, municipalities, phlplanningareas } =
+    useContext(AppContext);
   const [suggestions, setSuggestions] = useState([]);
   const [input, setInput] = useState("");
   const debounceInput = useDebounce(input);
@@ -34,17 +35,24 @@ const Search = () => {
               .includes(debounceInput.toLowerCase())
           );
         } else {
-          return [...counties, ...municipalities].filter((location) =>
-            location.properties.name
-              .toLowerCase()
-              .includes(debounceInput.toLowerCase())
+          return [...counties, ...municipalities, ...phlplanningareas].filter(
+            (location) =>
+              location.properties.name
+                .toLowerCase()
+                .includes(debounceInput.toLowerCase())
           );
         }
       });
     } else {
       setSuggestions([]);
     }
-  }, [debounceInput, counties, municipalities, setSuggestions]);
+  }, [
+    debounceInput,
+    counties,
+    municipalities,
+    phlplanningareas,
+    setSuggestions,
+  ]);
 
   return (
     <>
@@ -58,6 +66,7 @@ const Search = () => {
           const name = !suggestion.properties.cty
             ? `${suggestion.properties.name} County`
             : suggestion.properties.name;
+
           return (
             <div className="py-2 px-3" key={suggestion.id}>
               <button
