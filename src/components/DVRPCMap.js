@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import Map, { Source, Layer } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
-import { boundaryLayers } from "../map-layers";
+import { boundaryLayers, fillLayer } from "../map-layers";
 import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
 import { navigate } from "gatsby";
@@ -244,11 +244,16 @@ const DVRPCMap = (props) => {
           {props.children}
         </div>
       )}
+
+      <Source id={fillLayer.id} type={fillLayer.type} data={fillLayer.data}>
+        <Layer {...fillLayer.layer} />
+      </Source>
+
       {boundaryLayers.map((source) => {
-        const { key, layer, ...props } = source;
+        const { layer, ...props } = source;
 
         return (
-          <Source key={key} {...props}>
+          <Source {...props}>
             <Layer
               id={`highlight-${source.id}`}
               type="line"
