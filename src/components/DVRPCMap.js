@@ -75,8 +75,8 @@ const DVRPCMap = (props) => {
           hoveredFeature.current = features && features[0];
           mapRef.current.setFeatureState(
             {
-              source: "municipalities",
-              sourceLayer: "municipalities",
+              source: hoveredFeature.current.source,
+              sourceLayer: hoveredFeature.current.sourceLayer,
               id: hoveredFeature.current.id,
             },
             { hover: true }
@@ -84,8 +84,8 @@ const DVRPCMap = (props) => {
         } else {
           mapRef.current.removeFeatureState(
             {
-              source: "municipalities",
-              sourceLayer: "municipalities",
+              source: hoveredFeature.current.source,
+              sourceLayer: hoveredFeature.current.sourceLayer,
               id: hoveredFeature.current.id,
             },
             "hover"
@@ -93,8 +93,8 @@ const DVRPCMap = (props) => {
           hoveredFeature.current = features && features[0];
           mapRef.current.setFeatureState(
             {
-              source: "municipalities",
-              sourceLayer: "municipalities",
+              source: hoveredFeature.current.source,
+              sourceLayer: hoveredFeature.current.sourceLayer,
               id: hoveredFeature.current.id,
             },
             { hover: true }
@@ -229,7 +229,7 @@ const DVRPCMap = (props) => {
 
   return (
     <Map
-      interactiveLayerIds={["municipalities", "county"]}
+      interactiveLayerIds={["municipalities", "phlplanningareas"]}
       ref={mapRef}
       initialViewState={{ bounds: maxExtent }}
       mapStyle="mapbox://styles/mapbox/light-v11"

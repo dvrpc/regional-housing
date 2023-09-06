@@ -54,23 +54,28 @@ const Search = () => {
         onChange={(event) => setInput(event.target.value)}
       />
       <div className="bg-white divide-y max-h-[20vh] overflow-y-scroll text-black rounded-b-lg">
-        {suggestions.map((suggestion) => (
-          <div className="py-2 px-3" key={suggestion.id}>
-            <button
-              className="cursor-pointer"
-              onClick={() => linkClick(suggestion)}
-            >
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: suggestion.properties.name.replace(
-                    new RegExp(debounceInput, "gi"),
-                    (match) => `<span class="highlight">${match}</span>`
-                  ),
-                }}
-              />
-            </button>
-          </div>
-        ))}
+        {suggestions.map((suggestion) => {
+          const name = !suggestion.properties.cty
+            ? `${suggestion.properties.name} County`
+            : suggestion.properties.name;
+          return (
+            <div className="py-2 px-3" key={suggestion.id}>
+              <button
+                className="cursor-pointer"
+                onClick={() => linkClick(suggestion)}
+              >
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: name.replace(
+                      new RegExp(debounceInput, "gi"),
+                      (match) => `<span class="highlight">${match}</span>`
+                    ),
+                  }}
+                />
+              </button>
+            </div>
+          );
+        })}
       </div>
     </>
   );

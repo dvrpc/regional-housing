@@ -13,6 +13,22 @@ const boundaryLayers = [
     },
   },
   {
+    id: "phlplanningareas",
+    type: "vector",
+    url: "https://tiles.dvrpc.org/data/dvrpc-municipal.json",
+    promoteId: "geoid",
+    layer: {
+      id: "phlplanningareas",
+      "source-layer": "phlplanningareas",
+      type: "fill",
+      paint: {
+        "fill-color": "transparent",
+        "fill-opacity": 1,
+        "fill-outline-color": "#777",
+      },
+    },
+  },
+  {
     id: "municipalities",
     type: "vector",
     url: "https://tiles.dvrpc.org/data/dvrpc-municipal.json",
@@ -26,6 +42,7 @@ const boundaryLayers = [
         "fill-opacity": 1,
         "fill-outline-color": "#777",
       },
+      filter: ["!=", "name", "Philadelphia City"],
     },
   },
 ];
