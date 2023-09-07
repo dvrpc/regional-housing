@@ -1,55 +1,25 @@
 import React from "react";
 import { graphql } from "gatsby";
 import PercentageViz from "../../../components/PercentageViz";
-import { titleCase } from "../../../utils/index";
+import { generateSubmarketObj, titleCase } from "../../../utils/index";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 
 const MunicipalityPage = (props) => {
-  const { data, municipality } = props;
+  const { data, county, municipality, serverData } = props;
+  const { result } = serverData;
   // destructure array of submarkets
   const {
     allMarkdownRemark: { edges },
   } = data;
-  // build object of submarket properties using submarket id as key
-  const submarkets = Object.assign(
-    {},
-    ...Object.entries({ ...edges }).map(([, b]) => ({
-      [parseInt(b.node.frontmatter.slug)]: { ...b.node.frontmatter },
-    }))
-  );
-
-  const res = {
-    help: "https://catalog.dvrpc.org/api/3/action/help_show?name=datastore_search_sql",
-    success: true,
-    result: {
-      sql: "SELECT * from \"66807b47-0d95-4671-913b-0bf8e61d878e\" WHERE geoid ='3400503370'",
-      records: [
-        {
-          _id: 1,
-          _full_text: "#full str of json",
-          geoid: "3400503370",
-          name: "Bass River Township",
-          county: "Burlington",
-          one: 0,
-          two: 0.12,
-          three: 0,
-          four: 0.27,
-          five: 0,
-          six: 0,
-          seven: 0.61,
-          eight: 0,
-        },
-      ],
-      fields: [{ "array of fields from table": "" }],
-    },
-  };
+  const submarkets = generateSubmarketObj(edges);
+  console.log(submarkets);
 
   return (
     <div>
-      <Breadcrumbs path={props.path} params={props.params} />
+      <Breadcrumbs path={props.path} params={{ county, municipality }} />
       <h3 className="text-xl font-bold my-4">{titleCase(municipality)}</h3>
       <PercentageViz
-        res={res.result.records[0]}
+        res={result.records[0]}
         submarkets={submarkets}
         title={titleCase(municipality)}
       />
@@ -75,3 +45,29 @@ export const query = graphql`
 `;
 
 export default MunicipalityPage;
+
+export async function getServerData(context) {
+  const { county, municipality } = context.params;
+
+  try {
+    const res = await fetch(
+      `https://catalog.dvrpc.org/api/3/action/datastore_search_sql?sql=SELECT * from "f15d2421-0e62-4cfd-ae0f-251a4fe432da" WHERE county ='${titleCase(
+        county
+      )}' AND name = '${titleCase(municipality)}'`
+    );
+
+    if (!res.ok) {
+      throw new Error("Response failed");
+    }
+
+    return {
+      props: await res.json(),
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      headers: {},
+      props: {},
+    };
+  }
+}

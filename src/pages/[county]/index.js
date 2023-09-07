@@ -1,52 +1,21 @@
 import React from "react";
 import { graphql } from "gatsby";
 import PercentageViz from "../../components/PercentageViz";
-import { titleCase } from "../../utils";
+import { titleCase, generateSubmarketObj } from "../../utils";
 
 const CountyPage = (props) => {
-  const { county, data } = props;
+  const { county, data, serverData } = props;
+  const { result } = serverData;
   const {
     allMarkdownRemark: { edges },
   } = data;
-  // build object of submarket properties using submarket id as key
-  const submarkets = Object.assign(
-    {},
-    ...Object.entries({ ...edges }).map(([, b]) => ({
-      [parseInt(b.node.frontmatter.slug)]: { ...b.node.frontmatter },
-    }))
-  );
-
-  const res = {
-    help: "https://catalog.dvrpc.org/api/3/action/help_show?name=datastore_search_sql",
-    success: true,
-    result: {
-      sql: "SELECT * from \"66807b47-0d95-4671-913b-0bf8e61d878e\" WHERE geoid ='3400503370'",
-      records: [
-        {
-          _id: 1,
-          _full_text: "#full str of json",
-          geoid: "3400503370",
-          name: "Bass River Township",
-          county: "Burlington",
-          one: 0,
-          two: 0.12,
-          three: 0,
-          four: 0.27,
-          five: 0,
-          six: 0,
-          seven: 0.61,
-          eight: 0,
-        },
-      ],
-      fields: [{ "array of fields from table": "" }],
-    },
-  };
+  const submarkets = generateSubmarketObj(edges);
 
   return (
     <div>
       <h3 className="text-xl font-bold my-4">{titleCase(county)}</h3>
       <PercentageViz
-        res={res.result.records[0]}
+        res={result.records[0]}
         submarkets={submarkets}
         title={titleCase(county)}
       />
@@ -72,3 +41,29 @@ export const query = graphql`
 `;
 
 export default CountyPage;
+
+export async function getServerData(context) {
+  const { county } = context.params;
+
+  try {
+    const res = await fetch(
+      `https://catalog.dvrpc.org/api/3/action/datastore_search_sql?sql=SELECT * from "f88e8831-7d04-4b41-9c1d-29645cac400c" WHERE name ='${titleCase(
+        county
+      )}'`
+    );
+
+    if (!res.ok) {
+      throw new Error("Response failed");
+    }
+
+    return {
+      props: await res.json(),
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      headers: {},
+      props: {},
+    };
+  }
+}

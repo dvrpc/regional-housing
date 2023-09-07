@@ -4,6 +4,7 @@ import Header from "../components/Header";
 
 const Layout = (props) => {
   const overlay = props.path === "/" || props.path === "/about/" ? true : false;
+  const { county, municipality } = props;
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -24,7 +25,9 @@ const Layout = (props) => {
             {props.children}
           </div>
         )}
-        <DVRPCMap params={props.params}>{!overlay && props.children}</DVRPCMap>
+        <DVRPCMap params={{ county, municipality }}>
+          {!overlay && props.children}
+        </DVRPCMap>
       </div>
     </div>
   );

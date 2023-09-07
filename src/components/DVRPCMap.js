@@ -22,7 +22,7 @@ const DVRPCMap = (props) => {
     [-77.92498363575237, 39.40815950072073],
     [-74.3760451631676, 40.88377285238582],
   ]);
-  let hoveredFeature = useRef(null);
+  const hoveredFeature = useRef(null);
   const prevActiveFeature = useRef(activeFeature);
 
   const onClick = useCallback(

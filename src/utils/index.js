@@ -31,3 +31,14 @@ export const reducerFunc = (a, c) => {
   }
   return a;
 };
+
+/**
+ * build object of submarket properties using submarket id as key
+ */
+export const generateSubmarketObj = (edges) =>
+  Object.assign(
+    { 9: { title: "not covered by submarket", hex: "#cfd2d9" } },
+    ...Object.entries({ ...edges }).map(([, b]) => ({
+      [parseInt(b.node.frontmatter.slug)]: { ...b.node.frontmatter },
+    }))
+  );
