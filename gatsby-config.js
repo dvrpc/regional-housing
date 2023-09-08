@@ -18,5 +18,6 @@ module.exports = {
     },
     `gatsby-plugin-layout`,
     `gatsby-transformer-remark`,
+    `gatsby-plugin-netlify`,
   ],
 };
