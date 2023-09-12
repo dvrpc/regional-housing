@@ -1,12 +1,16 @@
 import React from "react";
 import Input from "../components/Input";
 import DVRPC from "../images/dvrpc.svg";
+import Hero from "../images/hero.jpg";
 
 const IndexPage = () => {
   return (
     <div className="min-h-screen">
-      <div className="w-full bg-slate-300 text-white">
-        <div className="px-36 py-20 text-center">
+      <div className="w-full text-white">
+        <div
+          className="px-36 py-20 text-center"
+          style={{ backgroundImage: `url(${Hero})` }}
+        >
           <h1 className="text-5xl font-bold leading-snug">
             Diagnosing the housing crisis in <br /> Greater Philadelphia
           </h1>

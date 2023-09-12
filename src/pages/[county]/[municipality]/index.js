@@ -12,7 +12,6 @@ const MunicipalityPage = (props) => {
     allMarkdownRemark: { edges },
   } = data;
   const submarkets = generateSubmarketObj(edges);
-  console.log(submarkets);
 
   return (
     <div>
