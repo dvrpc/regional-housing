@@ -5,29 +5,11 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 
 export default function Submarket(props) {
   const {
+    serverData: { result },
+  } = props;
+  const {
     markdownRemark: { frontmatter, html },
   } = props.data;
-
-  const res = {
-    help: "https://catalog.dvrpc.org/api/3/action/help_show?name=datastore_search_sql",
-    success: true,
-    result: {
-      sql: 'SELECT * from "66807b47-0d95-4671-913b-0bf8e61d878e" WHERE submarket = 1',
-      records: [
-        {
-          _id: 1,
-          _full_text: "#full str of json",
-          submarket: 1,
-          median_sales: 48540,
-          price_change: 0.028,
-          pct_owner: 0.95,
-          pct_subsidized: 0.1,
-        },
-      ],
-      fields: [{ "array of fields from table": "" }],
-    },
-  };
-  const { result } = res;
 
   return (
     <div className="text-[#5A5A5A]">
@@ -57,19 +39,19 @@ export default function Submarket(props) {
           <div className="col-span-1 text-gray-500 font-bold">
             MEDIAN SALES PRICE
           </div>
-          <MedianViz type="median" value={result.records[0].median_sales} />
+          <MedianViz type="median" value={result.records[0].med21} />
         </div>
         <div className="grid grid-cols-3">
           <div className="col-span-1 text-gray-500 font-bold">
             CHANGE IN SALES PRICE
           </div>
-          <MedianViz type="change" value={result.records[0].price_change} />
+          <MedianViz type="change" value={result.records[0].pct_diff} />
         </div>
         <div className="grid grid-cols-3">
           <div className="col-span-1 text-gray-500 font-bold">
             PERCENT OWNER-OCCUPIED
           </div>
-          <MedianViz type="percent" value={result.records[0].pct_owner} />
+          <MedianViz type="percent" value={result.records[0].ten_own} />
         </div>
       </div>
     </div>
@@ -89,3 +71,29 @@ export const pageQuery = graphql`
     }
   }
 `;
+
+//
+
+export async function getServerData(context) {
+  const { frontmatter__slug: id } = context.params;
+
+  try {
+    const res = await fetch(
+      `https://catalog.dvrpc.org/api/3/action/datastore_search_sql?sql=SELECT * from %220cc1c4e2-f2c5-46bf-80aa-929ef6a53cda%22 WHERE submarket = ${id}`
+    );
+
+    if (!res.ok) {
+      throw new Error("Response failed");
+    }
+
+    return {
+      props: await res.json(),
+    };
+  } catch (error) {
+    return {
+      status: 500,
+      headers: {},
+      props: {},
+    };
+  }
+}

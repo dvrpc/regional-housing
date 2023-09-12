@@ -1,18 +1,25 @@
 import React from "react";
 
 const getPercent = (x, value) => {
+  const range = 20;
   let ret = (value < 1 ? value * 100 : value) / (2 * x);
   ret *= 100;
-  if (Math.abs(ret - 50) < 20) ret += ret - 50;
+  let diff = ret - 50;
+  if ((diff < range + 5 && diff > 0) || (diff > range * -1 - 5 && diff < 0)) {
+    if (diff > 0 && diff < 15) ret += range;
+    else if (diff < 0 && diff > -15) ret += range * -1;
+  } else if (ret > 100) ret = 85;
   return ret;
 };
 
 const MedianViz = ({ type, value }) => {
   const regionalAverages = {
-    median: 79540,
-    change: 3.5,
-    percent: 76,
+    median: 295000,
+    change: 23.1,
+    percent: 68.9,
   };
+  value = parseFloat(value.replace(/[^0-9\.]+/g, ""));
+  if (type === "change" || type === "percent") value /= 100;
   const plotValue = parseInt(getPercent(regionalAverages[type], value));
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -35,7 +42,7 @@ const MedianViz = ({ type, value }) => {
         <div className="h-6 w-6 rounded-full border-2 border-gray-500 bg-white" />
       </div>
       <div
-        className={`absolute -mt-6 flex flex-col items-center`}
+        className="w-6 absolute -mt-6 flex flex-col items-center"
         style={{ left: `${plotValue}%` }}
       >
         <span className="text-[#015ab8]">
