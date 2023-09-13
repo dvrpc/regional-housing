@@ -34,26 +34,28 @@ export default function Submarket(props) {
           Regional average
         </div>
       </div>
-      <div className="flex flex-col space-y-12 mt-8">
-        <div className="grid grid-cols-3">
-          <div className="col-span-1 text-gray-500 font-bold">
-            MEDIAN SALES PRICE
+      {result && (
+        <div className="flex flex-col space-y-12 mt-8">
+          <div className="grid grid-cols-3">
+            <div className="col-span-1 text-gray-500 font-bold">
+              MEDIAN SALES PRICE
+            </div>
+            <MedianViz type="median" value={result.records[0].med21} />
           </div>
-          <MedianViz type="median" value={result.records[0].med21} />
-        </div>
-        <div className="grid grid-cols-3">
-          <div className="col-span-1 text-gray-500 font-bold">
-            CHANGE IN SALES PRICE
+          <div className="grid grid-cols-3">
+            <div className="col-span-1 text-gray-500 font-bold">
+              CHANGE IN SALES PRICE
+            </div>
+            <MedianViz type="change" value={result.records[0].pct_diff} />
           </div>
-          <MedianViz type="change" value={result.records[0].pct_diff} />
-        </div>
-        <div className="grid grid-cols-3">
-          <div className="col-span-1 text-gray-500 font-bold">
-            PERCENT OWNER-OCCUPIED
+          <div className="grid grid-cols-3">
+            <div className="col-span-1 text-gray-500 font-bold">
+              PERCENT OWNER-OCCUPIED
+            </div>
+            <MedianViz type="percent" value={result.records[0].ten_own} />
           </div>
-          <MedianViz type="percent" value={result.records[0].ten_own} />
         </div>
-      </div>
+      )}
     </div>
   );
 }

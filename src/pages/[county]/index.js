@@ -14,11 +14,13 @@ const CountyPage = (props) => {
   return (
     <div>
       <h3 className="text-xl font-bold my-4">{titleCase(county)}</h3>
-      <PercentageViz
-        res={result.records[0]}
-        submarkets={submarkets}
-        title={titleCase(county)}
-      />
+      {result && (
+        <PercentageViz
+          res={result.records[0]}
+          submarkets={submarkets}
+          title={titleCase(county)}
+        />
+      )}
     </div>
   );
 };
