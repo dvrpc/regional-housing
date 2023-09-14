@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { graphql } from "gatsby";
 import MedianViz from "../../components/MedianViz";
 import Breadcrumbs from "../../components/Breadcrumbs";
+import AppContext from "../../utils/AppContext";
+import { useEffect } from "react";
 
 export default function Submarket(props) {
+  const { setSubmarketFilter } = useContext(AppContext);
   const {
     serverData: { result },
   } = props;
   const {
     markdownRemark: { frontmatter, html },
   } = props.data;
+
+  useEffect(() => {
+    setSubmarketFilter(frontmatter.slug);
+  }, [frontmatter]);
 
   return (
     <div className="text-[#5A5A5A]">
@@ -69,6 +76,7 @@ export const pageQuery = graphql`
         description
         highlights
         indicators
+        slug
       }
     }
   }

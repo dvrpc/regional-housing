@@ -1,12 +1,17 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link, graphql } from "gatsby";
+import AppContext from "../../utils/AppContext";
+import { useEffect } from "react";
 
 export default function Submarkets({ data }) {
+  const { setSubmarketFilter } = useContext(AppContext);
   let {
     allMarkdownRemark: { edges },
   } = data;
   // destructure frontmatter and html from nodes
   edges = useRef(Array.from(edges, ({ node: { frontmatter } }) => frontmatter));
+
+  useEffect(() => setSubmarketFilter(""), [setSubmarketFilter]);
 
   return (
     <div className="my-4">

@@ -8,6 +8,7 @@ export const AppProvider = (props) => {
   const [counties, setCounties] = useState([]);
   const [municipalities, setMunicipalities] = useState([]);
   const [phlplanningareas, setPhlplanningareas] = useState([]);
+  const [submarketFilter, setSubmarketFilter] = useState("");
 
   return (
     <AppContext.Provider
@@ -21,6 +22,8 @@ export const AppProvider = (props) => {
         setMunicipalities,
         phlplanningareas,
         setPhlplanningareas,
+        submarketFilter,
+        setSubmarketFilter,
       }}
     >
       {props.children}

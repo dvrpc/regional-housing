@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from "react";
 import Map, { Source, Layer } from "react-map-gl";
-import { LngLatBounds } from "mapbox-gl";
+import { LngLatBounds, maxParallelImageRequests } from "mapbox-gl";
 import { boundaryLayers, fillLayer } from "../map-layers";
 import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
@@ -17,6 +17,7 @@ const DVRPCMap = (props) => {
     setMunicipalities,
     counties,
     setPhlplanningareas,
+    submarketFilter,
   } = useContext(AppContext);
   const maxExtent = new LngLatBounds([
     [-77.92498363575237, 39.40815950072073],
@@ -189,9 +190,7 @@ const DVRPCMap = (props) => {
         for (const coord of coords) {
           bounds.extend(coord);
         }
-        mapRef.current.fitBounds(bounds, {
-          padding: { left: 700 },
-        });
+        mapRef.current.fitBounds(bounds);
       } else {
         const bbox = getBoundingBox(activeFeature);
         const { xMin, xMax, yMin, yMax } = bbox;
@@ -203,9 +202,6 @@ const DVRPCMap = (props) => {
             ],
             {
               maxZoom: activeFeature.properties.cty ? 12 : 9,
-              padding: {
-                left: 700,
-              },
             }
           );
       }
@@ -256,13 +252,20 @@ const DVRPCMap = (props) => {
       minZoom={8}
     >
       {props.children && (
-        <div className="absolute h-full max-w-[30%] bg-white left-[15%] border-x-2 border-[#f05a22] px-12 py-8 overflow-y-auto">
+        <div className="absolute h-full max-w-[30%] bg-white border-r-2 border-[#f05a22] px-12 py-8 overflow-y-auto">
           {props.children}
         </div>
       )}
 
       <Source id={fillLayer.id} type={fillLayer.type} data={fillLayer.data}>
-        <Layer {...fillLayer.layer} />
+        <Layer
+          {...fillLayer.layer}
+          filter={
+            submarketFilter
+              ? ["==", "submarket", parseInt(submarketFilter)]
+              : null
+          }
+        />
       </Source>
 
       {boundaryLayers.map((source) => {
