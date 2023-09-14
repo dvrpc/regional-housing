@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DVRPCMap from "../components/DVRPCMap";
 import Header from "../components/Header";
+import AppContext from "../utils/AppContext";
 
 const Layout = (props) => {
-  const overlay = props.path === "/" || props.path === "/about/" ? true : false;
   const { county, municipality } = props;
+  const { setSubmarketFilter } = useContext(AppContext);
+  const [overlay, setOverlay] = useState(true);
+
+  useEffect(() => {
+    setOverlay(props.path === "/" || props.path === "/about/" ? true : false);
+    if (overlay || props.path === "/submarkets/") setSubmarketFilter("");
+  }, [props.path]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -14,20 +21,43 @@ const Layout = (props) => {
       />
       <Header />
       <div style={{ height: "85vh" }}>
-        {(props.path === "/" || props.path === "/about/") && (
+        {overlay && (
           <div
             style={{
               position: "absolute",
-              width: "100%",
               zIndex: 100,
             }}
           >
             {props.children}
           </div>
         )}
-        <DVRPCMap params={{ county, municipality }}>
-          {!overlay && props.children}
-        </DVRPCMap>
+        <div style={{ display: "flex" }}>
+          {!overlay && (
+            <div style={{ position: "relative", width: "30vw" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  overflowY: "auto",
+                  paddingTop: "2rem",
+                  paddingBottom: "2rem",
+                  paddingLeft: "3rem",
+                  paddingRight: "3rem",
+                  height: "100%",
+                  width: "100%",
+                  borderRightWidth: "2px",
+                  backgroundColor: "#ffffff",
+                  borderColor: "#f05a22",
+                  zIndex: 999,
+                }}
+              >
+                {props.children}
+              </div>
+            </div>
+          )}
+          <div>
+            <DVRPCMap params={{ county, municipality }} />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from "react";
 import Map, { Source, Layer } from "react-map-gl";
-import { LngLatBounds, maxParallelImageRequests } from "mapbox-gl";
+import { LngLatBounds } from "mapbox-gl";
 import { boundaryLayers, fillLayer } from "../map-layers";
 import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
@@ -20,8 +20,8 @@ const DVRPCMap = (props) => {
     submarketFilter,
   } = useContext(AppContext);
   const maxExtent = new LngLatBounds([
-    [-77.92498363575237, 39.40815950072073],
-    [-74.3760451631676, 40.88377285238582],
+    [-76.09405517578125, 39.49211914385648],
+    [-74.32525634765625, 40.614734298694216],
   ]);
   const hoveredFeature = useRef(null);
   const prevActiveFeature = useRef(activeFeature);
@@ -250,20 +250,15 @@ const DVRPCMap = (props) => {
       onMouseLeave={onMouseLeave}
       onLoad={onLoad}
       minZoom={8}
+      style={{ height: "85vh", width: "70vw" }}
     >
-      {props.children && (
-        <div className="absolute h-full max-w-[30%] bg-white border-r-2 border-[#f05a22] px-12 py-8 overflow-y-auto">
-          {props.children}
-        </div>
-      )}
-
       <Source id={fillLayer.id} type={fillLayer.type} data={fillLayer.data}>
         <Layer
           {...fillLayer.layer}
           filter={
             submarketFilter
               ? ["==", "submarket", parseInt(submarketFilter)]
-              : null
+              : ["!=", "submarket", ""]
           }
         />
       </Source>

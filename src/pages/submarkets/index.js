@@ -11,8 +11,6 @@ export default function Submarkets({ data }) {
   // destructure frontmatter and html from nodes
   edges = useRef(Array.from(edges, ({ node: { frontmatter } }) => frontmatter));
 
-  useEffect(() => setSubmarketFilter(""), [setSubmarketFilter]);
-
   return (
     <div className="my-4">
       <h3 className="text-2xl font-bold mt-4">Submarkets Overview</h3>
