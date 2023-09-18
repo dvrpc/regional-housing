@@ -2,29 +2,32 @@ import React from "react";
 
 const PercentageViz = ({ res, submarkets, title }) => {
   let { _id, _full_text, county, geoid, name, ...percentages } = res;
-  const values = [];
+  let values = [];
   Object.keys(percentages).forEach((key, idx) => {
     if (percentages[key] > 0)
       values.push({ submarket: idx + 1, val: percentages[key] });
   });
 
+  if (values[values.length - 1].submarket === 9) {
+    const none = values.pop();
+    values = [...values.sort((a, b) => b.val - a.val), none];
+  } else values.sort((a, b) => b.val - a.val);
+
   return (
     <div>
       <h3 className="text-lg">Submarkets</h3>
       <div className="flex w-full mb-4">
-        {[...values]
-          .sort((a, b) => b.val - a.val)
-          .map((item) => (
-            <div
-              className="py-4 px-1"
-              style={{
-                backgroundColor: submarkets[item.submarket]
-                  ? submarkets[item.submarket].hex
-                  : "#c7d8e1",
-                width: `${item.val * 100}%`,
-              }}
-            />
-          ))}
+        {values.map((item) => (
+          <div
+            className="py-4 px-1"
+            style={{
+              backgroundColor: submarkets[item.submarket]
+                ? submarkets[item.submarket].hex
+                : "#c7d8e1",
+              width: `${item.val * 100}%`,
+            }}
+          />
+        ))}
       </div>
       <div className="flex flex-col space-y-4">
         {values.map((item) => {
