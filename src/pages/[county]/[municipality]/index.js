@@ -15,14 +15,18 @@ const MunicipalityPage = (props) => {
 
   return (
     <div>
-      <Breadcrumbs path={props.path} params={{ county, municipality }} />
-      <h3 className="text-xl font-bold my-4">{titleCase(municipality)}</h3>
-      {result && (
-        <PercentageViz
-          res={result.records[0]}
-          submarkets={submarkets}
-          title={titleCase(municipality)}
-        />
+      {county && municipality && (
+        <>
+          <Breadcrumbs path={props.path} params={{ county, municipality }} />
+          <h3 className="text-xl font-bold my-4">{titleCase(municipality)}</h3>
+          {result && (
+            <PercentageViz
+              res={result.records[0]}
+              submarkets={submarkets}
+              title={titleCase(municipality)}
+            />
+          )}
+        </>
       )}
     </div>
   );
