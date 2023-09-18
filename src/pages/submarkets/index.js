@@ -1,10 +1,7 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { Link, graphql } from "gatsby";
-import AppContext from "../../utils/AppContext";
-import { useEffect } from "react";
 
 export default function Submarkets({ data }) {
-  const { setSubmarketFilter } = useContext(AppContext);
   let {
     allMarkdownRemark: { edges },
   } = data;

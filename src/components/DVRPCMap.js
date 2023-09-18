@@ -16,8 +16,11 @@ const DVRPCMap = (props) => {
     setCounties,
     setMunicipalities,
     counties,
+    municipalities,
+    phlplanningareas,
     setPhlplanningareas,
     submarketFilter,
+    setSubmarketFilter,
   } = useContext(AppContext);
   const maxExtent = new LngLatBounds([
     [-76.09405517578125, 39.49211914385648],
@@ -25,7 +28,9 @@ const DVRPCMap = (props) => {
   ]);
   const hoveredFeature = useRef(null);
   const prevActiveFeature = useRef(activeFeature);
+  const { county, municipality } = props.params;
 
+  // click event
   const onClick = useCallback(
     (event) => {
       const { features } = event;
@@ -35,10 +40,14 @@ const DVRPCMap = (props) => {
           prevActiveFeature.current &&
           prevActiveFeature.current.properties.cty
         ) {
+          const source =
+            prevActiveFeature.current.properties.cty === "Philadelphia"
+              ? "phlplanningareas"
+              : "municipalities";
           mapRef.current.removeFeatureState(
             {
-              source: prevActiveFeature.current.source,
-              sourceLayer: prevActiveFeature.current.source,
+              source: source,
+              sourceLayer: source,
               id: prevActiveFeature.current.id,
             },
             "clicked"
@@ -61,14 +70,13 @@ const DVRPCMap = (props) => {
               )}`
             : `/${kebabCase(feature.properties.name)}`
         );
-
         prevActiveFeature.current = feature;
-        setActiveFeature(feature);
       }
     },
-    [setActiveFeature, prevActiveFeature, mapRef]
+    [prevActiveFeature, mapRef]
   );
 
+  // hover effect
   const onHover = useCallback(
     (event) => {
       const { features } = event;
@@ -104,9 +112,10 @@ const DVRPCMap = (props) => {
         }
       }
     },
-    [mapRef]
+    [mapRef, hoveredFeature, activeFeature]
   );
 
+  // mouse leave effect
   const onMouseLeave = useCallback(() => {
     if (hoveredFeature.current) {
       mapRef.current.setFeatureState(
@@ -120,6 +129,7 @@ const DVRPCMap = (props) => {
     }
   }, [mapRef]);
 
+  // onload store data in state for search
   const onLoad = useCallback(() => {
     if (mapRef.current) {
       let counties = mapRef.current
@@ -139,49 +149,13 @@ const DVRPCMap = (props) => {
         })
         .reduce(reducerFunc, []);
 
-      const { county, municipality } = props.params;
-      if (municipality) {
-        let name = titleCase(municipality);
-        let feature = null;
-        if (county === "philadelphia") {
-          feature = phlplanningareas.filter(
-            (municipality) => municipality.properties.name === name
-          )[0];
-        } else {
-          feature = municipalities.filter(
-            (municipality) =>
-              municipality.properties.name === name &&
-              municipality.properties.cty === titleCase(county)
-          )[0];
-        }
-
-        mapRef.current.setFeatureState(
-          {
-            source: "municipalities",
-            sourceLayer: "municipalities",
-            id: feature.id,
-          },
-          { clicked: true }
-        );
-        prevActiveFeature.current = feature;
-        setActiveFeature(feature);
-      }
-
       setCounties(counties);
       setMunicipalities(municipalities);
       setPhlplanningareas(phlplanningareas);
     }
-  }, [
-    mapRef,
-    setActiveFeature,
-    setCounties,
-    setMunicipalities,
-    setPhlplanningareas,
-    props.params,
-    prevActiveFeature,
-  ]);
+  }, [mapRef, setCounties, setMunicipalities, setPhlplanningareas]);
 
-  // zoom to effect
+  // zoom effect
   useEffect(() => {
     if (activeFeature) {
       if (activeFeature.geometry.type !== "MultiPolygon") {
@@ -205,24 +179,33 @@ const DVRPCMap = (props) => {
             }
           );
       }
-    }
-  }, [activeFeature, mapRef]);
+    } else if (mapRef.current && !activeFeature)
+      mapRef.current.fitBounds(maxExtent);
+  }, [activeFeature, mapRef, county, municipality]);
 
+  // navigation handler
   useEffect(() => {
     if (counties.length) {
-      const { county, municipality } = props.params;
-      if (county && !municipality) {
-        let feature = counties.filter(
-          (location) => location.properties.name === titleCase(county)
-        )[0];
-
+      let feature = null;
+      if (municipality) {
+        let name = titleCase(municipality);
+        if (county === "philadelphia") {
+          feature = phlplanningareas.filter(
+            (municipality) => municipality.properties.name === name
+          )[0];
+        } else {
+          feature = municipalities.filter(
+            (municipality) =>
+              municipality.properties.name === name &&
+              municipality.properties.cty === titleCase(county)
+          )[0];
+        }
+      } else if ((county && !municipality) || (!county && !municipality)) {
         if (prevActiveFeature.current) {
           const prevLayer =
-            prevActiveFeature.current.source ||
-            prevActiveFeature.current.properties.cty
-              ? "municipalities"
-              : "county";
-
+            prevActiveFeature.current.properties.cty === "Philadelphia"
+              ? "phlplanningareas"
+              : "municipalities";
           mapRef.current.removeFeatureState(
             {
               source: prevLayer,
@@ -232,11 +215,28 @@ const DVRPCMap = (props) => {
             "clicked"
           );
         }
-
-        setActiveFeature(feature);
+        if (county)
+          feature = counties.filter(
+            (test) => test.properties.name === titleCase(county)
+          )[0];
       }
+
+      // set active feature and trigger zoom effect
+      prevActiveFeature.current = activeFeature;
+      setActiveFeature(feature);
+      // remove submarket filter
+      setSubmarketFilter("");
     }
-  }, [props.params, counties, prevActiveFeature, mapRef, setActiveFeature]);
+  }, [
+    county,
+    municipality,
+    mapRef,
+    counties,
+    municipalities,
+    phlplanningareas,
+    setActiveFeature,
+    activeFeature,
+  ]);
 
   return (
     <Map
