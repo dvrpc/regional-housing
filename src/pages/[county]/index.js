@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import PercentageViz from "../../components/PercentageViz";
 import { titleCase, generateSubmarketObj } from "../../utils";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 const CountyPage = (props) => {
   const { county, data, serverData } = props;
@@ -15,6 +16,7 @@ const CountyPage = (props) => {
     <div>
       {county && (
         <>
+          <Breadcrumbs params={{ county }} />
           <h3 className="text-xl font-bold my-4">{titleCase(county)}</h3>
           {result && (
             <PercentageViz
