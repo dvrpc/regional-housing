@@ -11,15 +11,15 @@ const Header = () => {
         <img
           src={DVRPCMini}
           alt="dvrpc logo"
-          className="md:h-12 desktop:h-14 opacity-50 mt-4"
+          className="desktop:h-14 opacity-50 mt-4"
         />
         <img
           src={Logo}
           alt="housing submarkets logo"
-          className="desktop:h-32 laptop:h-24 mx-24"
+          className="desktop:h-34 laptop:h-24 mx-24"
         />
       </div>
-      <div className="right-0 p-4 md:w-2/5 flex flex-col justify-center absolute">
+      <div className="right-0 p-4 md:w-2/5 flex flex-col justify-center absolute desktop:mt-[1.20rem]">
         <ul className="flex divide-x justify-end [&>*]:px-2.5 font-bold py-2">
           <li>
             <Link to="/">Home</Link>
