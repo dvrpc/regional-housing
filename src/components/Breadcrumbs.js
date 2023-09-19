@@ -22,7 +22,7 @@ const Breadcrumbs = ({ params }) => {
             <Link to={(!isLast && crumb.path) || `/${crumb}`}>
               {crumb.str || titleCase(crumb)}
             </Link>
-            {!isLast && <span className="px-0.5">{">"}</span>}
+            {!isLast && <span className="px-1">{">"}</span>}
           </>
         );
       })}

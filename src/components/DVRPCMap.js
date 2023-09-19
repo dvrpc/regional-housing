@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from "react";
-import Map, { Source, Layer } from "react-map-gl";
+import Map, { Source, Layer, Popup } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
 import { boundaryLayers, fillLayer } from "../map-layers";
 import AppContext from "../utils/AppContext";
@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { navigate } from "gatsby";
 import { kebabCase, getBoundingBox, reducerFunc, titleCase } from "../utils";
 import { useRef } from "react";
+import { useState } from "react";
 
 const DVRPCMap = (props) => {
   const {
@@ -26,7 +27,7 @@ const DVRPCMap = (props) => {
     [-76.09405517578125, 39.49211914385648],
     [-74.32525634765625, 40.614734298694216],
   ]);
-  const hoveredFeature = useRef(null);
+  const [hoveredFeature, setHoveredFeature] = useState(null);
   const prevActiveFeature = useRef(activeFeature);
   const { county, municipality } = props.params;
 
@@ -81,53 +82,64 @@ const DVRPCMap = (props) => {
     (event) => {
       const { features } = event;
       if (features.length) {
-        if (!hoveredFeature.current) {
-          hoveredFeature.current = features && features[0];
+        if (!hoveredFeature) {
+          const feature = features && features[0];
+          setHoveredFeature({
+            feature: feature,
+            latitude: event.lngLat.lat,
+            longitude: event.lngLat.lng,
+          });
           mapRef.current.setFeatureState(
             {
-              source: hoveredFeature.current.source,
-              sourceLayer: hoveredFeature.current.sourceLayer,
-              id: hoveredFeature.current.id,
+              source: feature.source,
+              sourceLayer: feature.sourceLayer,
+              id: feature.id,
             },
             { hover: true }
           );
         } else {
           mapRef.current.removeFeatureState(
             {
-              source: hoveredFeature.current.source,
-              sourceLayer: hoveredFeature.current.sourceLayer,
-              id: hoveredFeature.current.id,
+              source: hoveredFeature.feature.source,
+              sourceLayer: hoveredFeature.feature.sourceLayer,
+              id: hoveredFeature.feature.id,
             },
             "hover"
           );
-          hoveredFeature.current = features && features[0];
+          const feature = features && features[0];
+          setHoveredFeature({
+            feature: features[0],
+            latitude: event.lngLat.lat,
+            longitude: event.lngLat.lng,
+          });
           mapRef.current.setFeatureState(
             {
-              source: hoveredFeature.current.source,
-              sourceLayer: hoveredFeature.current.sourceLayer,
-              id: hoveredFeature.current.id,
+              source: feature.source,
+              sourceLayer: feature.sourceLayer,
+              id: feature.id,
             },
             { hover: true }
           );
         }
       }
     },
-    [mapRef, hoveredFeature, activeFeature]
+    [mapRef, hoveredFeature]
   );
 
   // mouse leave effect
   const onMouseLeave = useCallback(() => {
-    if (hoveredFeature.current) {
+    if (hoveredFeature) {
+      setHoveredFeature(null);
       mapRef.current.setFeatureState(
         {
-          source: "municipalities",
-          sourceLayer: "municipalities",
-          id: hoveredFeature.current.id,
+          source: hoveredFeature.feature.source,
+          sourceLayer: hoveredFeature.feature.sourceLayer,
+          id: hoveredFeature.feature.id,
         },
         { hover: false }
       );
     }
-  }, [mapRef]);
+  }, [mapRef, hoveredFeature, setHoveredFeature]);
 
   // onload store data in state for search
   const onLoad = useCallback(() => {
@@ -180,7 +192,12 @@ const DVRPCMap = (props) => {
           );
       }
     } else if (mapRef.current && !activeFeature)
-      mapRef.current.fitBounds(maxExtent);
+      mapRef.current.fitBounds(
+        new LngLatBounds([
+          [-76.09405517578125, 39.49211914385648],
+          [-74.32525634765625, 40.614734298694216],
+        ])
+      );
   }, [activeFeature, mapRef, county, municipality]);
 
   // navigation handler
@@ -236,7 +253,10 @@ const DVRPCMap = (props) => {
     phlplanningareas,
     setActiveFeature,
     activeFeature,
+    setSubmarketFilter,
   ]);
+
+  if (hoveredFeature) console.log(hoveredFeature);
 
   return (
     <Map
@@ -291,6 +311,25 @@ const DVRPCMap = (props) => {
           </Source>
         );
       })}
+
+      {hoveredFeature ? (
+        <Popup
+          longitude={hoveredFeature.longitude}
+          latitude={hoveredFeature.latitude}
+          closeButton={false}
+          closeOnClick={false}
+          maxWidth="350px"
+        >
+          <div>
+            <div className="divide-y text-center text-base">
+              <div>{hoveredFeature.feature.properties.name}</div>
+              <div>{`${hoveredFeature.feature.properties.cty}, ${
+                hoveredFeature.feature.properties.state || "PA"
+              }`}</div>
+            </div>
+          </div>
+        </Popup>
+      ) : null}
     </Map>
   );
 };
