@@ -86,6 +86,14 @@ const fillLayer = {
         9,
         "#ffffff",
       ],
+      "fill-opacity": {
+        base: 9,
+        stops: [
+          [10, 0.9],
+          [12, 0.7],
+          [13, 0.6],
+        ],
+      },
     },
   },
 };
