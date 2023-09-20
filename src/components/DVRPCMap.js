@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import Map, { Source, Layer, Popup } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
-import { boundaryLayers, fillLayer } from "../map-layers";
+import { boundaryLayers, fillLayer, highlightLayer } from "../map-layers";
 import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
 import { navigate } from "gatsby";
@@ -242,7 +242,11 @@ const DVRPCMap = (props) => {
       prevActiveFeature.current = activeFeature;
       setActiveFeature(feature);
       // remove submarket filter
-      setSubmarketFilter("");
+      mapRef.current.removeFeatureState(
+        { source: "submarkets", id: parseInt(submarketFilter) },
+        "hover"
+      );
+      if (activeFeature) setSubmarketFilter("");
     }
   }, [
     county,
@@ -253,10 +257,9 @@ const DVRPCMap = (props) => {
     phlplanningareas,
     setActiveFeature,
     activeFeature,
+    submarketFilter,
     setSubmarketFilter,
   ]);
-
-  if (hoveredFeature) console.log(hoveredFeature);
 
   return (
     <Map
@@ -272,7 +275,12 @@ const DVRPCMap = (props) => {
       minZoom={8}
       style={{ height: "85vh", width: "70vw" }}
     >
-      <Source id={fillLayer.id} type={fillLayer.type} data={fillLayer.data}>
+      <Source
+        id={fillLayer.id}
+        type={fillLayer.type}
+        data={fillLayer.data}
+        promoteId={fillLayer.promoteId}
+      >
         <Layer
           {...fillLayer.layer}
           filter={
@@ -281,6 +289,7 @@ const DVRPCMap = (props) => {
               : ["!=", "submarket", ""]
           }
         />
+        <Layer {...highlightLayer} />
       </Source>
 
       {boundaryLayers.map((source) => {

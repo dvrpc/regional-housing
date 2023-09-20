@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Link, graphql } from "gatsby";
+import AppContext from "../../utils/AppContext";
 
 export default function Submarkets({ data }) {
+  const { mapRef } = useContext(AppContext);
   let {
     allMarkdownRemark: { edges },
   } = data;
@@ -18,7 +20,30 @@ export default function Submarkets({ data }) {
             style={{ backgroundColor: submarket.hex }}
           />
           <div>
-            <Link className="text-xl font-bold" to={submarket.slug}>
+            <Link
+              className="text-xl font-bold"
+              to={submarket.slug}
+              onMouseOver={() =>
+                mapRef.current &&
+                mapRef.current.setFeatureState(
+                  {
+                    source: "submarkets",
+                    id: submarket.slug,
+                  },
+                  { hover: true }
+                )
+              }
+              onMouseLeave={() =>
+                mapRef.current &&
+                mapRef.current.removeFeatureState(
+                  {
+                    source: "submarkets",
+                    id: submarket.slug,
+                  },
+                  "hover"
+                )
+              }
+            >
               {submarket.title}
             </Link>
             <div>{submarket.description}</div>
