@@ -15,7 +15,7 @@ const Header = () => {
         />
         <img src={Logo} alt="housing submarkets logo" className="h-24 mx-24" />
       </div>
-      <div className="right-0 p-4 md:w-2/5 flex flex-col justify-center absolute md:mt-[1.20rem] laptop:mt-0">
+      <div className="right-0 p-4 md:w-2/5 flex flex-col justify-center absolute">
         <ul className="flex divide-x justify-end [&>*]:px-2.5 font-bold py-2">
           <li>
             <Link to="/">Home</Link>
