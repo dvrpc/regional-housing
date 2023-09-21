@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link, graphql } from "gatsby";
 import AppContext from "../../utils/AppContext";
 

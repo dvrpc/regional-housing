@@ -266,7 +266,7 @@ const DVRPCMap = (props) => {
       interactiveLayerIds={["municipalities", "phlplanningareas"]}
       ref={mapRef}
       initialViewState={{ bounds: maxExtent }}
-      mapStyle="mapbox://styles/mapbox/light-v11"
+      mapStyle="mapbox://styles/crvanpollard/clmqidmqj04uh01ma2mkla3yz"
       mapboxAccessToken="pk.eyJ1IjoibW1vbHRhIiwiYSI6ImNqZDBkMDZhYjJ6YzczNHJ4cno5eTcydnMifQ.RJNJ7s7hBfrJITOBZBdcOA"
       onClick={onClick}
       onMouseMove={onHover}
