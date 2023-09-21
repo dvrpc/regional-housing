@@ -42,7 +42,7 @@ export default function Submarket(props) {
         </div>
       </div>
       {result && (
-        <div className="flex flex-col space-y-12 mt-8">
+        <div className="flex flex-col space-y-12 mt-8 text-sm">
           <div className="grid grid-cols-3">
             <div className="col-span-1 text-gray-500 font-bold">
               MEDIAN SALES PRICE

@@ -11,7 +11,7 @@ const Layout = (props) => {
   useEffect(() => {
     setOverlay(props.path === "/" || props.path === "/about/" ? true : false);
     if (overlay || props.path === "/submarkets/") setSubmarketFilter("");
-  }, [props.path]);
+  }, [props.path, overlay, setOverlay, setSubmarketFilter]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

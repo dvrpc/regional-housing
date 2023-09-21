@@ -1,14 +1,15 @@
 import React from "react";
 
 const getPercent = (x, value) => {
-  const range = 20;
+  const range = 25;
   let ret = (value < 1 ? value * 100 : value) / (2 * x);
   ret *= 100;
   let diff = ret - 50;
   if ((diff < range + 5 && diff > 0) || (diff > range * -1 - 5 && diff < 0)) {
-    if (diff > 0 && diff < 15) ret += range;
-    else if (diff < 0 && diff > -15) ret += range * -1;
-  } else if (ret > 100) ret = 85;
+    if (diff > 0 && diff < 20) ret += range;
+    else if (diff < 0 && diff > -20) ret += range * -1;
+  }
+  if (ret > 85) ret = 85;
   return ret;
 };
 
@@ -29,9 +30,9 @@ const MedianViz = ({ type, value }) => {
   });
 
   return (
-    <div className="col-span-2 relative">
-      <div className="w-6 absolute left-[50%] -mt-6 flex flex-col items-center">
-        <span className="text-gray-500">
+    <div className="col-span-2 relative text-sm">
+      <div className="w-6 absolute left-[45%] -mt-5 flex flex-col items-center">
+        <span className="text-gray-500 text-xs">
           {type === "median"
             ? formatter.format(regionalAverages[type])
             : (regionalAverages[type] / 100).toLocaleString(undefined, {
@@ -42,10 +43,10 @@ const MedianViz = ({ type, value }) => {
         <div className="h-6 w-6 rounded-full border-2 border-gray-500 bg-white" />
       </div>
       <div
-        className="w-6 absolute -mt-6 flex flex-col items-center"
+        className="w-6 absolute -mt-5 flex flex-col items-center"
         style={{ left: `${plotValue}%` }}
       >
-        <span className="text-[#015ab8]">
+        <span className="text-[#015ab8] text-xs">
           {type === "median"
             ? formatter.format(value)
             : value.toLocaleString(undefined, {

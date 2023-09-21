@@ -14,7 +14,7 @@ const Breadcrumbs = ({ params }) => {
     if (municipality) crumbs.push(municipality);
   }
   return (
-    <div className="flex text-sm">
+    <div className="flex text-xs">
       {crumbs.map((crumb, idx) => {
         const isLast = crumbs.length - 1 === idx ? true : false;
         return (
