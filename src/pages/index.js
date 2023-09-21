@@ -12,15 +12,15 @@ const IndexPage = () => {
           style={{ backgroundImage: `url(${Hero})` }}
         >
           <h1 className="text-5xl font-bold leading-snug">
-            Diagnosing the housing crisis in <br /> Greater Philadelphia
+            A Regional Approach to Housing Affordability
           </h1>
         </div>
         <div className="px-36 py-20 text-center border-b-4 border-[#A198D1] bg-white">
           <p className="text-2xl text-[#f05a22] leading-snug tracking-wide">
-            The lack of affordable housing is one of the most significant
-            challenges facing our region. <br />
-            Home Remedies can help us better understand the problem and decide
-            how to address it.
+            Municipalities across Greater Philadelphia are confronting a housing
+            affordability crisis. DVRPC created the Housing Submarkets tool to
+            help local governments better understand the challenges they are
+            facing and how we can work together to address them.
           </p>
         </div>
         <div className="px-36 py-20 border-b-4 border-[#A198D1] bg-white">
