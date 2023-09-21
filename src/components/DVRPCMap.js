@@ -210,12 +210,14 @@ const DVRPCMap = (props) => {
           feature = phlplanningareas.filter(
             (municipality) => municipality.properties.name === name
           )[0];
+          feature.sourceLayer = "phlplanningareas";
         } else {
           feature = municipalities.filter(
             (municipality) =>
               municipality.properties.name === name &&
               municipality.properties.cty === titleCase(county)
           )[0];
+          feature.sourceLayer = "municipalities";
         }
       } else if ((county && !municipality) || (!county && !municipality)) {
         if (prevActiveFeature.current) {
@@ -232,10 +234,12 @@ const DVRPCMap = (props) => {
             "clicked"
           );
         }
-        if (county)
+        if (county) {
           feature = counties.filter(
             (test) => test.properties.name === titleCase(county)
           )[0];
+          feature.sourceLayer = "county";
+        }
       }
 
       // set active feature and trigger zoom effect
@@ -297,6 +301,15 @@ const DVRPCMap = (props) => {
 
         return (
           <Source {...props}>
+            {activeFeature && activeFeature.sourceLayer === source.id && (
+              <Layer
+                id={`mask-${source.id}`}
+                type="fill"
+                source-layer={source.id}
+                paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
+                filter={["!=", "geoid", activeFeature.properties.geoid]}
+              />
+            )}
             <Layer
               id={`highlight-${source.id}`}
               type="line"
