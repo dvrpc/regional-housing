@@ -6,14 +6,12 @@ import { navigate } from "gatsby";
 import { kebabCase } from "../utils";
 
 const Search = () => {
-  const { setActiveFeature, counties, municipalities, phlplanningareas } =
-    useContext(AppContext);
+  const { counties, municipalities, phlplanningareas } = useContext(AppContext);
   const [suggestions, setSuggestions] = useState([]);
   const [input, setInput] = useState("");
   const debounceInput = useDebounce(input);
 
   const linkClick = (suggestion) => {
-    setActiveFeature(suggestion);
     setInput("");
     setSuggestions([]);
     navigate(
@@ -56,12 +54,19 @@ const Search = () => {
 
   return (
     <>
-      <Input
-        placeholder="Search by county or municipality"
-        value={input}
-        onChange={(event) => setInput(event.target.value)}
-      />
-      <div className="bg-white divide-y max-h-[20vh] overflow-y-scroll text-black rounded-b-lg">
+      <div className="flex">
+        <span className="font-bold my-auto text-right tracking-[2px] pr-2 inline-block w-1/3 whitespace-nowrap laptop:text-sm">
+          FIND A COMMUNITY:
+        </span>
+        <div className="w-2/3">
+          <Input
+            placeholder="Search by county or municipality"
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+          />
+        </div>
+      </div>
+      <div className="bg-white divide-y max-h-[20vh] overflow-y-scroll text-black rounded-b-lg block ml-auto w-2/3">
         {suggestions.map((suggestion) => {
           const name = !suggestion.properties.cty
             ? `${suggestion.properties.name} County`

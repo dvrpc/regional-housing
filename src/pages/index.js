@@ -8,7 +8,7 @@ const IndexPage = () => {
     <div className="min-h-screen">
       <div className="w-full text-white">
         <div
-          className="px-36 py-20 text-center"
+          className="px-36 py-20 text-center bg-left"
           style={{ backgroundImage: `url(${Hero})` }}
         >
           <h1 className="text-5xl font-bold leading-snug">
@@ -24,15 +24,15 @@ const IndexPage = () => {
           </p>
         </div>
         <div className="px-36 py-20 border-b-4 border-[#A198D1] bg-white">
-          <div className="grid grid-cols-2 text-[#f05a22]">
+          <div className="grid grid-cols-2 text-[#f05a22] space-x-8 ">
             <p>
-              <strong className="block">What is a submarket?</strong>
+              <strong className="block text-xl">What is a submarket?</strong>
               Is one of the most significant challenges facing our region. Home
               Remedies can help us better understand the problem and decide how
               to address it.
             </p>
             <p>
-              <strong className="block">How did we get here?</strong>
+              <strong className="block text-xl">How did we get here?</strong>
               Is one of the most significant challenges facing our region. Home
               Remedies can help us better understand the problem and decide how
               to address it.
