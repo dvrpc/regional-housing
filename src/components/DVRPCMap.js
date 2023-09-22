@@ -286,6 +286,7 @@ const DVRPCMap = (props) => {
         promoteId={fillLayer.promoteId}
       >
         <Layer
+          beforeId="waterway-shadow"
           {...fillLayer.layer}
           filter={
             submarketFilter
@@ -310,6 +311,16 @@ const DVRPCMap = (props) => {
                 filter={["!=", "geoid", activeFeature.properties.geoid]}
               />
             )}
+            {activeFeature &&
+              activeFeature.sourceLayer === "phlplanningareas" && (
+                <Layer
+                  id="mask-philadelphia"
+                  type="fill"
+                  source-layer={source.id}
+                  paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
+                  filter={["!=", "name", "Philadelphia"]}
+                />
+              )}
             <Layer
               id={`highlight-${source.id}`}
               type="line"
