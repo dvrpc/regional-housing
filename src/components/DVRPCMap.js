@@ -342,6 +342,7 @@ const DVRPCMap = (props) => {
           closeOnClick={false}
           maxWidth="350px"
           offset={[0, -10]}
+          anchor="bottom"
         >
           <div>
             <div className="divide-y text-center text-base">
