@@ -36,6 +36,7 @@ const Layout = (props) => {
             <div style={{ position: "relative", width: "30vw" }}>
               <div
                 style={{
+                  top: 0,
                   position: "absolute",
                   overflowY: "auto",
                   paddingTop: "2rem",

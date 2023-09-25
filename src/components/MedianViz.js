@@ -31,7 +31,7 @@ const MedianViz = ({ type, value }) => {
 
   return (
     <div className="col-span-2 relative text-sm">
-      <div className="w-6 absolute left-[45%] -mt-5 flex flex-col items-center">
+      <div className="w-6 absolute left-[50%] -mt-5 flex flex-col items-center">
         <span className="text-gray-500 text-xs">
           {type === "median"
             ? formatter.format(regionalAverages[type])
