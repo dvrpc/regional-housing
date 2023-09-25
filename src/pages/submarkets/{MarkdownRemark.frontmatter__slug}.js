@@ -42,25 +42,15 @@ export default function Submarket(props) {
         </div>
       </div>
       {result && (
-        <div className="flex flex-col space-y-12 mt-8 text-sm">
-          <div className="grid grid-cols-3">
-            <div className="col-span-1 text-gray-500 font-bold">
-              MEDIAN SALES PRICE
-            </div>
-            <MedianViz type="median" value={result.records[0].med21} />
+        <div className="flex flex-col space-y-8 mt-8 text-sm">
+          <div className="text-gray-500 font-bold block">
+            MEDIAN SALES PRICE:
           </div>
-          <div className="grid grid-cols-3">
-            <div className="col-span-1 text-gray-500 font-bold">
-              CHANGE IN SALES PRICE
-            </div>
-            <MedianViz type="change" value={result.records[0].pct_diff} />
-          </div>
-          <div className="grid grid-cols-3">
-            <div className="col-span-1 text-gray-500 font-bold">
-              PERCENT OWNER-OCCUPIED
-            </div>
-            <MedianViz type="percent" value={result.records[0].ten_own} />
-          </div>
+          <MedianViz type="median" value={result.records[0].med21} />
+          <div className=" text-gray-500 font-bold">CHANGE IN SALES PRICE:</div>
+          <MedianViz type="change" value={result.records[0].pct_diff} />
+          <div className="text-gray-500 font-bold">PERCENT OWNER-OCCUPIED:</div>
+          <MedianViz type="percent" value={result.records[0].ten_own} />
         </div>
       )}
     </div>

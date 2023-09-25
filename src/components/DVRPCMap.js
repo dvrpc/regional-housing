@@ -8,6 +8,7 @@ import { navigate } from "gatsby";
 import { kebabCase, getBoundingBox, reducerFunc, titleCase } from "../utils";
 import { useRef } from "react";
 import { useState } from "react";
+import SubmarketDropdown from "./SubmarketDropdown";
 
 const DVRPCMap = (props) => {
   const {
@@ -279,6 +280,7 @@ const DVRPCMap = (props) => {
       minZoom={8}
       style={{ height: "85vh", width: "70vw" }}
     >
+      {!activeFeature && <SubmarketDropdown />}
       <Source
         id={fillLayer.id}
         type={fillLayer.type}
