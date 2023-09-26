@@ -33,7 +33,10 @@ const Layout = (props) => {
         )}
         <div style={{ display: "flex" }}>
           {!overlay && (
-            <div style={{ position: "relative", width: "30vw" }}>
+            <div
+              className="sidebar"
+              style={{ position: "relative", width: "25vw", float: "left" }}
+            >
               <div
                 style={{
                   top: 0,
@@ -55,7 +58,7 @@ const Layout = (props) => {
               </div>
             </div>
           )}
-          <div>
+          <div style={{ width: "100%" }}>
             <DVRPCMap params={{ county, municipality }} />
           </div>
         </div>

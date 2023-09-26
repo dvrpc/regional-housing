@@ -278,7 +278,7 @@ const DVRPCMap = (props) => {
       onMouseLeave={onMouseLeave}
       onLoad={onLoad}
       minZoom={8}
-      style={{ height: "85vh", width: "70vw" }}
+      style={{ height: "85vh" }}
     >
       {!activeFeature && <SubmarketDropdown />}
       <Source
@@ -356,14 +356,13 @@ const DVRPCMap = (props) => {
           maxWidth="350px"
           offset={[0, -10]}
           anchor="bottom"
+          className="opacity-90"
         >
-          <div>
-            <div className="divide-y text-center text-base">
-              <div>{hoveredFeature.feature.properties.name}</div>
-              <div>{`${hoveredFeature.feature.properties.cty}, ${
-                hoveredFeature.feature.properties.state || "PA"
-              }`}</div>
-            </div>
+          <div className="divide-y text-center text-base">
+            <div>{hoveredFeature.feature.properties.name}</div>
+            <div>{`${hoveredFeature.feature.properties.cty}, ${
+              hoveredFeature.feature.properties.state || "PA"
+            }`}</div>
           </div>
         </Popup>
       ) : null}

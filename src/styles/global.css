@@ -16,3 +16,9 @@ body {
   background-color: yellow;
   font-weight: bold;
 }
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) {
+  .sidebar {
+    width: 35vw !important;
+  }
+}
