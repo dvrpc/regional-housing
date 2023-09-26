@@ -52,7 +52,7 @@ const PercentageViz = ({ res, submarkets, title }) => {
                           })}{" "}
                       of {title[0].toUpperCase() + title.substr(1)} is
                       <span
-                        className="px-1"
+                        className="px-1 brightness-75"
                         style={{
                           color: submarket.description && submarket.hex,
                         }}
