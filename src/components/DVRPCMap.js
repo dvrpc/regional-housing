@@ -324,11 +324,25 @@ const DVRPCMap = (props) => {
                 />
               )}
             <Layer
-              id={`highlight-${source.id}`}
+              id={`highlight-${source.id}-fill`}
+              type="fill"
+              source-layer={source.id}
+              paint={{
+                "fill-color": [
+                  "case",
+                  ["boolean", ["feature-state", "hover"], false],
+                  "#FFD662",
+                  "transparent",
+                ],
+                "fill-opacity": 0.8,
+              }}
+            />
+            <Layer
+              id={`highlight-${source.id}-line`}
               type="line"
               source-layer={source.id}
               paint={{
-                "line-color": "#0159b8",
+                "line-color": "#FF0000",
                 "line-width": [
                   "case",
                   [
@@ -342,7 +356,8 @@ const DVRPCMap = (props) => {
                 ],
               }}
             />
-            <Layer beforeId={`highlight-${source.id}`} {...layer} />
+
+            <Layer beforeId={`highlight-${source.id}-fill`} {...layer} />
           </Source>
         );
       })}
@@ -354,9 +369,7 @@ const DVRPCMap = (props) => {
           closeButton={false}
           closeOnClick={false}
           maxWidth="350px"
-          offset={[0, -10]}
-          anchor="bottom"
-          className="opacity-90"
+          className="opacity-90 py-4"
         >
           <div className="divide-y text-center text-base">
             <div>{hoveredFeature.feature.properties.name}</div>
