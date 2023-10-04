@@ -99,14 +99,10 @@ const DVRPCMap = (props) => {
             { hover: true }
           );
         } else {
-          mapRef.current.removeFeatureState(
-            {
-              source: hoveredFeature.feature.source,
-              sourceLayer: hoveredFeature.feature.sourceLayer,
-              id: hoveredFeature.feature.id,
-            },
-            "hover"
-          );
+          mapRef.current.removeFeatureState({
+            source: hoveredFeature.feature.source,
+            sourceLayer: hoveredFeature.feature.sourceLayer,
+          });
           const feature = features && features[0];
           setHoveredFeature({
             feature: features[0],
@@ -305,23 +301,47 @@ const DVRPCMap = (props) => {
         return (
           <Source {...props}>
             {activeFeature && activeFeature.sourceLayer === source.id && (
-              <Layer
-                id={`mask-${source.id}`}
-                type="fill"
-                source-layer={source.id}
-                paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
-                filter={["!=", "geoid", activeFeature.properties.geoid]}
-              />
+              <>
+                <Layer
+                  id={`mask-${source.id}`}
+                  type="fill"
+                  source={source.id}
+                  source-layer={source.id}
+                  paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
+                  filter={["!=", "geoid", activeFeature.properties.geoid]}
+                />
+                {activeFeature.sourceLayer != "county" && (
+                  <Layer
+                    id={`clicked-${source.id}`}
+                    type="line"
+                    source={source.id}
+                    source-layer={source.id}
+                    paint={{ "line-color": "#FF0000", "line-width": 3 }}
+                    filter={["==", "geoid", activeFeature.properties.geoid]}
+                  />
+                )}
+              </>
             )}
             {activeFeature &&
               activeFeature.sourceLayer === "phlplanningareas" && (
-                <Layer
-                  id="mask-philadelphia"
-                  type="fill"
-                  source-layer={source.id}
-                  paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
-                  filter={["!=", "name", "Philadelphia"]}
-                />
+                <>
+                  <Layer
+                    id="mask-philadelphia"
+                    type="fill"
+                    source={source.id}
+                    source-layer={source.id}
+                    paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
+                    filter={["!=", "name", "Philadelphia"]}
+                  />
+                  <Layer
+                    id={`clicked-${source.id}`}
+                    type="line"
+                    source={source.id}
+                    source-layer={source.id}
+                    paint={{ "line-color": "#FF0000", "line-width": 3 }}
+                    filter={["==", "geoid", activeFeature.properties.geoid]}
+                  />
+                </>
               )}
             <Layer
               id={`highlight-${source.id}-fill`}
@@ -345,18 +365,12 @@ const DVRPCMap = (props) => {
                 "line-color": "#FF0000",
                 "line-width": [
                   "case",
-                  [
-                    "boolean",
-                    ["feature-state", "hover"],
-                    ["feature-state", "clicked"],
-                    false,
-                  ],
+                  ["boolean", ["feature-state", "hover"], false],
                   3,
                   0,
                 ],
               }}
             />
-
             <Layer beforeId={`highlight-${source.id}-fill`} {...layer} />
           </Source>
         );
