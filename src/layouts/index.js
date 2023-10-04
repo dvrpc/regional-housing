@@ -35,7 +35,7 @@ const Layout = (props) => {
           {!overlay && (
             <div
               className="sidebar"
-              style={{ position: "relative", width: "25vw", float: "left" }}
+              style={{ position: "relative", width: "35vw", float: "left" }}
             >
               <div
                 style={{
