@@ -19,7 +19,10 @@ const Breadcrumbs = ({ params }) => {
         const isLast = crumbs.length - 1 === idx ? true : false;
         return (
           <>
-            <Link to={!isLast && (crumb.path || `/${crumb}`)} className="w-min">
+            <Link
+              to={!isLast && (crumb.path || `/${crumb}`)}
+              className="w-min md:w-fit"
+            >
               {crumb.str || titleCase(crumb)}
             </Link>
             {!isLast && <span className="px-1">{">"}</span>}

@@ -21,7 +21,7 @@ const Layout = (props) => {
       />
       <Header />
       <div style={{ height: "85vh" }}>
-        {overlay && (
+        {overlay ? (
           <div
             style={{
               position: "absolute",
@@ -30,38 +30,13 @@ const Layout = (props) => {
           >
             {props.children}
           </div>
-        )}
-        <div style={{ display: "flex" }}>
-          {!overlay && (
-            <div
-              className="sidebar"
-              style={{ position: "relative", width: "35vw", float: "left" }}
-            >
-              <div
-                style={{
-                  top: 0,
-                  position: "absolute",
-                  overflowY: "auto",
-                  paddingTop: "2rem",
-                  paddingBottom: "2rem",
-                  paddingLeft: "4rem",
-                  paddingRight: "4rem",
-                  height: "100%",
-                  width: "100%",
-                  borderRightWidth: "2px",
-                  backgroundColor: "#ffffff",
-                  borderColor: "#f05a22",
-                  zIndex: 999,
-                }}
-              >
-                {props.children}
-              </div>
-            </div>
-          )}
+        ) : (
           <div style={{ width: "100%" }}>
-            <DVRPCMap params={{ county, municipality }} />
+            <DVRPCMap params={{ county, municipality }}>
+              {props.children}
+            </DVRPCMap>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

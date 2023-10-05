@@ -4,42 +4,72 @@ import DVRPCMini from "../images/dvrpc-mini.svg";
 import Logo from "../images/logo.png";
 import Search from "./Search";
 
+const Menu = () => {
+  return (
+    <div className="flex flex-col-reverse md:flex-col md:w-1/2 right-0 p-4 justify-center md:absolute md:pr-16">
+      <ul className="flex md:divide-x justify-end [&>*]:px-2.5 font-bold py-2 flex-col md:flex-row">
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/submarkets">Submarkets</Link>
+        </li>
+      </ul>
+      <div>
+        <Search />
+      </div>
+    </div>
+  );
+};
+
 const Header = () => {
   return (
-    <header className="bg-[#f05a22] text-white flex drop-shadow-lg px-16 h-[15vh] z-[999]">
-      <div className="flex items-center">
-        <a href="https://www.dvrpc.org/">
-          <img
-            src={DVRPCMini}
-            alt="dvrpc logo"
-            className="md:h-12 opacity-50 mt-4"
-          />
-        </a>
-        <Link to="/">
-          <img
-            src={Logo}
-            alt="housing submarkets logo"
-            className="h-28 p-2 mx-24 laptop:mx-11"
-          />
-        </Link>
-      </div>
-      <div className="right-0 p-4 md:w-1/2 flex flex-col justify-center absolute mt-2 pr-16">
-        <ul className="flex divide-x justify-end [&>*]:px-2.5 font-bold py-2">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/submarkets">Submarkets</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-        </ul>
-        <div className="pr-2.5">
-          <Search />
+    <>
+      <header className="bg-[#f05a22] h-[15vh] relative z-[999] w-full md:flex md:text-white md:px-16">
+        <div className="flex items-center w-full">
+          <div
+            className="hamburger p-4 visible md:hidden"
+            id="hamburger-1"
+            onClick={(e) => {
+              if (!e.target.id) {
+                e.target.parentElement.classList.toggle("is-active");
+              } else {
+                e.target.classList.toggle("is-active");
+              }
+              document
+                .querySelector(".mobile-menu")
+                .classList.toggle("mobile-menu-open");
+            }}
+          >
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+          </div>
+          <a className="" href="https://www.dvrpc.org/">
+            <img
+              src={DVRPCMini}
+              alt="dvrpc logo"
+              className="h-12 opacity-50 mt-4"
+            />
+          </a>
+          <Link to="/" className="ml-auto md:ml-0">
+            <img
+              src={Logo}
+              alt="housing submarkets logo"
+              className="h-20 md:h-28 p-2 md:mx-24 laptop:mx-11"
+            />
+          </Link>
+        </div>
+        <span className="desktop-menu">
+          <Menu />
+        </span>
+      </header>
+      <div className="visible md:hidden mobile-menu rounded-b-lg p-4 pt-0">
+        <div className="mobile-menu-wrapper">
+          <Menu />
         </div>
       </div>
-    </header>
+    </>
   );
 };
 

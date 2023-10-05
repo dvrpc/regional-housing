@@ -166,7 +166,7 @@ const DVRPCMap = (props) => {
 
   // zoom effect
   useEffect(() => {
-    if (activeFeature) {
+    if (activeFeature && mapRef.current) {
       if (activeFeature.geometry.type !== "MultiPolygon") {
         const coords = activeFeature.geometry.coordinates[0];
         const bounds = new LngLatBounds(coords[0], coords[0]);
@@ -243,10 +243,11 @@ const DVRPCMap = (props) => {
       prevActiveFeature.current = activeFeature;
       setActiveFeature(feature);
       // remove submarket filter
-      mapRef.current.removeFeatureState(
-        { source: "submarkets", id: parseInt(submarketFilter) },
-        "hover"
-      );
+      mapRef.curent &&
+        mapRef.current.removeFeatureState(
+          { source: "submarkets", id: parseInt(submarketFilter) },
+          "hover"
+        );
       if (activeFeature) setSubmarketFilter("");
     }
   }, [
@@ -263,137 +264,145 @@ const DVRPCMap = (props) => {
   ]);
 
   return (
-    <Map
-      interactiveLayerIds={["municipalities", "phlplanningareas"]}
-      ref={mapRef}
-      initialViewState={{ bounds: maxExtent }}
-      mapStyle="mapbox://styles/crvanpollard/clmqidmqj04uh01ma2mkla3yz"
-      mapboxAccessToken="pk.eyJ1IjoibW1vbHRhIiwiYSI6ImNqZDBkMDZhYjJ6YzczNHJ4cno5eTcydnMifQ.RJNJ7s7hBfrJITOBZBdcOA"
-      onClick={onClick}
-      onMouseMove={onHover}
-      onMouseLeave={onMouseLeave}
-      onLoad={onLoad}
-      minZoom={8}
-      style={{ height: "85vh" }}
-    >
-      {!activeFeature && <SubmarketDropdown />}
-      <Source
-        id={fillLayer.id}
-        type={fillLayer.type}
-        data={fillLayer.data}
-        promoteId={fillLayer.promoteId}
-      >
-        <Layer
-          beforeId="waterway-shadow"
-          {...fillLayer.layer}
-          filter={
-            submarketFilter
-              ? ["==", "submarket", parseInt(submarketFilter)]
-              : ["!=", "submarket", ""]
-          }
-        />
-        <Layer {...highlightLayer} />
-      </Source>
-
-      {boundaryLayers.map((source) => {
-        const { layer, ...props } = source;
-
-        return (
-          <Source {...props}>
-            {activeFeature && activeFeature.sourceLayer === source.id && (
-              <>
-                <Layer
-                  id={`mask-${source.id}`}
-                  type="fill"
-                  source={source.id}
-                  source-layer={source.id}
-                  paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
-                  filter={["!=", "geoid", activeFeature.properties.geoid]}
-                />
-                {activeFeature.sourceLayer != "county" && (
-                  <Layer
-                    id={`clicked-${source.id}`}
-                    type="line"
-                    source={source.id}
-                    source-layer={source.id}
-                    paint={{ "line-color": "#FF0000", "line-width": 3 }}
-                    filter={["==", "geoid", activeFeature.properties.geoid]}
-                  />
-                )}
-              </>
-            )}
-            {activeFeature &&
-              activeFeature.sourceLayer === "phlplanningareas" && (
-                <>
-                  <Layer
-                    id="mask-philadelphia"
-                    type="fill"
-                    source={source.id}
-                    source-layer={source.id}
-                    paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
-                    filter={["!=", "name", "Philadelphia"]}
-                  />
-                  <Layer
-                    id={`clicked-${source.id}`}
-                    type="line"
-                    source={source.id}
-                    source-layer={source.id}
-                    paint={{ "line-color": "#FF0000", "line-width": 3 }}
-                    filter={["==", "geoid", activeFeature.properties.geoid]}
-                  />
-                </>
-              )}
-            <Layer
-              id={`highlight-${source.id}-fill`}
-              type="fill"
-              source-layer={source.id}
-              paint={{
-                "fill-color": [
-                  "case",
-                  ["boolean", ["feature-state", "hover"], false],
-                  "#FFD662",
-                  "transparent",
-                ],
-                "fill-opacity": 0.8,
-              }}
-            />
-            <Layer
-              id={`highlight-${source.id}-line`}
-              type="line"
-              source-layer={source.id}
-              paint={{
-                "line-color": "#FF0000",
-                "line-width": [
-                  "case",
-                  ["boolean", ["feature-state", "hover"], false],
-                  3,
-                  0,
-                ],
-              }}
-            />
-            <Layer beforeId={`highlight-${source.id}-fill`} {...layer} />
-          </Source>
-        );
-      })}
-
-      {hoveredFeature ? (
-        <Popup
-          longitude={hoveredFeature.longitude}
-          latitude={hoveredFeature.latitude}
-          closeButton={false}
-          closeOnClick={false}
-          maxWidth="350px"
-          className="opacity-90 py-4"
+    <div className="md:flex h-[85vh]">
+      <div className="sidebar overflow-y-auto h-[35vh] md:h-[85vh] md:w-[35vw] md:float-left">
+        <div className="overflow-y-auto h-full bg-white z-[999] p-4 md:px-16 md:py-8 md:border-r-2 border-[#f05a22] top-0">
+          {props.children}
+        </div>
+      </div>
+      <div className="w-full h-[50vh] md:h-[85vh]">
+        <Map
+          interactiveLayerIds={["municipalities", "phlplanningareas"]}
+          ref={mapRef}
+          initialViewState={{ bounds: maxExtent }}
+          mapStyle="mapbox://styles/crvanpollard/clmqidmqj04uh01ma2mkla3yz"
+          mapboxAccessToken="pk.eyJ1IjoibW1vbHRhIiwiYSI6ImNqZDBkMDZhYjJ6YzczNHJ4cno5eTcydnMifQ.RJNJ7s7hBfrJITOBZBdcOA"
+          onClick={onClick}
+          onMouseMove={onHover}
+          onMouseLeave={onMouseLeave}
+          onLoad={onLoad}
+          minZoom={8}
         >
-          <div className="divide-y text-center text-base">
-            <div>{hoveredFeature.feature.properties.name}</div>
-            <div>{`${hoveredFeature.feature.properties.cty}, ${
-              hoveredFeature.feature.properties.state || "PA"
-            }`}</div>
-          </div>
-        </Popup>
-      ) : null}
-    </Map>
+          {!activeFeature && <SubmarketDropdown />}
+          <Source
+            id={fillLayer.id}
+            type={fillLayer.type}
+            data={fillLayer.data}
+            promoteId={fillLayer.promoteId}
+          >
+            <Layer
+              beforeId="waterway-shadow"
+              {...fillLayer.layer}
+              filter={
+                submarketFilter
+                  ? ["==", "submarket", parseInt(submarketFilter)]
+                  : ["!=", "submarket", ""]
+              }
+            />
+            <Layer {...highlightLayer} />
+          </Source>
+
+          {boundaryLayers.map((source) => {
+            const { layer, ...props } = source;
+
+            return (
+              <Source {...props}>
+                {activeFeature && activeFeature.sourceLayer === source.id && (
+                  <>
+                    <Layer
+                      id={`mask-${source.id}`}
+                      type="fill"
+                      source={source.id}
+                      source-layer={source.id}
+                      paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
+                      filter={["!=", "geoid", activeFeature.properties.geoid]}
+                    />
+                    {activeFeature.sourceLayer != "county" && (
+                      <Layer
+                        id={`clicked-${source.id}`}
+                        type="line"
+                        source={source.id}
+                        source-layer={source.id}
+                        paint={{ "line-color": "#FF0000", "line-width": 3 }}
+                        filter={["==", "geoid", activeFeature.properties.geoid]}
+                      />
+                    )}
+                  </>
+                )}
+                {activeFeature &&
+                  activeFeature.sourceLayer === "phlplanningareas" && (
+                    <>
+                      <Layer
+                        id="mask-philadelphia"
+                        type="fill"
+                        source={source.id}
+                        source-layer={source.id}
+                        paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
+                        filter={["!=", "name", "Philadelphia"]}
+                      />
+                      <Layer
+                        id={`clicked-${source.id}`}
+                        type="line"
+                        source={source.id}
+                        source-layer={source.id}
+                        paint={{ "line-color": "#FF0000", "line-width": 3 }}
+                        filter={["==", "geoid", activeFeature.properties.geoid]}
+                      />
+                    </>
+                  )}
+                <Layer
+                  id={`highlight-${source.id}-fill`}
+                  type="fill"
+                  source-layer={source.id}
+                  paint={{
+                    "fill-color": [
+                      "case",
+                      ["boolean", ["feature-state", "hover"], false],
+                      "#FFD662",
+                      "transparent",
+                    ],
+                    "fill-opacity": 0.8,
+                  }}
+                />
+                <Layer
+                  id={`highlight-${source.id}-line`}
+                  type="line"
+                  source-layer={source.id}
+                  paint={{
+                    "line-color": "#FF0000",
+                    "line-width": [
+                      "case",
+                      ["boolean", ["feature-state", "hover"], false],
+                      3,
+                      0,
+                    ],
+                  }}
+                />
+                <Layer beforeId={`highlight-${source.id}-fill`} {...layer} />
+              </Source>
+            );
+          })}
+
+          {hoveredFeature ? (
+            <Popup
+              longitude={hoveredFeature.longitude}
+              latitude={hoveredFeature.latitude}
+              closeButton={true}
+              closeOnClick={false}
+              maxWidth="350px"
+              className="opacity-90 py-4"
+            >
+              <div className="divide-y text-center text-base">
+                <div>{hoveredFeature.feature.properties.name}</div>
+                <div>{`${hoveredFeature.feature.properties.cty}, ${
+                  hoveredFeature.feature.properties.state || "PA"
+                }`}</div>
+              </div>
+            </Popup>
+          ) : null}
+        </Map>
+      </div>
+    </div>
   );
 };
 

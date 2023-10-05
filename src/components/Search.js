@@ -54,11 +54,11 @@ const Search = () => {
 
   return (
     <>
-      <div className="flex">
-        <span className="font-bold my-auto text-right tracking-[2px] pr-2 inline-block w-1/3 whitespace-nowrap laptop:text-sm">
+      <div className="flex md:flex-row flex-col px-2.5">
+        <span className="font-bold my-auto text-right tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap laptop:text-sm">
           FIND A COMMUNITY:
         </span>
-        <div className="w-2/3">
+        <div className="md:w-2/3">
           <Input
             placeholder="Search by county or municipality"
             value={input}
@@ -66,7 +66,7 @@ const Search = () => {
           />
         </div>
       </div>
-      <div className="bg-white divide-y max-h-[20vh] overflow-y-scroll text-black rounded-b-lg block ml-auto w-2/3">
+      <div className="bg-white divide-y md:max-h-[20vh] overflow-y-scroll text-black rounded-b-lg block ml-auto md:w-2/3 bg-gray-100 md:bg-white">
         {suggestions.map((suggestion) => {
           const name = !suggestion.properties.cty
             ? `${suggestion.properties.name} County`
