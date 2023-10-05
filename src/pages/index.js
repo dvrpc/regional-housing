@@ -11,7 +11,7 @@ const IndexPage = () => {
           className="p-4 md:px-36 md:py-20 text-center bg-left md:mt-0"
           style={{ backgroundImage: `url(${Hero})` }}
         >
-          <h1 className="text-5xl font-bold leading-snug">
+          <h1 className="text-[2rem] md:text-5xl font-bold leading-snug">
             A Regional Approach to Housing Affordability
           </h1>
         </div>

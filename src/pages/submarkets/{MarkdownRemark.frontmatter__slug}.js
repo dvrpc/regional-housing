@@ -21,7 +21,10 @@ export default function Submarket(props) {
   return (
     <div className="text-[#5A5A5A]">
       <Breadcrumbs path={props.path} params={props.params} />
-      <h3 className="text-2xl my-4 font-bold text-[#015ab8]">
+      <h3
+        className="text-2xl my-4 font-bold brightness-75"
+        style={{ color: frontmatter.hex }}
+      >
         {frontmatter.title}
       </h3>
       <div className="text-lg">{frontmatter.description}</div>
@@ -30,7 +33,7 @@ export default function Submarket(props) {
           <li>{highlight}</li>
         ))}
       </ul>
-      <h3 className="text-lg mt-6 font-bold text-[#015ab8]">How it Compares</h3>
+      <h3 className="text-lg mt-6 font-bold text-gray-500">How it Compares</h3>
       <div className="flex justify-end">
         <div className="flex items-center text-[#015ab8]">
           <div className="p-2 m-2 rounded-full border-2 border-[#015ab8]" />
@@ -67,12 +70,11 @@ export const pageQuery = graphql`
         highlights
         indicators
         slug
+        hex
       }
     }
   }
 `;
-
-//
 
 export async function getServerData(context) {
   const { frontmatter__slug: id } = context.params;

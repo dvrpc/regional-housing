@@ -21,7 +21,7 @@ const Breadcrumbs = ({ params }) => {
           <>
             <Link
               to={!isLast && (crumb.path || `/${crumb}`)}
-              className="w-min md:w-fit"
+              className="w-min md:w-fit whitespace-nowrap md:whitespace-normal"
             >
               {crumb.str || titleCase(crumb)}
             </Link>
