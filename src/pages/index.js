@@ -27,15 +27,25 @@ const IndexPage = () => {
           <div className="grid md:grid-cols-2 text-[#f05a22] md:space-x-8 space-y-4">
             <p>
               <strong className="block text-xl">What is a submarket?</strong>
-              Is one of the most significant challenges facing our region. Home
-              Remedies can help us better understand the problem and decide how
-              to address it.
+              DVRPC used a variety of data points and a clustering algorithm to
+              sort every census tract in the region into one of eight distinct
+              submarkets. Each of these submarkets consists of neighborhoods
+              that share similar housing types and market conditions, regardless
+              of their location in the region. These characteristics help
+              determine who can afford to live in various neighborhoods
+              throughout Greater Philadelphia.
             </p>
             <p>
-              <strong className="block text-xl">How did we get here?</strong>
-              Is one of the most significant challenges facing our region. Home
-              Remedies can help us better understand the problem and decide how
-              to address it.
+              <strong className="block text-xl">
+                How can local governments use this tool?
+              </strong>
+              This tool is designed to help establish a common understanding of
+              complex housing issues and inspire conversations about the ways
+              that local governments can improve the variety and affordability
+              of housing within their jurisdiction. Municipalities can use this
+              targeted information to customize their own housing strategies and
+              identify communities around the region with which they share
+              similar housing challenges and opportunities.
             </p>
           </div>
         </div>
