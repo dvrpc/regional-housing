@@ -13,6 +13,11 @@ const Layout = (props) => {
     if (overlay || props.path === "/submarkets/") setSubmarketFilter("");
   }, [props.path, overlay, setOverlay, setSubmarketFilter]);
 
+  useEffect(() => {
+    const sidebar = document.querySelector(".sidebar");
+    if (sidebar) sidebar.scrollTop = 0;
+  }, []);
+
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <link
