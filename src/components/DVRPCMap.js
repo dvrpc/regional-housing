@@ -243,7 +243,7 @@ const DVRPCMap = (props) => {
       prevActiveFeature.current = activeFeature;
       setActiveFeature(feature);
       // remove submarket filter
-      mapRef.curent &&
+      mapRef.current &&
         mapRef.current.removeFeatureState(
           { source: "submarkets", id: parseInt(submarketFilter) },
           "hover"

@@ -11,12 +11,12 @@ export default function Submarket(props) {
     serverData: { result },
   } = props;
   const {
-    markdownRemark: { frontmatter, html },
+    markdownRemark: { frontmatter },
   } = props.data;
 
   useEffect(() => {
     setSubmarketFilter(frontmatter.slug);
-  }, [frontmatter]);
+  }, [frontmatter, setSubmarketFilter]);
 
   return (
     <div className="text-[#5A5A5A]">
