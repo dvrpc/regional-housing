@@ -4,9 +4,10 @@ import MedianViz from "../../components/MedianViz";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import AppContext from "../../utils/AppContext";
 import { useEffect } from "react";
+import { Tooltip } from "react-tooltip";
 
 export default function Submarket(props) {
-  const { submarketFilter, setSubmarketFilter } = useContext(AppContext);
+  const { setSubmarketFilter } = useContext(AppContext);
   const {
     serverData: { result },
   } = props;
@@ -35,8 +36,11 @@ export default function Submarket(props) {
       </ul>
       <h3 className="text-lg mt-6 font-bold text-gray-500">How it Compares</h3>
       <div className="flex justify-end">
-        <div className="flex items-center text-[#015ab8]">
-          <div className="p-2 m-2 rounded-full border-2 border-[#015ab8]" />
+        <div className="flex items-center" style={{ color: frontmatter.hex }}>
+          <div
+            className="p-2 m-2 rounded-full border-2"
+            style={{ borderColor: frontmatter.hex }}
+          />
           {frontmatter.title}
         </div>
         <div className="flex items-center text-gray-500">
@@ -45,17 +49,63 @@ export default function Submarket(props) {
         </div>
       </div>
       {result && (
-        <div className="flex flex-col space-y-8 mt-8 text-sm">
-          <div className="text-gray-500 font-bold block">
-            MEDIAN SALES PRICE:
+        <div className="flex flex-col mt-8 text-sm">
+          <div
+            data-tooltip-id="median-sales-tooltip"
+            className="space-y-8 mb-8"
+          >
+            <div className="text-gray-500 font-bold block">
+              MEDIAN SALES PRICE:
+            </div>
+            <MedianViz
+              type="median"
+              value={result.records[0].med21}
+              hex={frontmatter.hex}
+            />
           </div>
-          <MedianViz type="median" value={result.records[0].med21} />
-          <div className=" text-gray-500 font-bold">CHANGE IN SALES PRICE:</div>
-          <MedianViz type="change" value={result.records[0].pct_diff} />
-          <div className="text-gray-500 font-bold">PERCENT OWNER-OCCUPIED:</div>
-          <MedianViz type="percent" value={result.records[0].ten_own} />
+          <Tooltip id="median-sales-tooltip" place="bottom">
+            Some information about the percentages...
+          </Tooltip>
+          <div data-tooltip-id="change-sales-tooltip" className="space-y-8">
+            <div className=" text-gray-500 font-bold">
+              CHANGE IN SALES PRICE:
+            </div>
+            <MedianViz
+              type="change"
+              value={result.records[0].pct_diff}
+              hex={frontmatter.hex}
+            />
+          </div>
+          <Tooltip id="change-sales-tooltip" place="bottom">
+            Some information about the percentages...
+          </Tooltip>
+          <div
+            data-tooltip-id="percent-owner-tooltip"
+            className="space-y-8 mt-8"
+          >
+            <div className="text-gray-500 font-bold">
+              PERCENT OWNER-OCCUPIED:
+            </div>
+            <MedianViz
+              type="percent"
+              value={result.records[0].ten_own}
+              hex={frontmatter.hex}
+            />
+          </div>
+          <Tooltip id="percent-owner-tooltip" place="bottom">
+            Some information about the percentages...
+          </Tooltip>
         </div>
       )}
+      <p className="text-right py-4">
+        <a
+          className="underline italic"
+          target="_blank"
+          href="https://catalog.dvrpc.org/dataset/regional-housing-submarkets/resource/0cc1c4e2-f2c5-46bf-80aa-929ef6a53cda"
+        >
+          View the data
+        </a>
+      </p>
     </div>
   );
 }

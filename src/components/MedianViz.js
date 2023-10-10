@@ -10,10 +10,10 @@ const getPercent = (x, value) => {
     else if (diff < 0 && diff > -20) ret += range * -1;
   }
   if (ret > 85) ret = 85;
-  return ret;
+  return ret - 5;
 };
 
-const MedianViz = ({ type, value }) => {
+const MedianViz = ({ type, value, hex }) => {
   const regionalAverages = {
     median: 295000,
     change: 23.1,
@@ -31,8 +31,8 @@ const MedianViz = ({ type, value }) => {
 
   return (
     <div className="col-span-2 relative text-sm">
-      <div className="w-6 absolute left-[50%] -mt-5 flex flex-col items-center">
-        <span className="text-gray-500 text-xs">
+      <div className="w-6 absolute left-[45%] -mt-6 flex flex-col items-center">
+        <span className="text-gray-500 text-sm">
           {type === "median"
             ? formatter.format(regionalAverages[type])
             : (regionalAverages[type] / 100).toLocaleString(undefined, {
@@ -43,10 +43,10 @@ const MedianViz = ({ type, value }) => {
         <div className="h-6 w-6 rounded-full border-2 border-gray-500 bg-white" />
       </div>
       <div
-        className="w-6 absolute -mt-5 flex flex-col items-center"
+        className="w-6 absolute -mt-6 flex flex-col items-center"
         style={{ left: `${plotValue}%` }}
       >
-        <span className="text-[#015ab8] text-xs">
+        <span className="text-sm" style={{ color: hex }}>
           {type === "median"
             ? formatter.format(value)
             : value.toLocaleString(undefined, {
@@ -54,7 +54,10 @@ const MedianViz = ({ type, value }) => {
                 minimumFractionDigits: 1,
               }) || 0}
         </span>
-        <div className="h-6 w-6 rounded-full border-2 border-[#015ab8] bg-white" />
+        <div
+          className="h-6 w-6 rounded-full border-2 bg-white"
+          style={{ borderColor: hex }}
+        />
       </div>
       <div className="border-x-2 py-2 border-gray-400">
         <hr className="border-gray-400" />

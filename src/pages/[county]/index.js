@@ -27,6 +27,15 @@ const CountyPage = (props) => {
           )}
         </>
       )}
+      <p className="text-right py-4">
+        <a
+          className="underline italic"
+          target="_blank"
+          href="https://catalog.dvrpc.org/dataset/regional-housing-submarkets/resource/f88e8831-7d04-4b41-9c1d-29645cac400c"
+        >
+          View the data
+        </a>
+      </p>
     </div>
   );
 };
