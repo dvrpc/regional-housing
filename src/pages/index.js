@@ -2,16 +2,18 @@ import React from "react";
 import Input from "../components/Input";
 import DVRPC from "../images/dvrpc.svg";
 import Hero from "../images/hero.jpg";
+import Search from "../components/Search";
+import { Link } from "gatsby";
 
 const IndexPage = () => {
   return (
     <div className="min-h-screen">
-      <div className="w-full text-white">
+      <div className="w-full">
         <div
           className="p-4 md:px-36 md:py-20 text-center bg-left md:mt-0"
           style={{ backgroundImage: `url(${Hero})` }}
         >
-          <h1 className="text-[2rem] md:text-5xl font-bold leading-snug">
+          <h1 className="text-[2rem] md:text-5xl font-bold leading-snug text-white">
             A Regional Approach to Housing Affordability
           </h1>
         </div>
@@ -22,9 +24,72 @@ const IndexPage = () => {
             help local governments better understand the challenges they are
             facing and how we can work together to address them.
           </p>
+          <p className="flex flex-col items-center">
+            <div className="flex flex-col px-2.5 md:w-2/3">
+              <span className="font-bold my-auto w-full text-center tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap text-[#6C9CCD] text-2xl py-4">
+                FIND A COMMUNITY:
+              </span>
+              <Search />
+              <div>
+                <span className="font-bold my-auto w-full text-center tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap text-[#6C9CCD] text-2xl py-4">
+                  BROWSE BY COUNTY:
+                </span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Link
+                    to="bucks"
+                    className="bg-[#f05a22] text-white p-3 rounded-lg font-bold "
+                  >
+                    Bucks
+                  </Link>
+                  <Link
+                    to="burlington"
+                    className="bg-[#f05a22] text-white p-3 rounded-lg font-bold"
+                  >
+                    Burlington
+                  </Link>
+                  <Link
+                    to="camden"
+                    className="bg-[#f05a22] text-white p-3 rounded-lg font-bold"
+                  >
+                    Camden
+                  </Link>
+                  <Link
+                    to="chester"
+                    className="bg-[#f05a22] text-white p-3 rounded-lg font-bold"
+                  >
+                    Chester
+                  </Link>
+                  <Link
+                    to="delaware"
+                    className="bg-[#f05a22] text-white p-3 rounded-lg font-bold"
+                  >
+                    Delaware
+                  </Link>
+                  <Link
+                    to="gloucester"
+                    className="bg-[#f05a22] text-white p-3 rounded-lg font-bold"
+                  >
+                    Gloucester
+                  </Link>
+                  <Link
+                    to="montgomery"
+                    className="bg-[#f05a22] text-white p-3 rounded-lg font-bold"
+                  >
+                    Montgomery
+                  </Link>
+                  <Link
+                    to="philadelphia"
+                    className="bg-[#f05a22] text-white p-3 rounded-lg font-bold"
+                  >
+                    Philadelphia
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </p>
         </div>
         <div className="p-4 md:px-36 md:py-20 border-b-4 border-[#A198D1] bg-white">
-          <div className="grid md:grid-cols-2 text-[#f05a22] md:space-x-8 space-y-4">
+          <div className="grid md:grid-cols-2 text-[#f05a22] md:space-x-8 space-y-4 md:space-y-0">
             <p>
               <strong className="block text-xl">What is a submarket?</strong>
               DVRPC used a variety of data points and a clustering algorithm to
@@ -55,7 +120,7 @@ const IndexPage = () => {
           </h3>
           <form className="flex flex-col md:flex-row my-4">
             <div className="md:w-1/2">
-              <span className="flex flex-col md:flex-row md:space-x-4 space-y-4 space-y-0 mb-4">
+              <span className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 mb-4">
                 <Input placeholder="First Name" />
                 <Input placeholder="Last Name" />
               </span>
@@ -69,7 +134,7 @@ const IndexPage = () => {
             </span>
           </form>
         </div>
-        <footer className="bg-[#6C9CCD] flex flex-col-reverse md:flex-row p-4 md:px-36 md:py-14 justify-start">
+        <footer className="bg-[#3D78B4] flex flex-col-reverse md:flex-row p-4 md:px-36 md:py-14 justify-start">
           <img
             src={DVRPC}
             alt="dvrpc logo"

@@ -4,9 +4,9 @@ import DVRPCMini from "../images/dvrpc-mini.svg";
 import Logo from "../images/logo.png";
 import Search from "./Search";
 
-const Menu = () => {
+const Menu = ({ bool }) => {
   return (
-    <div className="flex flex-col-reverse md:flex-col md:w-1/2 right-0 p-4 justify-center md:absolute md:pr-16">
+    <div className="flex flex-col-reverse md:flex-col md:w-1/2 right-0 p-4 justify-center md:absolute md:pr-16 self-center">
       <ul className="flex md:divide-x justify-end [&>*]:px-2.5 font-bold py-2 flex-col md:flex-row">
         <li>
           <Link to="/">Home</Link>
@@ -15,14 +15,19 @@ const Menu = () => {
           <Link to="/submarkets">Submarkets</Link>
         </li>
       </ul>
-      <div>
-        <Search />
-      </div>
+      {!bool && (
+        <div className="flex md:flex-row flex-col px-2.5">
+          <span className="font-bold my-auto text-right tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap laptop:text-sm">
+            FIND A COMMUNITY:
+          </span>
+          <Search />
+        </div>
+      )}
     </div>
   );
 };
 
-const Header = () => {
+const Header = ({ bool }) => {
   return (
     <>
       <header className="bg-[#f05a22] h-[15vh] relative z-[999] w-full md:flex md:text-white md:px-16">
@@ -56,12 +61,12 @@ const Header = () => {
             <img
               src={Logo}
               alt="housing submarkets logo"
-              className="h-20 md:h-28 p-2 md:mx-24 laptop:mx-11"
+              className="h-20 md:h-24 p-2 md:mx-24 laptop:mx-11"
             />
           </Link>
         </div>
-        <span className="desktop-menu">
-          <Menu />
+        <span className="desktop-menu flex">
+          <Menu bool={bool} />
         </span>
       </header>
       <div className="visible md:hidden mobile-menu rounded-b-lg p-4 pt-0">

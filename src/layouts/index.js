@@ -24,9 +24,9 @@ const Layout = (props) => {
         href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
         rel="stylesheet"
       />
-      <Header />
+      <Header bool={overlay} />
       <div style={{ height: "85vh" }}>
-        {overlay ? (
+        {overlay && (
           <div
             style={{
               position: "absolute",
@@ -35,13 +35,18 @@ const Layout = (props) => {
           >
             {props.children}
           </div>
-        ) : (
-          <div style={{ width: "100%" }}>
-            <DVRPCMap params={{ county, municipality }}>
-              {props.children}
-            </DVRPCMap>
-          </div>
         )}
+        <div style={{ width: "100%" }}>
+          <DVRPCMap params={{ county, municipality }}>
+            {!overlay && (
+              <div className="sidebar overflow-y-auto h-[35vh] md:h-[85vh] md:w-[35vw] md:float-left">
+                <div className="overflow-y-auto h-full bg-white z-[999] p-4 md:px-16 md:py-8 md:border-r-2 border-[#f05a22] top-0">
+                  {props.children}
+                </div>
+              </div>
+            )}
+          </DVRPCMap>
+        </div>
       </div>
     </div>
   );

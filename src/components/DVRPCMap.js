@@ -265,11 +265,8 @@ const DVRPCMap = (props) => {
 
   return (
     <div className="md:flex h-[85vh]">
-      <div className="sidebar overflow-y-auto h-[35vh] md:h-[85vh] md:w-[35vw] md:float-left">
-        <div className="overflow-y-auto h-full bg-white z-[999] p-4 md:px-16 md:py-8 md:border-r-2 border-[#f05a22] top-0">
-          {props.children}
-        </div>
-      </div>
+      {props.children}
+
       <div className="w-full h-[50vh] md:h-[85vh]">
         <Map
           interactiveLayerIds={["municipalities", "phlplanningareas"]}
