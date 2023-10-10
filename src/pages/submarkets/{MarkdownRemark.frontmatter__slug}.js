@@ -6,7 +6,7 @@ import AppContext from "../../utils/AppContext";
 import { useEffect } from "react";
 
 export default function Submarket(props) {
-  const { setSubmarketFilter } = useContext(AppContext);
+  const { submarketFilter, setSubmarketFilter } = useContext(AppContext);
   const {
     serverData: { result },
   } = props;
@@ -16,7 +16,7 @@ export default function Submarket(props) {
 
   useEffect(() => {
     setSubmarketFilter(frontmatter.slug);
-  }, [frontmatter, setSubmarketFilter]);
+  });
 
   return (
     <div className="text-[#5A5A5A]">

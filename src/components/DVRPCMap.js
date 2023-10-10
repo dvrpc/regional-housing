@@ -265,8 +265,13 @@ const DVRPCMap = (props) => {
 
   return (
     <div className="md:flex h-[85vh]">
-      {props.children}
-
+      <div className="sidebar overflow-auto h-[35vh] md:h-[85vh] md:w-[35vw] md:float-left">
+        {props.children && (
+          <div className="overflow-y-auto h-full bg-white z-[999] p-4 md:px-16 md:py-8 md:border-r-2 border-[#f05a22] top-0">
+            {props.children}
+          </div>
+        )}
+      </div>
       <div className="w-full h-[50vh] md:h-[85vh]">
         <Map
           interactiveLayerIds={["municipalities", "phlplanningareas"]}
@@ -320,7 +325,7 @@ const DVRPCMap = (props) => {
                         type="line"
                         source={source.id}
                         source-layer={source.id}
-                        paint={{ "line-color": "#FF0000", "line-width": 3 }}
+                        paint={{ "line-color": "#f05a22", "line-width": 3 }}
                         filter={["==", "geoid", activeFeature.properties.geoid]}
                       />
                     )}
@@ -342,31 +347,17 @@ const DVRPCMap = (props) => {
                         type="line"
                         source={source.id}
                         source-layer={source.id}
-                        paint={{ "line-color": "#FF0000", "line-width": 3 }}
+                        paint={{ "line-color": "#f05a22", "line-width": 3 }}
                         filter={["==", "geoid", activeFeature.properties.geoid]}
                       />
                     </>
                   )}
                 <Layer
-                  id={`highlight-${source.id}-fill`}
-                  type="fill"
-                  source-layer={source.id}
-                  paint={{
-                    "fill-color": [
-                      "case",
-                      ["boolean", ["feature-state", "hover"], false],
-                      "#FFD662",
-                      "transparent",
-                    ],
-                    "fill-opacity": 0.8,
-                  }}
-                />
-                <Layer
                   id={`highlight-${source.id}-line`}
                   type="line"
                   source-layer={source.id}
                   paint={{
-                    "line-color": "#FF0000",
+                    "line-color": "#f05a22",
                     "line-width": [
                       "case",
                       ["boolean", ["feature-state", "hover"], false],
@@ -375,7 +366,7 @@ const DVRPCMap = (props) => {
                     ],
                   }}
                 />
-                <Layer beforeId={`highlight-${source.id}-fill`} {...layer} />
+                <Layer beforeId={`highlight-${source.id}-line`} {...layer} />
               </Source>
             );
           })}

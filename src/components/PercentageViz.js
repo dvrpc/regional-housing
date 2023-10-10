@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "gatsby";
 
 const PercentageViz = ({ res, submarkets, title }) => {
   let { _id, _full_text, county, geoid, name, ...percentages } = res;
@@ -50,15 +51,16 @@ const PercentageViz = ({ res, submarkets, title }) => {
                         : value.toLocaleString(undefined, {
                             style: "percent",
                           })}{" "}
-                      of {title[0].toUpperCase() + title.substr(1)} is
-                      <span
+                      is
+                      <Link
+                        to={`/submarkets/${submarket.slug}`}
                         className="px-1 brightness-75"
                         style={{
                           color: submarket.description && submarket.hex,
                         }}
                       >
                         {submarket.title}
-                      </span>
+                      </Link>
                     </span>
                     <p>{submarket.description}</p>
                   </div>
