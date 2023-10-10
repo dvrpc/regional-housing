@@ -5,13 +5,10 @@ import { titleCase } from "../utils";
 const Breadcrumbs = ({ params }) => {
   const { county, municipality } = params;
   let crumbs = [];
-  if (!county && !municipality)
-    crumbs = [...["submarkets", `submarket ${params["frontmatter__slug"]}`]];
+  if (!county && !municipality) crumbs = [...["submarkets"]];
   else {
-    crumbs = [
-      ...[{ str: "Greater Philadelphia Region", path: "/submarkets" }, county],
-    ];
-    if (municipality) crumbs.push(municipality);
+    crumbs = [...[{ str: "Greater Philadelphia Region", path: "/submarkets" }]];
+    if (municipality) crumbs.push(county);
   }
   return (
     <div className="flex text-xs">
@@ -20,7 +17,7 @@ const Breadcrumbs = ({ params }) => {
         return (
           <>
             <Link
-              to={!isLast && (crumb.path || `/${crumb}`)}
+              to={crumb.path || `/${crumb}`}
               className="w-min md:w-fit whitespace-nowrap md:whitespace-normal"
             >
               {crumb.str || titleCase(crumb)}
