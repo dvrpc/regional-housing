@@ -134,4 +134,8 @@ body {
   .desktop-menu {
     visibility: visible;
   }
+
+  .mapboxgl-popup-close-button {
+    visibility: hidden !important;
+  }
 }

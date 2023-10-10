@@ -17,7 +17,7 @@ const CountyPage = (props) => {
       {county && (
         <>
           <Breadcrumbs params={{ county }} />
-          <h3 className="text-xl font-bold my-4">{titleCase(county)}</h3>
+          <h3 className="text-xl font-bold my-4">{titleCase(county)} County</h3>
           {result && (
             <PercentageViz
               res={result.records[0]}
