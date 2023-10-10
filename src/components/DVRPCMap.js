@@ -285,6 +285,18 @@ const DVRPCMap = (props) => {
           onLoad={onLoad}
           minZoom={8}
         >
+          <div
+            id="default-extent-btn"
+            className="overlays shadow"
+            aria-label="Default DVRPC Extent"
+            onClick={() => mapRef.current?.fitBounds(maxExtent)}
+          >
+            <img
+              id="default-extent-img"
+              src="https://www.dvrpc.org/img/banner/new/bug-favicon.png"
+              alt="DVRPC logo"
+            />
+          </div>
           {!activeFeature && <SubmarketDropdown />}
           <Source
             id={fillLayer.id}
@@ -382,9 +394,7 @@ const DVRPCMap = (props) => {
             >
               <div className="divide-y text-center text-base">
                 <div>{hoveredFeature.feature.properties.name}</div>
-                <div>{`${hoveredFeature.feature.properties.cty}, ${
-                  hoveredFeature.feature.properties.state || "PA"
-                }`}</div>
+                <div>{`${hoveredFeature.feature.properties.cty} County`}</div>
               </div>
             </Popup>
           ) : null}
