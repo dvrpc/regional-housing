@@ -55,7 +55,7 @@ export default function Submarket(props) {
             className="space-y-8 mb-8"
           >
             <div className="text-gray-500 font-bold block">
-              MEDIAN SALES PRICE:
+              MEDIAN SALES PRICE
             </div>
             <MedianViz
               type="median"
@@ -68,7 +68,7 @@ export default function Submarket(props) {
           </Tooltip>
           <div data-tooltip-id="change-sales-tooltip" className="space-y-8">
             <div className=" text-gray-500 font-bold">
-              CHANGE IN SALES PRICE:
+              CHANGE IN SALES PRICE
             </div>
             <MedianViz
               type="change"
@@ -84,7 +84,7 @@ export default function Submarket(props) {
             className="space-y-8 mt-8"
           >
             <div className="text-gray-500 font-bold">
-              PERCENT OWNER-OCCUPIED:
+              PERCENT OWNER-OCCUPIED
             </div>
             <MedianViz
               type="percent"

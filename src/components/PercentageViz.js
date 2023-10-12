@@ -53,7 +53,11 @@ const PercentageViz = ({ res, submarkets, title }) => {
                           })}{" "}
                       is
                       <Link
-                        to={`/submarkets/${submarket.slug}`}
+                        to={
+                          submarket.slug
+                            ? `/submarkets/${submarket.slug}`
+                            : null
+                        }
                         className="px-1 brightness-75"
                         style={{
                           color: submarket.description && submarket.hex,

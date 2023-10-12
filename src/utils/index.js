@@ -37,7 +37,7 @@ export const reducerFunc = (a, c) => {
  */
 export const generateSubmarketObj = (edges) =>
   Object.assign(
-    { 9: { title: "not covered by submarket", hex: "#cfd2d9" } },
+    { 9: { title: "not covered by any submarket", hex: "#cfd2d9" } },
     ...Object.entries({ ...edges }).map(([, b]) => ({
       [parseInt(b.node.frontmatter.slug)]: { ...b.node.frontmatter },
     }))
