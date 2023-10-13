@@ -4,7 +4,7 @@ import DVRPCMini from "../images/dvrpc-mini.svg";
 import Logo from "../images/logo.png";
 import Search from "./Search";
 
-const Menu = ({ bool }) => {
+const Menu = ({ isHome }) => {
   return (
     <div className="flex flex-col-reverse md:flex-col md:w-1/2 right-0 p-4 justify-center md:absolute md:pr-16 self-center">
       <ul className="flex md:divide-x justify-end [&>*]:px-2.5 font-bold py-2 flex-col md:flex-row">
@@ -15,7 +15,7 @@ const Menu = ({ bool }) => {
           <Link to="/submarkets">Submarkets</Link>
         </li>
       </ul>
-      {!bool && (
+      {!isHome && (
         <div className="flex md:flex-row flex-col px-2.5">
           <span className="font-bold my-auto text-right tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap laptop:text-sm">
             FIND A COMMUNITY:
@@ -27,7 +27,7 @@ const Menu = ({ bool }) => {
   );
 };
 
-const Header = ({ bool }) => {
+const Header = ({ isHome }) => {
   return (
     <>
       <header className="bg-[#f05a22] h-[15vh] relative z-[999] w-full md:flex md:text-white md:px-16">
@@ -66,7 +66,7 @@ const Header = ({ bool }) => {
           </Link>
         </div>
         <span className="desktop-menu flex">
-          <Menu bool={bool} />
+          <Menu isHome={isHome} />
         </span>
       </header>
       <div className="visible md:hidden mobile-menu rounded-b-lg p-4 pt-0">

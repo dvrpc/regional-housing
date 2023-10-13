@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import DVRPCMap from "../components/DVRPCMap";
 import Header from "../components/Header";
 import AppContext from "../utils/AppContext";
@@ -6,12 +6,11 @@ import AppContext from "../utils/AppContext";
 const Layout = (props) => {
   const { county, municipality } = props;
   const { setSubmarketFilter } = useContext(AppContext);
-  const [overlay, setOverlay] = useState(true);
+  const isHome = props.pageContext.layout === "home";
 
   useEffect(() => {
-    setOverlay(props.path === "/" || props.path === "/about/" ? true : false);
-    if (overlay || props.path === "/submarkets/") setSubmarketFilter("");
-  }, [props.path, overlay, setOverlay, setSubmarketFilter]);
+    if (isHome || props.path === "/submarkets/") setSubmarketFilter("");
+  }, [isHome, props.path, setSubmarketFilter]);
 
   useEffect(() => {
     const sidebar = document.querySelector(".sidebar");
@@ -24,24 +23,18 @@ const Layout = (props) => {
         href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
         rel="stylesheet"
       />
-      <Header bool={overlay} />
-      <div style={{ height: "85vh" }}>
-        {overlay && (
-          <div
-            style={{
-              position: "absolute",
-              zIndex: 100,
-            }}
-          >
-            {props.children}
+      <Header isHome={isHome} />
+      {props.pageContext.layout === "home" ? (
+        props.children
+      ) : (
+        <div style={{ height: "85vh" }}>
+          <div style={{ width: "100%" }}>
+            <DVRPCMap params={{ county, municipality }}>
+              {props.children}
+            </DVRPCMap>
           </div>
-        )}
-        <div style={{ width: "100%" }}>
-          <DVRPCMap params={{ county, municipality }}>
-            {!overlay && props.children}
-          </DVRPCMap>
         </div>
-      </div>
+      )}
     </div>
   );
 };
