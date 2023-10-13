@@ -6,7 +6,7 @@ import { navigate } from "gatsby";
 import { kebabCase } from "../utils";
 
 const Search = () => {
-  const { counties, municipalities, phlplanningareas } = useContext(AppContext);
+  const { counties, municipalities } = useContext(AppContext);
   const [suggestions, setSuggestions] = useState([]);
   const [input, setInput] = useState("");
   const debounceInput = useDebounce(input);
@@ -33,24 +33,17 @@ const Search = () => {
               .includes(debounceInput.toLowerCase())
           );
         } else {
-          return [...counties, ...municipalities, ...phlplanningareas].filter(
-            (location) =>
-              location.properties.name
-                .toLowerCase()
-                .includes(debounceInput.toLowerCase())
+          return [...counties, ...municipalities].filter((location) =>
+            location.properties.name
+              .toLowerCase()
+              .includes(debounceInput.toLowerCase())
           );
         }
       });
     } else {
       setSuggestions([]);
     }
-  }, [
-    debounceInput,
-    counties,
-    municipalities,
-    phlplanningareas,
-    setSuggestions,
-  ]);
+  }, [debounceInput, counties, municipalities, setSuggestions]);
 
   return (
     <div className="relative w-full">

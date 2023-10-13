@@ -5,7 +5,7 @@ import { boundaryLayers, fillLayer, highlightLayer } from "../map-layers";
 import AppContext from "../utils/AppContext";
 import { useEffect } from "react";
 import { navigate } from "gatsby";
-import { kebabCase, getBoundingBox, reducerFunc, titleCase } from "../utils";
+import { kebabCase, getBoundingBox, titleCase } from "../utils";
 import { useRef } from "react";
 import { useState } from "react";
 import SubmarketDropdown from "./SubmarketDropdown";
@@ -15,12 +15,8 @@ const DVRPCMap = (props) => {
     mapRef,
     activeFeature,
     setActiveFeature,
-    setCounties,
-    setMunicipalities,
     counties,
     municipalities,
-    phlplanningareas,
-    setPhlplanningareas,
     submarketFilter,
     setSubmarketFilter,
   } = useContext(AppContext);
@@ -138,32 +134,6 @@ const DVRPCMap = (props) => {
     }
   }, [mapRef, hoveredFeature, setHoveredFeature]);
 
-  // onload store data in state for search
-  const onLoad = useCallback(() => {
-    if (mapRef.current) {
-      let counties = mapRef.current
-        .querySourceFeatures("county", {
-          sourceLayer: "county",
-          filter: ["==", "dvrpc", "Yes"],
-        })
-        .reduce(reducerFunc, []);
-      let municipalities = mapRef.current
-        .querySourceFeatures("municipalities", {
-          sourceLayer: "municipalities",
-        })
-        .reduce(reducerFunc, []);
-      let phlplanningareas = mapRef.current
-        .querySourceFeatures("phlplanningareas", {
-          sourceLayer: "phlplanningareas",
-        })
-        .reduce(reducerFunc, []);
-
-      setCounties(counties);
-      setMunicipalities(municipalities);
-      setPhlplanningareas(phlplanningareas);
-    }
-  }, [mapRef, setCounties, setMunicipalities, setPhlplanningareas]);
-
   // zoom effect
   useEffect(() => {
     if (activeFeature && mapRef.current) {
@@ -184,7 +154,7 @@ const DVRPCMap = (props) => {
               [xMax, yMax],
             ],
             {
-              maxZoom: activeFeature.properties.cty ? 12 : 9,
+              maxZoom: activeFeature.properties.co_name ? 12 : 9,
             }
           );
       }
@@ -199,23 +169,17 @@ const DVRPCMap = (props) => {
 
   // navigation handler
   useEffect(() => {
-    if (counties.length) {
+    if (mapRef.current) {
       let feature = null;
       if (municipality) {
         let name = titleCase(municipality);
-        if (county === "philadelphia") {
-          feature = phlplanningareas.filter(
-            (municipality) => municipality.properties.name === name
-          )[0];
-          feature.sourceLayer = "phlplanningareas";
-        } else {
-          feature = municipalities.filter(
-            (municipality) =>
-              municipality.properties.name === name &&
-              municipality.properties.cty === titleCase(county)
-          )[0];
-          feature.sourceLayer = "municipalities";
-        }
+        feature = municipalities.filter(
+          (municipality) =>
+            municipality.properties.name === name &&
+            municipality.properties.cty === titleCase(county)
+        )[0];
+        if (county === "philadelphia") feature.sourceLayer = "phlplanningareas";
+        else feature.sourceLayer = "municipalities";
       } else if ((county && !municipality) || (!county && !municipality)) {
         if (prevActiveFeature.current) {
           const prevLayer =
@@ -251,14 +215,13 @@ const DVRPCMap = (props) => {
       if (activeFeature) setSubmarketFilter("");
     }
   }, [
+    mapRef.current,
+    activeFeature,
     county,
     municipality,
-    mapRef,
     counties,
     municipalities,
-    phlplanningareas,
     setActiveFeature,
-    activeFeature,
     submarketFilter,
     setSubmarketFilter,
   ]);
@@ -282,7 +245,6 @@ const DVRPCMap = (props) => {
           onClick={onClick}
           onMouseMove={onHover}
           onMouseLeave={onMouseLeave}
-          onLoad={onLoad}
           minZoom={8}
         >
           <div
