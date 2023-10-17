@@ -101,6 +101,7 @@ export default function Submarket(props) {
         <a
           className="underline italic"
           target="_blank"
+          rel="noopener"
           href="https://catalog.dvrpc.org/dataset/regional-housing-submarkets/resource/0cc1c4e2-f2c5-46bf-80aa-929ef6a53cda"
         >
           View the data

@@ -32,6 +32,7 @@ const MunicipalityPage = (props) => {
         <a
           className="underline italic"
           target="_blank"
+          rel="noopener"
           href="https://catalog.dvrpc.org/dataset/regional-housing-submarkets/resource/f15d2421-0e62-4cfd-ae0f-251a4fe432da"
         >
           View the data

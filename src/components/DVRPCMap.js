@@ -169,7 +169,7 @@ const DVRPCMap = (props) => {
 
   // navigation handler
   useEffect(() => {
-    if (mapRef.current) {
+    if (counties.length && municipalities.length) {
       let feature = null;
       if (municipality) {
         let name = titleCase(municipality);
@@ -186,14 +186,15 @@ const DVRPCMap = (props) => {
             prevActiveFeature.current.properties.cty === "Philadelphia"
               ? "phlplanningareas"
               : "municipalities";
-          mapRef.current.removeFeatureState(
-            {
-              source: prevLayer,
-              sourceLayer: prevLayer,
-              id: prevActiveFeature.current.id,
-            },
-            "clicked"
-          );
+          mapRef.current &&
+            mapRef.current.removeFeatureState(
+              {
+                source: prevLayer,
+                sourceLayer: prevLayer,
+                id: prevActiveFeature.current.id,
+              },
+              "clicked"
+            );
         }
         if (county) {
           feature = counties.filter(
@@ -208,6 +209,7 @@ const DVRPCMap = (props) => {
       setActiveFeature(feature);
       // remove submarket filter
       mapRef.current &&
+        submarketFilter &&
         mapRef.current.removeFeatureState(
           { source: "submarkets", id: parseInt(submarketFilter) },
           "hover"
@@ -215,8 +217,8 @@ const DVRPCMap = (props) => {
       if (activeFeature) setSubmarketFilter("");
     }
   }, [
-    mapRef.current,
     activeFeature,
+    mapRef,
     county,
     municipality,
     counties,
