@@ -55,46 +55,70 @@ export default function Submarket(props) {
             className="space-y-8 mb-8"
           >
             <div className="text-gray-500 font-bold block">
-              MEDIAN SALES PRICE
+              SALES PRICE (2021)
             </div>
-            <MedianViz
-              type="median"
-              value={result.records[0].med21}
-              hex={frontmatter.hex}
-            />
+            <MedianViz property="med21" result={result} hex={frontmatter.hex} />
           </div>
-          <Tooltip id="median-sales-tooltip" place="bottom">
-            Some information about the percentages...
+          <Tooltip
+            id="median-sales-tooltip"
+            place="bottom"
+            className="italic z-[1000]"
+          >
+            Median single-family home sales price
           </Tooltip>
           <div data-tooltip-id="change-sales-tooltip" className="space-y-8">
             <div className=" text-gray-500 font-bold">
-              CHANGE IN SALES PRICE
+              CHANGE IN PRICE (2016-2021)
             </div>
             <MedianViz
-              type="change"
-              value={result.records[0].pct_diff}
+              property="pct_diff"
+              result={result}
               hex={frontmatter.hex}
             />
           </div>
-          <Tooltip id="change-sales-tooltip" place="bottom">
-            Some information about the percentages...
-          </Tooltip>
-          <div
-            data-tooltip-id="percent-owner-tooltip"
-            className="space-y-8 mt-8"
+          <Tooltip
+            id="change-sales-tooltip"
+            place="bottom"
+            className="italic z-[1000]"
           >
+            Percentage change in median single-family home sales price between
+            2016 and 2021
+          </Tooltip>
+          <div data-tooltip-id="median-rent-tooltip" className="space-y-8 mt-8">
             <div className="text-gray-500 font-bold">
-              PERCENT OWNER-OCCUPIED
+              MEDIAN RENT (2016-2020)
+            </div>
+            <MedianViz
+              property="rent_med"
+              result={result}
+              hex={frontmatter.hex}
+            />
+          </div>
+          <Tooltip
+            id="median-rent-tooltip"
+            place="bottom"
+            className="italic z-[1000]"
+          >
+            Median monthly gross rent
+          </Tooltip>
+          {/* <div data-tooltip-id="cost-burden-tooltip" className="space-y-8 mt-8">
+            <div className="text-gray-500 font-bold">
+              COST BURDEN (2016-2020)
             </div>
             <MedianViz
               type="percent"
-              value={result.records[0].ten_own}
+              value={result.records[0].rent_med}
               hex={frontmatter.hex}
             />
           </div>
-          <Tooltip id="percent-owner-tooltip" place="bottom">
-            Some information about the percentages...
-          </Tooltip>
+          <Tooltip
+            id="cost-burden-tooltip"
+            place="bottom"
+            className="italic z-[1000]"
+          >
+            Percentage of households that are paying more than 30 percent of
+            their income on housing costs.
+          </Tooltip> */}
         </div>
       )}
       <p className="text-right py-4">
@@ -132,7 +156,7 @@ export async function getServerData(context) {
 
   try {
     const res = await fetch(
-      `https://catalog.dvrpc.org/api/3/action/datastore_search_sql?sql=SELECT * from %220cc1c4e2-f2c5-46bf-80aa-929ef6a53cda%22 WHERE submarket = ${id}`
+      `https://catalog.dvrpc.org/api/3/action/datastore_search_sql?sql=SELECT * from %220cc1c4e2-f2c5-46bf-80aa-929ef6a53cda%22 WHERE submarket = ${id} OR submarket = 9`
     );
 
     if (!res.ok) {

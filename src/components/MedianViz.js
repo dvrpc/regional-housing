@@ -13,15 +13,18 @@ const getPercent = (x, value) => {
   return ret - 5;
 };
 
-const MedianViz = ({ type, value, hex }) => {
-  const regionalAverages = {
-    median: 295000,
-    change: 23.1,
-    percent: 68.9,
-  };
-  value = parseFloat(value.replace(/[^0-9\.]+/g, ""));
-  if (type === "change" || type === "percent") value /= 100;
-  const plotValue = parseInt(getPercent(regionalAverages[type], value));
+const MedianViz = ({ property, result, hex }) => {
+  const record = result.records[0][property];
+  let value = parseFloat(record.replace(/[^0-9\.]+/g, ""));
+  const regionalAverage = parseFloat(
+    result.records[result.records.length - 1][property].replace(
+      /[^0-9\.]+/g,
+      ""
+    )
+  );
+
+  if (value < 100) value /= 100;
+  const plotValue = parseInt(getPercent(regionalAverage, value));
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -33,9 +36,9 @@ const MedianViz = ({ type, value, hex }) => {
     <div className="col-span-2 relative text-sm">
       <div className="w-6 absolute left-[45%] -mt-6 flex flex-col items-center">
         <span className="text-gray-500 text-sm">
-          {type === "median"
-            ? formatter.format(regionalAverages[type])
-            : (regionalAverages[type] / 100).toLocaleString(undefined, {
+          {value > 1
+            ? formatter.format(regionalAverage)
+            : (regionalAverage / 100).toLocaleString(undefined, {
                 style: "percent",
                 minimumFractionDigits: 1,
               })}
@@ -47,7 +50,7 @@ const MedianViz = ({ type, value, hex }) => {
         style={{ left: `${plotValue}%` }}
       >
         <span className="text-sm" style={{ color: hex }}>
-          {type === "median"
+          {value > 1
             ? formatter.format(value)
             : value.toLocaleString(undefined, {
                 style: "percent",
