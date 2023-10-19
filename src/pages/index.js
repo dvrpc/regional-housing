@@ -4,37 +4,43 @@ import DVRPC from "../images/dvrpc.svg";
 import Hero from "../images/hero.jpg";
 import Search from "../components/Search";
 import { Link } from "gatsby";
+import Facebook from "../images/facebook.svg";
+import Instagram from "../images/instagram.svg";
+import Linkedin from "../images/linkedin.svg";
+import Twitter from "../images/twitter.svg";
+import Youtube from "../images/youtube.svg";
 
 const IndexPage = () => {
   return (
     <div className="min-h-screen">
       <div className="w-full">
         <div
-          className="p-4 md:px-36 md:py-20 text-center bg-left md:mt-0"
+          className="p-4 md:px-36 md:py-6 text-center bg-left md:mt-0"
           style={{ backgroundImage: `url(${Hero})` }}
-        >
-          <h1 className="text-[2rem] md:text-5xl font-bold leading-snug text-white">
+        />
+        <div className="p-4 md:px-36 md:py-12 text-center border-b-4 border-[#A198D1] bg-white">
+          <h1 className="text-[2rem] md:text-5xl font-bold leading-snug text-[#6C9CCD]">
             A Regional Approach to Housing Affordability
           </h1>
-        </div>
-        <div className="p-4 md:px-36 md:py-20 text-center border-b-4 border-[#A198D1] bg-white">
-          <p className="text-lg md:text-2xl text-[#f05a22] leading-snug md:tracking-wide">
+          <p className="text-lg md:text-xl text-[#f05a22] leading-snug md:tracking-wide py-10 md:w-3/4 mx-auto">
             Municipalities across Greater Philadelphia are confronting a housing
             affordability crisis. DVRPC created the Housing Submarkets tool to
             help local governments better understand the challenges they are
             facing and how we can work together to address them.
           </p>
           <p className="flex flex-col items-center">
-            <div className="flex flex-col px-2.5 md:w-2/3">
-              <span className="font-bold my-auto w-full text-center tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap text-[#6C9CCD] text-2xl py-4">
-                FIND A COMMUNITY:
-              </span>
-              <Search />
-              <div>
-                <span className="font-bold my-auto w-full text-center tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap text-[#6C9CCD] text-2xl py-4">
+            <div className="flex flex-col px-2.5 md:w-full">
+              <div className="md:flex md:items-center md:pb-14">
+                <span className="font-bold my-auto w-full text-center tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap text-[#6C9CCD] text-2xl py-4 md:w-1/3 md:text-left">
+                  FIND A COMMUNITY:
+                </span>
+                <Search />
+              </div>
+              <div className="md:flex md:items-center md:w-full md:pb-4">
+                <span className="font-bold my-auto w-full text-center tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap text-[#6C9CCD] text-2xl py-4 md:w-1/3 md:text-left">
                   BROWSE BY COUNTY:
                 </span>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:w-full">
                   <Link
                     to="bucks"
                     className="bg-[#f05a22] text-white p-3 rounded-lg font-bold "
@@ -134,22 +140,90 @@ const IndexPage = () => {
             </span>
           </form>
         </div>
-        <footer className="bg-[#3D78B4] flex flex-col-reverse md:flex-row p-4 md:px-36 md:py-14 justify-start">
-          <img
-            src={DVRPC}
-            alt="dvrpc logo"
-            className="h-24 mt-1 object-scale-down"
-          />
-          <p className="text-white md:ml-24 md:w-1/2 self-start">
-            The Delaware Valley Regional Planning Commission is the federally
-            designated Metropolitan Planning Organization for the Greater
-            Philadelphia region, established by an Interstate Compact between
-            the Commonwealth of Pennsylvania and the State of New Jersey.
-            Members include Bucks, Chester, Delaware, Montgomery, and
-            Philadelphia counties, plus the City of Chester, in Pennsylvania;
-            and Burlington, Camden, Gloucester, and Mercer counties, plus the
-            cities of Camden and Trenton, in New Jersey.
-          </p>
+        <footer>
+          <div className="bg-[#3D78B4] flex flex-col-reverse md:flex-row p-4 md:px-36 md:py-14 justify-start divide-x space-x-4 justify-center">
+            <img
+              src={DVRPC}
+              alt="dvrpc logo"
+              className="h-24 mt-1 object-scale-down"
+            />
+            <p className="text-white md:ml-24 pl-4">
+              190 N Independence Mall West
+              <br /> 8th Floor
+              <br /> Philadelphia PA 19106-1520
+              <br /> 215.592.1800
+              <br /> www.dvrpc.org
+              <div className="flex">
+                <span className="font-bold">Connect With Us!</span>
+                <span className="flex [&>*]:px-2 divide-x items-center">
+                  <a
+                    key="facebook"
+                    href="https://www.facebook.com/DVRPC"
+                    label="Facebook"
+                  >
+                    <img
+                      src={Facebook}
+                      alt="facebook logo"
+                      className="h-4 w-4"
+                    />
+                  </a>
+                  <a
+                    key="twitter"
+                    href="https://www.twitter.com/DVRPC"
+                    label="Twitter"
+                  >
+                    <img src={Twitter} alt="twitter logo" className="h-4 w-4" />
+                  </a>
+                  <a
+                    key="instagram"
+                    href="https://www.instagram.com/dvrpc/"
+                    label="Instagram"
+                  >
+                    <img
+                      src={Instagram}
+                      alt="instagram logo"
+                      className="h-4 w-4"
+                    />
+                  </a>
+                  <a
+                    key="linkedin"
+                    href="http://www.linkedin.com/company/delaware-valley-regional-planning-commission"
+                    label="LinkedIn"
+                  >
+                    <img
+                      src={Linkedin}
+                      alt="linkedin logo"
+                      className="h-4 w-4"
+                    />
+                  </a>
+                  <a
+                    key="youtube"
+                    href="https://www.youtube.com/channel/UCEU8UI5_iGkVypHP93b5jLA"
+                    label="YouTube"
+                  >
+                    <img src={Youtube} alt="youtube logo" className="h-4 w-4" />
+                  </a>
+                </span>
+              </div>
+            </p>
+          </div>
+          <div className="text-[#f05a22] w-full text-center [&>*]:py-2 p-12">
+            <p className="font-bold">
+              Learn more about housing initiatives at www.dvrpc.org/housing
+            </p>
+            <p className="italic divide-y">
+              Product Number: TEM458 | DVRPC Policies
+            </p>
+            <p>
+              <span className="font-bold">
+                Staff Contact: Andrew Svekla, AICP |
+                <span className="italic font-normal">
+                  {" "}
+                  Manager, Office of Smart Growth
+                </span>
+              </span>
+            </p>
+          </div>
         </footer>
       </div>
     </div>
