@@ -110,6 +110,17 @@ const IndexPage = () => {
               <strong className="block text-xl">
                 How can local governments use this tool?
               </strong>
+              Individuals can learn more about the housing conditions found in
+              various parts of the region by searching for specific
+              municipalities, counties, or Philadelphia Planning Districts from
+              this page. Alternatively, users can explore the distribution of
+              individual submarkets across the region by clicking on the{" "}
+              <Link to="/submarkets" className="font-bold underline italic">
+                Submarkets
+              </Link>{" "}
+              tab above.
+              <br />
+              <br />
               This tool is designed to help establish a common understanding of
               complex housing issues and inspire conversations about the ways
               that local governments can improve the variety and affordability
@@ -236,7 +247,7 @@ const IndexPage = () => {
                 www.dvrpc.org/housing
               </a>
             </p>
-            <p className="italic divide-y">
+            <p className="italic">
               Product Number:{" "}
               <a href="/" className="underline">
                 TEM458
