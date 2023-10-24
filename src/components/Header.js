@@ -3,8 +3,10 @@ import { Link } from "gatsby";
 import DVRPCMini from "../images/dvrpc-mini.svg";
 import Logo from "../images/logo.png";
 import Search from "./Search";
+import { useState } from "react";
+import Modal from "./Modal";
 
-const Menu = ({ isHome }) => {
+const Menu = ({ isHome, isVisible, setIsVisible }) => {
   return (
     <div className="flex flex-col-reverse md:flex-col md:w-1/2 right-0 p-4 justify-center md:absolute md:pr-16 self-center">
       <ul className="flex md:divide-x justify-end [&>*]:px-2.5 font-bold py-2 flex-col md:flex-row">
@@ -13,6 +15,23 @@ const Menu = ({ isHome }) => {
         </li>
         <li>
           <Link to="/submarkets">Submarkets</Link>
+        </li>
+        <li>
+          <button
+            onClick={() => {
+              setIsVisible(!isVisible);
+              if (!isHome) {
+                document
+                  .querySelector("#hamburger-1")
+                  .classList.toggle("is-active");
+                document
+                  .querySelector(".mobile-menu")
+                  .classList.toggle("mobile-menu-open");
+              }
+            }}
+          >
+            About
+          </button>
         </li>
       </ul>
       {!isHome && (
@@ -28,6 +47,8 @@ const Menu = ({ isHome }) => {
 };
 
 const Header = ({ isHome }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
   return (
     <>
       <header className="bg-[#f05a22] h-[15vh] relative z-[999] w-full md:flex md:text-white md:px-16">
@@ -66,14 +87,19 @@ const Header = ({ isHome }) => {
           </Link>
         </div>
         <span className="desktop-menu flex">
-          <Menu isHome={isHome} />
+          <Menu
+            isHome={isHome}
+            isVisible={isVisible}
+            setIsVisible={setIsVisible}
+          />
         </span>
       </header>
       <div className="visible md:hidden mobile-menu rounded-b-lg p-4 pt-0">
         <div className="mobile-menu-wrapper">
-          <Menu />
+          <Menu isVisible={isVisible} setIsVisible={setIsVisible} />
         </div>
       </div>
+      <Modal isVisible={isVisible} setIsVisible={setIsVisible} />
     </>
   );
 };
