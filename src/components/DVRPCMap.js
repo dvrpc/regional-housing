@@ -137,7 +137,6 @@ const DVRPCMap = (props) => {
   // zoom effect
   useEffect(() => {
     if (activeFeature && mapRef.current) {
-      console.log(mapRef.current.isStyleLoaded());
       if (activeFeature.geometry.type !== "MultiPolygon") {
         const coords = activeFeature.geometry.coordinates[0];
         const bounds = new LngLatBounds(coords[0], coords[0]);
