@@ -33,7 +33,10 @@ const Search = () => {
               .includes(debounceInput.toLowerCase())
           );
         } else {
-          return [...counties, ...municipalities].filter((location) =>
+          return [
+            ...Object.values(counties),
+            ...Object.values(municipalities),
+          ].filter((location) =>
             location.properties.name
               .toLowerCase()
               .includes(debounceInput.toLowerCase())

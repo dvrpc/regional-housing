@@ -169,16 +169,14 @@ const DVRPCMap = (props) => {
 
   // navigation handler
   useEffect(() => {
-    if (counties.length && municipalities.length) {
+    if (counties && municipalities) {
+      if (!Object.keys(counties).length || !Object.keys(municipalities).length)
+        return;
       let feature = null;
       prevActiveFeature.current = null;
       if (municipality) {
         let name = titleCase(municipality);
-        feature = municipalities.filter(
-          (municipality) =>
-            municipality.properties.name === name &&
-            municipality.properties.cty === titleCase(county)
-        )[0];
+        feature = municipalities[name];
         if (county === "philadelphia") feature.sourceLayer = "phlplanningareas";
         else feature.sourceLayer = "municipalities";
       } else if ((county && !municipality) || (!county && !municipality)) {
@@ -198,9 +196,7 @@ const DVRPCMap = (props) => {
             );
         }
         if (county) {
-          feature = counties.filter(
-            (test) => test.properties.name === titleCase(county)
-          )[0];
+          feature = counties[titleCase(county)];
           feature.sourceLayer = "county";
         }
       }

@@ -5,8 +5,8 @@ const AppContext = createContext();
 export const AppProvider = (props) => {
   const mapRef = useRef(null);
   const [activeFeature, setActiveFeature] = useState(null);
-  const [counties, setCounties] = useState([]);
-  const [municipalities, setMunicipalities] = useState([]);
+  const [counties, setCounties] = useState(null);
+  const [municipalities, setMunicipalities] = useState(null);
   const [submarketFilter, setSubmarketFilter] = useState("");
 
   useEffect(() => {
@@ -16,9 +16,9 @@ export const AppProvider = (props) => {
       );
       let counties = await countiesRes.json();
       const countyMap = {};
-      counties = counties.features.map((county) => {
+      counties = counties.features.reduce((map, county) => {
         countyMap[county.properties.fips] = county.properties.co_name;
-        return {
+        map[county.properties.co_name] = {
           ...county,
           properties: {
             geoid: county.properties.fips,
@@ -26,25 +26,27 @@ export const AppProvider = (props) => {
             ...county.properties,
           },
         };
-      });
+        return map;
+      }, {});
+
       const municipalitiesRes = await fetch(
         `https://arcgis.dvrpc.org/portal/rest/services/Demographics/Census_MCDs_PhiPD_2020/FeatureServer/0/query?where=1%3D1&outFields=geoid,namelsad,geocode,aland&outSR=4326&f=geojson`
       );
       let municipalities = await municipalitiesRes.json();
-      municipalities = municipalities.features.reduce((arr, feature) => {
+      municipalities = municipalities.features.reduce((map, feature) => {
         if (feature.properties.geoid) {
           const county = feature.properties.geoid.substring(0, 5);
-          arr.push({
+          map[feature.properties.namelsad] = {
             ...feature,
             properties: {
               ...feature.properties,
               name: feature.properties.namelsad,
               cty: countyMap[county],
             },
-          });
+          };
         }
-        return arr;
-      }, []);
+        return map;
+      }, {});
 
       setCounties(counties);
       setMunicipalities(municipalities);
