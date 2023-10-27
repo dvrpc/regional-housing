@@ -51,7 +51,7 @@ const Search = () => {
   return (
     <div className="relative w-full">
       <Input
-        placeholder="Search by county or municipality"
+        placeholder="Search by County or Municipality"
         value={input}
         onChange={(event) => setInput(event.target.value)}
       />

@@ -9,7 +9,7 @@ import Modal from "./Modal";
 const Menu = ({ isHome, isVisible, setIsVisible }) => {
   return (
     <div className="flex flex-col-reverse md:flex-col md:w-1/2 right-0 p-4 justify-center md:absolute md:pr-16 self-center">
-      <ul className="flex md:divide-x justify-end [&>*]:px-2.5 font-bold py-2 flex-col md:flex-row">
+      <ul className="flex md:divide-x justify-end [&>*]:px-2.5 py-2 flex-col md:flex-row">
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -36,7 +36,7 @@ const Menu = ({ isHome, isVisible, setIsVisible }) => {
       </ul>
       {!isHome && (
         <div className="flex md:flex-row flex-col px-2.5">
-          <span className="font-bold my-auto text-right tracking-[2px] md:mr-2 inline-block w-1/3 whitespace-nowrap laptop:text-sm">
+          <span className="font-bold my-auto md:text-right tracking-[2px] md:mr-2 inline-block md:w-[90%] whitespace-nowrap">
             FIND A COMMUNITY:
           </span>
           <Search />

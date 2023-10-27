@@ -66,7 +66,7 @@ const PercentageViz = ({ res, submarkets, title }) => {
                         {submarket.title}
                       </Link>
                     </span>
-                    <p>{submarket.description}</p>
+                    <p className="text-[#5A5A5A]">{submarket.description}</p>
                   </div>
                 </div>
               </>

@@ -46,7 +46,7 @@ export default function Submarkets({ data }) {
             >
               {submarket.title}
             </Link>
-            <div>{submarket.description}</div>
+            <div className="text-[#5A5A5A]">{submarket.description}</div>
           </div>
         </div>
       ))}

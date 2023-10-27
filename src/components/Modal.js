@@ -1,4 +1,5 @@
 import React from "react";
+import DVRPC from "../images/dvrpc-blue.svg";
 
 const Modal = ({ isVisible, setIsVisible }) => {
   const display = isVisible ? "visible" : "hidden";
@@ -8,11 +9,13 @@ const Modal = ({ isVisible, setIsVisible }) => {
       className={`${display} h-full w-full fixed z-[998]`}
       style={{ background: "rgba(0, 0, 0, 0.5)" }}
     >
-      <div className="bg-white rounded fixed md:top-[20%] top-[17%] md:left-[25%] left-[10%] md:w-[50%] w-[80%] h-[75%] overflow-hidden pb-6">
-        <div className="bg-[#f05a22] text-white flex items-center">
-          <h2 className="px-4 py-2 text-2xl">About</h2>
+      <div className="bg-white rounded fixed md:top-[20%] top-[17%] md:left-[25%] left-[10%] md:w-[50%] w-[80%] h-[75%] overflow-hidden pb-6 md:pb-12">
+        <div className="bg-[#0058b9] text-white flex items-center py-4">
+          <h2 className="px-4 py-2 text-2xl md:px-12">
+            About Housing Submarkets
+          </h2>
           <button
-            className="ml-auto pr-4"
+            className="ml-auto pr-4 md:pr-12"
             onClick={() => setIsVisible(!isVisible)}
           >
             <svg
@@ -32,8 +35,8 @@ const Modal = ({ isVisible, setIsVisible }) => {
             </svg>
           </button>
         </div>
-        <div className="overflow-auto h-full p-4 [&>*]:pb-2">
-          <p>
+        <div className="overflow-auto h-full p-4 md:p-12 md:pt-4 [&>*]:pb-2 text-gray-500">
+          <p className="text-xl text-gray-600">
             The market for housing in Greater Philadelphia is complex and
             dynamic. The relative affordability of housing varies significantly
             from one municipality to the next, and sometimes between
@@ -44,7 +47,9 @@ const Modal = ({ isVisible, setIsVisible }) => {
             Greater Philadelphia to foster conversation and collaboration
             between communities experiencing similar challenges.
           </p>
-          <b>Identifying Housing Submarkets</b>
+          <b className="text-[#f05a22] text-xl">
+            Identifying Housing Submarkets
+          </b>
           <p>
             Housing submarkets are a type of economic model that can be used to
             classify neighborhoods based on their housing market conditions.
@@ -70,7 +75,9 @@ const Modal = ({ isVisible, setIsVisible }) => {
             with staff from MPOs that have pioneered this type of assessment
             about their methods and experiences.
           </p>
-          <b>Why Take a Regional Approach to Housing Affordability?</b>
+          <b className="text-[#f05a22] text-xl">
+            Why Take a Regional Approach to Housing Affordability?
+          </b>
           <p>
             Conducting this analysis at the regional level is essential because
             the factors and conditions that influence the cost and supply of
@@ -83,7 +90,7 @@ const Modal = ({ isVisible, setIsVisible }) => {
             with a more comprehensive understanding of the economic and social
             conditions that contribute to their own local housing needs.
           </p>
-          <p>
+          <p className="mb-2">
             Furthermore, the region’s housing affordability challenges are
             intertwined with several other other critical cross-jurisdictional
             issues related to transportation, the economy, and the environment.
@@ -94,8 +101,13 @@ const Modal = ({ isVisible, setIsVisible }) => {
             </a>
             .
           </p>
-          <b>Project Background</b>
-          <p>
+          <b className="text-[#f05a22] text-xl">Project Background</b>
+          <p className="flex md:flex-row flex-col pt-4">
+            <img
+              src={DVRPC}
+              alt="dvrpc logo"
+              className="h-20 mt-1 object-scale-down pr-10 mb-4 md:mb-0"
+            />
             Greater Philadelphia Housing Submarkets was developed as part of
             DVRPC’s Regional Housing Initiative. The Regional Housing Initiative
             is an ongoing research and analysis project designed to identify the
