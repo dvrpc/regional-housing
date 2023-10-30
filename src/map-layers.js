@@ -1,9 +1,6 @@
 const boundaryLayers = [
   {
     id: "county",
-    type: "vector",
-    url: "https://tiles.dvrpc.org/data/dvrpc-municipal.json",
-    promoteId: "geoid",
     layer: {
       id: "county",
       "source-layer": "county",
@@ -14,9 +11,6 @@ const boundaryLayers = [
   },
   {
     id: "phlplanningareas",
-    type: "vector",
-    url: "https://tiles.dvrpc.org/data/dvrpc-municipal.json",
-    promoteId: "geoid",
     layer: {
       id: "phlplanningareas",
       "source-layer": "phlplanningareas",
@@ -30,9 +24,6 @@ const boundaryLayers = [
   },
   {
     id: "municipalities",
-    type: "vector",
-    url: "https://tiles.dvrpc.org/data/dvrpc-municipal.json",
-    promoteId: "geoid",
     layer: {
       id: "municipalities",
       "source-layer": "municipalities",

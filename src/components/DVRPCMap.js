@@ -277,72 +277,93 @@ const DVRPCMap = (props) => {
             <Layer {...highlightLayer} />
           </Source>
 
-          {boundaryLayers.map((source) => {
-            const { layer, ...props } = source;
+          <Source
+            id="dvrpc-municipal"
+            type="vector"
+            url="https://tiles.dvrpc.org/data/dvrpc-municipal.json"
+            promoteId="geoid"
+          >
+            {boundaryLayers.map((source) => {
+              const { layer, ...props } = source;
+              let id;
 
-            return (
-              <Source {...props}>
-                {activeFeature && activeFeature.sourceLayer === source.id && (
-                  <>
-                    <Layer
-                      id={`mask-${source.id}`}
-                      type="fill"
-                      source={source.id}
-                      source-layer={source.id}
-                      paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
-                      filter={["!=", "geoid", activeFeature.properties.geoid]}
-                    />
-                    {activeFeature.sourceLayer != "county" && (
-                      <Layer
-                        id={`clicked-${source.id}`}
-                        type="line"
-                        source={source.id}
-                        source-layer={source.id}
-                        paint={{ "line-color": "#f05a22", "line-width": 3 }}
-                        filter={["==", "geoid", activeFeature.properties.geoid]}
-                      />
-                    )}
-                  </>
-                )}
-                {activeFeature &&
-                  activeFeature.sourceLayer === "phlplanningareas" && (
+              return (
+                <>
+                  {activeFeature && activeFeature.sourceLayer === source.id && (
                     <>
                       <Layer
-                        id="mask-philadelphia"
+                        id={`mask-${source.id}`}
                         type="fill"
-                        source={source.id}
+                        source="dvrpc-municipal"
                         source-layer={source.id}
                         paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
-                        filter={["!=", "name", "Philadelphia"]}
+                        filter={["!=", "geoid", activeFeature.properties.geoid]}
                       />
-                      <Layer
-                        id={`clicked-${source.id}`}
-                        type="line"
-                        source={source.id}
-                        source-layer={source.id}
-                        paint={{ "line-color": "#f05a22", "line-width": 3 }}
-                        filter={["==", "geoid", activeFeature.properties.geoid]}
-                      />
+                      {activeFeature.sourceLayer != "county" && (
+                        <Layer
+                          id={`clicked-${source.id}`}
+                          type="line"
+                          source="dvrpc-municipal"
+                          source-layer={source.id}
+                          paint={{ "line-color": "#f05a22", "line-width": 3 }}
+                          filter={[
+                            "==",
+                            "geoid",
+                            activeFeature.properties.geoid,
+                          ]}
+                        />
+                      )}
                     </>
                   )}
-                <Layer
-                  id={`highlight-${source.id}-line`}
-                  type="line"
-                  source-layer={source.id}
-                  paint={{
-                    "line-color": "#f05a22",
-                    "line-width": [
-                      "case",
-                      ["boolean", ["feature-state", "hover"], false],
-                      3,
-                      0,
-                    ],
-                  }}
-                />
-                <Layer beforeId={`highlight-${source.id}-line`} {...layer} />
-              </Source>
-            );
-          })}
+                  {activeFeature &&
+                    activeFeature.sourceLayer === "phlplanningareas" && (
+                      <>
+                        <Layer
+                          id="mask-philadelphia"
+                          type="fill"
+                          source="dvrpc-municipal"
+                          source-layer={source.id}
+                          paint={{ "fill-color": "rgba(0,0,0,0.3)" }}
+                          filter={["!=", "name", "Philadelphia"]}
+                        />
+                        <Layer
+                          id={`clicked-${source.id}`}
+                          type="line"
+                          source="dvrpc-municipal"
+                          source-layer={source.id}
+                          paint={{ "line-color": "#f05a22", "line-width": 3 }}
+                          filter={[
+                            "==",
+                            "geoid",
+                            activeFeature.properties.geoid,
+                          ]}
+                        />
+                      </>
+                    )}
+                  <Layer
+                    id={`highlight-${source.id}-line`}
+                    type="line"
+                    source="dvrpc-municipal"
+                    source-layer={source.id}
+                    paint={{
+                      "line-color": "#f05a22",
+                      "line-width": [
+                        "case",
+                        ["boolean", ["feature-state", "hover"], false],
+                        3,
+                        0,
+                      ],
+                    }}
+                  />
+                  <Layer
+                    source="dvrpc-municipal"
+                    beforeId={`highlight-${source.id}-line`}
+                    {...layer}
+                  />
+                </>
+              );
+            })}
+          </Source>
 
           {hoveredFeature ? (
             <Popup
