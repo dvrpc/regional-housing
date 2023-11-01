@@ -28,28 +28,31 @@ export default function Submarket(props) {
       >
         {frontmatter.title}
       </h3>
-      <div className="text-lg">{frontmatter.description}</div>
-      <ul className="list-disc ml-8 mt-4">
+      <div className="text-lg text-gray-900">{frontmatter.description}</div>
+      <ul className="list-disc ml-8 mt-2">
         {frontmatter.highlights.map((highlight) => (
-          <li>{highlight}</li>
+          <li className="md:my-3">{highlight}</li>
         ))}
       </ul>
       <h3 className="text-lg mt-6 font-bold text-gray-500">How it Compares</h3>
-      <div className="flex justify-end">
-        <div className="flex items-center" style={{ color: frontmatter.hex }}>
+      <div className="flex mt-2">
+        <div
+          className="flex items-center brightness-75 text-sm"
+          style={{ color: frontmatter.hex }}
+        >
           <div
-            className="p-2 m-2 rounded-full border-2"
-            style={{ borderColor: frontmatter.hex }}
+            className="h-6 w-6 mr-1 rounded-full"
+            style={{ backgroundColor: frontmatter.hex }}
           />
           {frontmatter.title}
         </div>
-        <div className="flex items-center text-gray-500">
-          <div className="p-2 m-2 rounded-full border-2 border-gray-500" />
+        <div className="flex items-center text-gray-500 text-sm">
+          <div className="h-6 w-6 mx-1 rounded-full border-2 border-gray-500" />
           Regional average
         </div>
       </div>
       {result && (
-        <div className="flex flex-col mt-8 text-sm">
+        <div className="flex flex-col mt-4 text-sm">
           <div
             data-tooltip-id="median-sales-tooltip"
             className="space-y-8 mb-8"

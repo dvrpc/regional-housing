@@ -124,18 +124,18 @@ body {
   }
 }
 
-@media screen and (max-device-width: 768px) {
-  .desktop-menu {
-    visibility: hidden;
-  }
-}
-
 @media screen and (min-device-width: 768px) {
   .desktop-menu {
-    visibility: visible;
+    visibility: visible !important;
   }
 
   .mapboxgl-popup-close-button {
+    visibility: hidden !important;
+  }
+}
+
+@media screen and (max-device-width: 768px) {
+  .desktop-menu {
     visibility: hidden !important;
   }
 }
@@ -156,4 +156,12 @@ body {
 
 #default-extent-img {
   height: 100%;
+}
+
+.about-text p,
+.about-text div {
+  padding: 0 0 0.875rem 0;
+}
+.about-text div {
+  font-weight: bold;
 }

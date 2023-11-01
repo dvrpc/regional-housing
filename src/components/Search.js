@@ -5,7 +5,7 @@ import useDebounce from "../utils/useDebounce";
 import { navigate } from "gatsby";
 import { kebabCase } from "../utils";
 
-const Search = () => {
+const Search = ({ textAlign, reduceFontSize }) => {
   const { counties, municipalities } = useContext(AppContext);
   const [suggestions, setSuggestions] = useState([]);
   const [input, setInput] = useState("");
@@ -51,9 +51,11 @@ const Search = () => {
   return (
     <div className="relative w-full">
       <Input
-        placeholder="Search by County or Municipality"
+        placeholder="Search by County, Municipality, or Philadelphia Planning District"
         value={input}
         onChange={(event) => setInput(event.target.value)}
+        textAlign={textAlign}
+        reduceFontSize={reduceFontSize ? true : false}
       />
       {suggestions.length > 0 && (
         <div className="bg-white divide-y md:max-h-[20vh] overflow-y-scroll w-full text-black rounded-b-lg block ml-auto bg-gray-100 md:bg-white text-left absolute">

@@ -229,7 +229,7 @@ const DVRPCMap = (props) => {
     <div className="md:flex h-[85vh]">
       <div className="sidebar overflow-auto h-[35vh] md:h-[85vh] md:w-[35vw] md:float-left">
         {props.children && (
-          <div className="overflow-y-auto h-full bg-white z-[999] p-4 md:px-16 md:py-8 md:border-r-2 border-[#f05a22] top-0">
+          <div className="overflow-y-auto h-full bg-white z-[999] p-4 md:px-10 md:py-8 md:border-r-2 border-[#f05a22] top-0">
             {props.children}
           </div>
         )}

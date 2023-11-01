@@ -22,7 +22,7 @@ const IndexPage = () => {
           <h1 className="text-[2rem] md:text-5xl font-bold leading-snug text-[#0058b9]">
             A Regional Approach to Housing Affordability
           </h1>
-          <p className="text-lg md:text-2xl text-[#f05a22] leading-snug md:tracking-wide py-4 md:w-3/4 mx-auto text-gray-600">
+          <p className="text-lg md:text-xl text-[#f05a22] leading-snug md:tracking-wide py-4 md:w-3/4 mx-auto text-gray-600">
             Municipalities across Greater Philadelphia are confronting a housing
             affordability crisis. DVRPC created the <i>Housing Submarkets</i>{" "}
             tool to help local governments better understand the challenges they
@@ -31,61 +31,67 @@ const IndexPage = () => {
           <p className="flex flex-col items-center">
             <div className="flex flex-col px-2.5 md:w-full">
               <div className="md:items-center">
-                <span className="font-bold my-auto w-full text-center tracking-[2px] inline-block w-1/3 whitespace-nowrap text-[#0058b9] text-2xl py-4 md:w-1/3 md:pt-0">
+                <span className="font-bold my-auto w-full text-center tracking-[2px] inline-block w-1/3 whitespace-nowrap text-[#0058b9] text-xl py-4 md:w-1/3 md:pt-0">
                   FIND A COMMUNITY
                 </span>
-                <Search />
+                <Search textAlign={"center"} />
               </div>
               <div className="md:items-center md:w-full">
-                <span className="font-bold my-auto w-full text-center tracking-[2px] inline-block w-1/3 whitespace-nowrap text-[#0058b9] text-2xl py-4 md:w-1/3">
+                <span className="font-bold my-auto w-full text-center tracking-[2px] inline-block w-1/3 whitespace-nowrap text-[#0058b9] text-xl py-4 md:w-1/3">
                   BROWSE BY COUNTY
                 </span>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:w-full">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:w-full">
                   <Link
-                    to="bucks"
-                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-3 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                    to="/bucks"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
                   >
                     Bucks
                   </Link>
                   <Link
-                    to="burlington"
-                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-3 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                    to="/burlington"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
                   >
                     Burlington
                   </Link>
                   <Link
-                    to="camden"
-                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-3 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                    to="/camden"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
                   >
                     Camden
                   </Link>
                   <Link
-                    to="chester"
-                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-3 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                    to="/chester"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
                   >
                     Chester
                   </Link>
                   <Link
-                    to="delaware"
-                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-3 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                    to="/delaware"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
                   >
                     Delaware
                   </Link>
                   <Link
-                    to="gloucester"
-                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-3 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                    to="/gloucester"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
                   >
                     Gloucester
                   </Link>
                   <Link
-                    to="montgomery"
-                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-3 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                    to="/mercer"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                  >
+                    Mercer
+                  </Link>
+                  <Link
+                    to="/montgomery"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
                   >
                     Montgomery
                   </Link>
                   <Link
-                    to="philadelphia"
-                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-3 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
+                    to="/philadelphia"
+                    className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white"
                   >
                     Philadelphia
                   </Link>
@@ -100,17 +106,17 @@ const IndexPage = () => {
               <strong className="block text-xl text-[#f05a22]">
                 What is a submarket?
               </strong>
-              DVRPC used a variety of data points and a clustering algorithm to
-              sort every census tract in the region into one of eight distinct
-              submarkets. Each of these submarkets consists of neighborhoods
-              that share similar housing types and market conditions, regardless
-              of their location in the region. These characteristics help
-              determine who can afford to live in various neighborhoods
-              throughout Greater Philadelphia.
+              The submarkets were developed by using a variety of data points
+              and a clustering algorithm to sort census tracts in the region
+              into one of eight distinct submarkets. Each submarket consists of
+              neighborhoods that share similar housing types and market
+              conditions, regardless of their location in the region. These
+              characteristics help determine who can afford to live in various
+              neighborhoods throughout Greater Philadelphia.
             </p>
             <p className="text-gray-600">
               <strong className="block text-xl text-[#f05a22]">
-                How can local governments use this tool?
+                How can this tool be used?
               </strong>
               Individuals can learn more about the housing conditions found in
               various parts of the region by searching for specific

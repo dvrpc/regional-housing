@@ -39,7 +39,7 @@ const Menu = ({ isHome, isVisible, setIsVisible }) => {
           <span className="font-bold my-auto md:text-right tracking-[2px] md:mr-2 inline-block md:w-[90%] whitespace-nowrap">
             FIND A COMMUNITY:
           </span>
-          <Search />
+          <Search textAlign={"left"} reduceFontSize />
         </div>
       )}
     </div>
@@ -86,7 +86,7 @@ const Header = ({ isHome }) => {
             />
           </Link>
         </div>
-        <span className="desktop-menu flex">
+        <span className="desktop-menu hidden md:flex">
           <Menu
             isHome={isHome}
             isVisible={isVisible}

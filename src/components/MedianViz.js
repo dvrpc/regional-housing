@@ -46,7 +46,7 @@ const MedianViz = ({ property, result, hex }) => {
         <div className="h-6 w-6 rounded-full border-2 border-gray-500 bg-white" />
       </div>
       <div
-        className="w-6 absolute -mt-6 flex flex-col items-center"
+        className="w-6 absolute -mt-6 flex flex-col items-center brightness-75"
         style={{ left: `${plotValue}%` }}
       >
         <span className="text-sm" style={{ color: hex }}>
@@ -58,8 +58,8 @@ const MedianViz = ({ property, result, hex }) => {
               }) || 0}
         </span>
         <div
-          className="h-6 w-6 rounded-full border-2 bg-white"
-          style={{ borderColor: hex }}
+          className="h-6 w-6 rounded-full bg-white"
+          style={{ backgroundColor: hex }}
         />
       </div>
       <div className="border-x-2 py-2 border-gray-400">

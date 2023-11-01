@@ -35,7 +35,7 @@ const Modal = ({ isVisible, setIsVisible }) => {
             </svg>
           </button>
         </div>
-        <div className="overflow-auto h-full p-4 md:p-12 md:pt-4 [&>*]:pb-2 text-gray-500">
+        <div className="overflow-auto h-full p-4 md:p-12 md:pt-4 text-gray-500 about-text">
           <p className="text-xl text-gray-600">
             The market for housing in Greater Philadelphia is complex and
             dynamic. The relative affordability of housing varies significantly
@@ -47,9 +47,9 @@ const Modal = ({ isVisible, setIsVisible }) => {
             Greater Philadelphia to foster conversation and collaboration
             between communities experiencing similar challenges.
           </p>
-          <b className="text-[#f05a22] text-xl">
+          <div className="text-[#f05a22] text-xl">
             Identifying Housing Submarkets
-          </b>
+          </div>
           <p>
             Housing submarkets are a type of economic model that can be used to
             classify neighborhoods based on their housing market conditions.
@@ -75,9 +75,9 @@ const Modal = ({ isVisible, setIsVisible }) => {
             with staff from MPOs that have pioneered this type of assessment
             about their methods and experiences.
           </p>
-          <b className="text-[#f05a22] text-xl">
+          <div className="text-[#f05a22] text-xl">
             Why Take a Regional Approach to Housing Affordability?
-          </b>
+          </div>
           <p>
             Conducting this analysis at the regional level is essential because
             the factors and conditions that influence the cost and supply of
@@ -101,7 +101,7 @@ const Modal = ({ isVisible, setIsVisible }) => {
             </a>
             .
           </p>
-          <b className="text-[#f05a22] text-xl">Project Background</b>
+          <div className="text-[#f05a22] text-xl my-2">Project Background</div>
           <p className="flex md:flex-row flex-col pt-4">
             <img
               src={DVRPC}
@@ -115,8 +115,7 @@ const Modal = ({ isVisible, setIsVisible }) => {
             potential solutions.
           </p>
           <p>
-            More information on this initiative can be found at:
-            <br />
+            More information on this initiative can be found at:{" "}
             <a className="underline" href="">
               www.dvrpc.org/housing/regionalhousinginitiative
             </a>
