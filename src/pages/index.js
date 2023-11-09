@@ -138,29 +138,7 @@ const IndexPage = () => {
               similar housing challenges and opportunities.
             </p>
           </div>
-        </div>
-        <div className="p-4 md:px-36 md:pt-10 text-center bg-white">
-          <h3 className="font-bold text-lg md:text-2xl text-[#0058b9] pb-4 tracking-[2px]">
-            QUESTIONS, COMMENTS, OR UPDATES?
-          </h3>
-          <form className="flex flex-col md:flex-row">
-            <div className="md:w-1/2">
-              <span className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 mb-4">
-                <Input placeholder="First Name" />
-                <Input placeholder="Last Name" />
-              </span>
-              <Input placeholder="Email" />
-            </div>
-            <span className="md:w-1/2">
-              <textarea
-                placeholder="Comments and/or Questions (optional)"
-                className="font-normal appearance-none border-[1px] border-[#f05a22] rounded-lg w-full h-full py-2 px-4 md:mx-4 focus:outline-none focus:bg-white focus:border-blue-500 my-4 md:my-0 placeholder:text-gray-500 text-gray-500 text-xl placeholder:italic placeholder:text-center"
-              />
-            </span>
-          </form>
-        </div>
-        <footer>
-          <div className="text-[#f05a22] w-full text-center p-10 md:pt-0 py-4">
+          <div className="text-[#0058b9] w-full text-center pt-10">
             <p className="font-bold">
               Learn more about housing initiatives at{" "}
               <a
@@ -199,6 +177,9 @@ const IndexPage = () => {
               </span>
             </p>
           </div>
+        </div>
+
+        <footer>
           <div className="bg-[#0058b9] flex flex-col-reverse md:flex-row p-4 md:px-36 md:py-14 justify-start md:divide-x justify-center w-full items-center md:items-start">
             <span className="w-1/2">
               <a href="https://www.dvrpc.org">
