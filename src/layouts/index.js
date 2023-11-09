@@ -24,7 +24,8 @@ const Layout = (props) => {
         rel="stylesheet"
       />
       <Header isHome={isHome} />
-      {props.pageContext.layout === "home" ? (
+      {props.pageContext.layout === "home" ||
+      props.pageContext.layout === "about" ? (
         props.children
       ) : (
         <div style={{ height: "85vh" }}>
