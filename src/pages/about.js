@@ -15,7 +15,7 @@ const AboutPage = () => {
           className="p-4 md:px-36 md:py-6 text-center bg-left md:mt-0 bg-cover"
           style={{ backgroundImage: `url(${Hero})` }}
         />
-        <div className="p-4 md:px-36 md:py-10 bg-white about-text">
+        <div className="p-4 md:py-10 bg-white about-text md:w-1/2 mx-auto">
           <p className="text-xl text-gray-600">
             The market for housing in Greater Philadelphia is complex and
             dynamic. The relative affordability of housing varies significantly
