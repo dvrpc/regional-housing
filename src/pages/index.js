@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Input from "../components/Input";
 import DVRPC from "../images/dvrpc.svg";
 import Hero from "../images/hero.jpg";
@@ -11,6 +11,8 @@ import Twitter from "../images/twitter.svg";
 import Youtube from "../images/youtube.svg";
 
 const IndexPage = () => {
+  const formRef = useRef(null);
+
   return (
     <div className="min-h-screen">
       <div className="w-full">
@@ -138,7 +140,66 @@ const IndexPage = () => {
               similar housing challenges and opportunities.
             </p>
           </div>
-          <div className="text-[#0058b9] w-full text-center pt-10">
+        </div>
+        <div className="p-4 md:px-36 md:pt-10 text-center bg-white">
+          <h3 className="font-bold text-lg md:text-2xl text-[#0058b9] pb-4 tracking-[2px]">
+            QUESTIONS, COMMENTS, OR UPDATES?
+          </h3>
+          <form className="flex flex-col" ref={formRef}>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/2">
+                <span className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 mb-4">
+                  <Input placeholder="First Name" name={"first"} isRequired />
+                  <Input placeholder="Last Name" name={"last"} isRequired />
+                </span>
+                <Input placeholder="Email" name={"email"} isRequired />
+              </div>
+              <span className="md:w-1/2">
+                <textarea
+                  required
+                  name="comment"
+                  placeholder="Comments and/or Questions"
+                  className="font-normal appearance-none border-[1px] border-[#f05a22] rounded-lg w-full h-full py-2 px-4 md:mx-4 focus:outline-none focus:bg-white focus:border-blue-500 md:my-0 placeholder:text-gray-500 text-gray-500 text-xl placeholder:italic placeholder:text-center my-4"
+                />
+              </span>
+            </div>
+            <button
+              onClick={async (e) => {
+                e.preventDefault();
+                const data = new FormData(formRef.current);
+                try {
+                  const request = await fetch(
+                    `https://www.dvrpc.org/asp/email/send.aspx`,
+                    {
+                      headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                      },
+                      method: "POST",
+                      body: new URLSearchParams({
+                        Email: data.get("email"),
+                        Subject: "Regional Housing Comment",
+                        ReplyTo: "thachadorian@dvrpc.org",
+                        Name: `${data.get("first")} ${data.get("last")}`,
+                        Message: data.get("comment"),
+                      }),
+                    }
+                  );
+                  if (request.ok) {
+                    formRef.current.reset();
+                    window.alert(
+                      "Your comment has been submitted. Thank you for the feedback!"
+                    );
+                  }
+                } catch (err) {
+                  console.error(err);
+                }
+              }}
+              className="bg-white text-[#f05a22] border-[1px] border-[#f05a22] p-1.5 rounded-lg font-bold hover:bg-[#f05a22] hover:text-white w-24 mt-8 mb-0 md:my-4 ml-auto md:-mr-4"
+            >
+              Submit
+            </button>
+          </form>
+          <div className="text-[#0058b9] w-full text-center pt-4">
             <p className="font-bold">
               Learn more about housing initiatives at{" "}
               <a
@@ -178,7 +239,6 @@ const IndexPage = () => {
             </p>
           </div>
         </div>
-
         <footer>
           <div className="bg-[#0058b9] flex flex-col-reverse md:flex-row p-4 md:px-36 md:py-14 justify-start md:divide-x justify-center w-full items-center md:items-start">
             <span className="w-1/2">
