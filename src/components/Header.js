@@ -20,7 +20,7 @@ const Menu = ({ isHome }) => {
       </ul>
       {!isHome && (
         <div className="flex md:flex-row flex-col px-2.5">
-          <span className="font-bold my-auto md:text-right tracking-[2px] md:mr-2 inline-block md:w-[90%] whitespace-nowrap">
+          <span className="font-bold my-auto md:text-right tracking-[2px] md:mr-2 inline-block md:w-[60%] whitespace-nowrap">
             FIND A COMMUNITY:
           </span>
           <Search textAlign={"left"} reduceFontSize />
