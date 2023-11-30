@@ -15,7 +15,7 @@ const AboutPage = () => {
           className="p-4 md:px-36 md:py-6 text-center bg-left md:mt-0 bg-cover"
           style={{ backgroundImage: `url(${Hero})` }}
         />
-        <div className="bg-white about-text mx-auto md:flex md:flex-row-reverse px-16 py-8">
+        <div className="bg-white about-text mx-auto md:flex px-16 py-8">
           <p className="text-2xl md:w-[30%] text-gray-600">
             The market for housing in Greater Philadelphia is complex and
             dynamic. The relative affordability of housing varies significantly
@@ -27,7 +27,7 @@ const AboutPage = () => {
             Greater Philadelphia to foster conversation and collaboration
             between communities experiencing similar challenges.
           </p>
-          <span className="md:w-2/3 mr-12">
+          <span className="md:w-2/3 ml-12">
             <div className="text-[#f05a22] text-xl">
               Identifying Housing Submarkets
             </div>
