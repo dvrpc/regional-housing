@@ -27,6 +27,7 @@ const DVRPCMap = (props) => {
   const [hoveredFeature, setHoveredFeature] = useState(null);
   const prevActiveFeature = useRef(activeFeature);
   const { county, municipality } = props.params;
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // click event
   const onClick = useCallback(
@@ -136,36 +137,39 @@ const DVRPCMap = (props) => {
 
   // zoom effect
   useEffect(() => {
-    if (activeFeature && mapRef.current) {
-      if (activeFeature.geometry.type !== "MultiPolygon") {
-        const coords = activeFeature.geometry.coordinates[0];
-        const bounds = new LngLatBounds(coords[0], coords[0]);
-        for (const coord of coords) {
-          bounds.extend(coord);
+    if (isLoaded) {
+      if (activeFeature && mapRef.current) {
+        if (activeFeature.geometry.type !== "MultiPolygon") {
+          const coords = activeFeature.geometry.coordinates[0];
+          console.log(activeFeature.geometry);
+          const bounds = new LngLatBounds(coords[0], coords[0]);
+          for (const coord of coords) {
+            bounds.extend(coord);
+          }
+          mapRef.current.fitBounds(bounds);
+        } else {
+          const bbox = getBoundingBox(activeFeature);
+          const { xMin, xMax, yMin, yMax } = bbox;
+          xMin &&
+            mapRef.current.fitBounds(
+              [
+                [xMin, yMin],
+                [xMax, yMax],
+              ],
+              {
+                maxZoom: 12,
+              }
+            );
         }
-        mapRef.current.fitBounds(bounds);
-      } else {
-        const bbox = getBoundingBox(activeFeature);
-        const { xMin, xMax, yMin, yMax } = bbox;
-        xMin &&
-          mapRef.current.fitBounds(
-            [
-              [xMin, yMin],
-              [xMax, yMax],
-            ],
-            {
-              maxZoom: activeFeature.properties.co_name ? 12 : 9,
-            }
-          );
-      }
-    } else if (mapRef.current && !activeFeature)
-      mapRef.current.fitBounds(
-        new LngLatBounds([
-          [-76.09405517578125, 39.49211914385648],
-          [-74.32525634765625, 40.614734298694216],
-        ])
-      );
-  }, [activeFeature, mapRef, county, municipality]);
+      } else if (mapRef.current && !activeFeature)
+        mapRef.current.fitBounds(
+          new LngLatBounds([
+            [-76.09405517578125, 39.49211914385648],
+            [-74.32525634765625, 40.614734298694216],
+          ])
+        );
+    }
+  }, [activeFeature, mapRef, county, municipality, isLoaded]);
 
   // navigation handler
   useEffect(() => {
@@ -175,8 +179,8 @@ const DVRPCMap = (props) => {
       let feature = null;
       prevActiveFeature.current = null;
       if (municipality) {
-        let name = titleCase(municipality);
-        feature = municipalities[name];
+        const name = titleCase(municipality);
+        feature = municipalities[`${name}, ${titleCase(county)}`];
         if (county === "philadelphia") feature.sourceLayer = "phlplanningareas";
         else feature.sourceLayer = "municipalities";
       } else if ((county && !municipality) || (!county && !municipality)) {
@@ -225,6 +229,10 @@ const DVRPCMap = (props) => {
     setSubmarketFilter,
   ]);
 
+  const onMapLoad = useCallback(() => {
+    if (mapRef.current) setIsLoaded(true);
+  }, [mapRef, isLoaded, setIsLoaded]);
+
   return (
     <div className="md:flex h-[85vh]">
       <div className="sidebar overflow-auto h-[35vh] md:h-[85vh] md:w-[35vw] md:float-left">
@@ -241,6 +249,7 @@ const DVRPCMap = (props) => {
           initialViewState={{ bounds: maxExtent }}
           mapStyle="mapbox://styles/crvanpollard/clmqidmqj04uh01ma2mkla3yz"
           mapboxAccessToken="pk.eyJ1IjoibW1vbHRhIiwiYSI6ImNqZDBkMDZhYjJ6YzczNHJ4cno5eTcydnMifQ.RJNJ7s7hBfrJITOBZBdcOA"
+          onLoad={onMapLoad}
           onClick={onClick}
           onMouseMove={onHover}
           onMouseLeave={onMouseLeave}

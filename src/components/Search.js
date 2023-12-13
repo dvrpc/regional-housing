@@ -24,7 +24,7 @@ const Search = ({ textAlign, reduceFontSize }) => {
   };
 
   useEffect(() => {
-    if (debounceInput.length) {
+    if (debounceInput.length && counties && municipalities) {
       setSuggestions((prev) => {
         if (prev.length) {
           return prev.filter((location) =>
@@ -62,7 +62,7 @@ const Search = ({ textAlign, reduceFontSize }) => {
           {suggestions.map((suggestion) => {
             const name = !suggestion.properties.cty
               ? `${suggestion.properties.name} County`
-              : suggestion.properties.name;
+              : `${suggestion.properties.name}, ${suggestion.properties.cty}`;
 
             return (
               <div className="py-2 px-3" key={suggestion.id}>

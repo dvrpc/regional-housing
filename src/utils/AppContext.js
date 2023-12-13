@@ -36,7 +36,7 @@ export const AppProvider = (props) => {
       municipalities = municipalities.features.reduce((map, feature) => {
         if (feature.properties.geoid) {
           const county = feature.properties.geoid.substring(0, 5);
-          map[feature.properties.namelsad] = {
+          map[`${feature.properties.namelsad}, ${countyMap[county]}`] = {
             ...feature,
             properties: {
               ...feature.properties,
