@@ -29,7 +29,7 @@ const AboutPage = () => {
             <p className="text-gray-600">
               Housing submarkets are a type of economic model that can be used
               to classify neighborhoods based on their housing market
-              conditions. Thisanalysis uses a statistical technique known as
+              conditions. This analysis uses a statistical technique known as
               Latent Profile Analysis to sort each census tract in the region
               into various submarkets based on 14 economic and housing stock
               indicators.
@@ -49,8 +49,9 @@ const AboutPage = () => {
               regional planning entities around the country and frequently
               serves as a foundation for housing policy conversations and
               research. As part of the preparation for this analysis, the
-              project team spoke with staff from MPOs that have pioneered this
-              type of assessment about their methods and experiences.
+              project team spoke with staff from Metropolitan Planning
+              Organizations that have pioneered this type of assessment about
+              their methods and experiences.
             </p>
             <div className="text-[#f05a22] text-xl">
               Why Take a Regional Approach to Housing Affordability?
@@ -61,7 +62,7 @@ const AboutPage = () => {
               supply of housing do not neatly align with municipal or county
               boundaries. As the results of this analysis show, there is no
               single market for housing in Greater Philadelphia. Instead,
-              DVRPC’s Submarket Analysis presents the region as a more complex
+              DVRPC’s submarket analysis presents the region as a more complex
               mosaic of multiple submarkets, each with its own dynamics shaping
               supply and demand. This regional perspective is intended to help
               provide individual municipalities with a more comprehensive
@@ -76,18 +77,18 @@ const AboutPage = () => {
               critical to realizing the equity, sustainability, and resiliency
               goals set in the{" "}
               <a
-                className="underline"
+                className="underline italic"
                 target="_blank"
                 href="https://www.dvrpc.org/plan/"
               >
-                Long Range Plan
+                Connections 2050 Long-Range Plan for Greater Philadelphia
               </a>
               .
             </p>
             <div className="text-[#f05a22] text-xl">Project Background</div>
-            <p className="flex md:flex-row flex-col text-gray-600">
-              Greater Philadelphia Housing Submarkets was developed as part of
-              DVRPC’s Regional Housing Initiative. The Regional Housing
+            <p className="text-gray-600">
+              <i>Greater Philadelphia Housing Submarkets</i> was developed as
+              part of DVRPC’s Regional Housing Initiative. The Regional Housing
               Initiative is an ongoing research and analysis project designed to
               identify the housing affordability challenges facing our region
               and evaluate potential solutions.
