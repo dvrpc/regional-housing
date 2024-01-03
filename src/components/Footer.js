@@ -22,7 +22,7 @@ const Footer = () => (
       <p className="italic">
         Product Number:{" "}
         <a href="/" className="underline">
-          TEM458
+          23015
         </a>{" "}
         |{" "}
         <a
@@ -36,7 +36,7 @@ const Footer = () => (
       <p>
         <span className="font-bold">
           Staff Contact:{" "}
-          <a className="underline italic" href="mailto:asvekla@dvrpc.org">
+          <a className="underline" href="mailto:asvekla@dvrpc.org">
             Andrew Svekla
           </a>
           , AICP <span className="font-normal">|</span>
@@ -50,7 +50,7 @@ const Footer = () => (
     <footer>
       <div className="bg-[#6C9CCD] flex flex-col-reverse md:flex-row p-4 md:px-36 md:py-14 justify-start md:divide-x justify-center w-full items-center md:items-start">
         <span className="w-1/2">
-          <a href="https://www.dvrpc.org">
+          <a href="https://www.dvrpc.org" target="_blank">
             <img
               src={DVRPC}
               alt="dvrpc logo"

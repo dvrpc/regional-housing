@@ -52,7 +52,7 @@ const Header = ({ isHome }) => (
           <span class="line"></span>
           <span class="line"></span>
         </div>
-        <a className="" href="https://www.dvrpc.org/">
+        <a className="" href="https://www.dvrpc.org/" target="_blank">
           <img
             src={DVRPCMini}
             alt="dvrpc logo"

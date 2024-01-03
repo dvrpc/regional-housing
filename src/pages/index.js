@@ -27,14 +27,14 @@ const IndexPage = () => {
           </p>
           <p className="flex flex-col text-center">
             <div className="flex flex-col md:w-full">
-              <div className="md:flex w-full my-4">
-                <span className="pb-4 md:pb-0 md:w-[35%] font-bold my-auto text-center tracking-[2px] md:mr-6 inline-block whitespace-nowrap text-[#6C9CCD] text-2xl md:text-right">
+              <div className="md:flex w-full my-4 md:space-x-6">
+                <span className="pb-4 md:pb-0 md:w-[35rem] font-bold my-auto text-center tracking-[2px] inline-block whitespace-nowrap text-[#6C9CCD] text-2xl md:text-right">
                   FIND A COMMUNITY:
                 </span>
                 <Search />
               </div>
-              <div className="md:flex w-full my-4">
-                <span className="pb-4 md:pb-0 md:w-[35%] font-bold my-auto text-center tracking-[2px] md:mr-6 inline-block whitespace-nowrap text-[#6C9CCD] text-2xl md:text-right">
+              <div className="md:flex w-full my-4 md:space-x-6">
+                <span className="pb-4 md:pb-0 md:w-[35rem] font-bold my-auto text-center tracking-[2px] inline-block whitespace-nowrap text-[#6C9CCD] text-2xl md:text-right">
                   BROWSE BY COUNTY:
                 </span>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:w-full">
@@ -140,7 +140,40 @@ const IndexPage = () => {
           <h3 className="font-bold text-lg md:text-2xl text-[#6C9CCD] pb-4 tracking-[2px]">
             QUESTIONS, COMMENTS, OR UPDATES?
           </h3>
-          <form className="flex flex-col" ref={formRef}>
+          <form
+            className="flex flex-col"
+            ref={formRef}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const data = new FormData(formRef.current);
+              try {
+                const request = await fetch(
+                  `https://www.dvrpc.org/asp/email/send.aspx`,
+                  {
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    method: "POST",
+                    body: new URLSearchParams({
+                      Email: data.get("email"),
+                      Subject: "Regional Housing Comment",
+                      ReplyTo: "thachadorian@dvrpc.org",
+                      Name: `${data.get("first")} ${data.get("last")}`,
+                      Message: data.get("comment"),
+                    }),
+                  }
+                );
+                if (request.ok) {
+                  formRef.current.reset();
+                  window.alert(
+                    "Your comment has been submitted. Thank you for the feedback!"
+                  );
+                }
+              } catch (err) {
+                console.error(err);
+              }
+            }}
+          >
             <div className="grid md:grid-cols-2">
               <div className="md:pr-4">
                 <span className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 mb-4">
@@ -158,39 +191,7 @@ const IndexPage = () => {
                 />
               </span>
             </div>
-            <button
-              onClick={async (e) => {
-                e.preventDefault();
-                const data = new FormData(formRef.current);
-                try {
-                  const request = await fetch(
-                    `https://www.dvrpc.org/asp/email/send.aspx`,
-                    {
-                      headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                      },
-                      method: "POST",
-                      body: new URLSearchParams({
-                        Email: data.get("email"),
-                        Subject: "Regional Housing Comment",
-                        ReplyTo: "thachadorian@dvrpc.org",
-                        Name: `${data.get("first")} ${data.get("last")}`,
-                        Message: data.get("comment"),
-                      }),
-                    }
-                  );
-                  if (request.ok) {
-                    formRef.current.reset();
-                    window.alert(
-                      "Your comment has been submitted. Thank you for the feedback!"
-                    );
-                  }
-                } catch (err) {
-                  console.error(err);
-                }
-              }}
-              className="bg-[#f05a22] text-white p-3 rounded-lg font-bold hover:bg-[#db5421] md:w-1/4 mt-8 mb-0 md:my-4 md:mx-auto"
-            >
+            <button className="bg-[#f05a22] text-white p-3 rounded-lg font-bold hover:bg-[#db5421] md:w-1/4 mt-8 mb-0 md:my-4 md:mx-auto">
               Submit
             </button>
           </form>

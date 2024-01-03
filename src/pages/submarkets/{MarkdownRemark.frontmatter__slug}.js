@@ -37,7 +37,7 @@ export default function Submarket(props) {
       <h3 className="text-lg mt-6 font-bold text-gray-500">How it Compares</h3>
       <div className="flex mt-2">
         <div
-          className="flex items-center brightness-75 text-sm"
+          className="flex items-center brightness-75 text-sm mr-3"
           style={{ color: frontmatter.hex }}
         >
           <div

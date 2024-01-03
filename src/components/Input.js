@@ -17,7 +17,7 @@ const Input = ({
       placeholder={placeholder ? placeholder : ""}
       value={value}
       onChange={onChange}
-      style={{ textAlign: textAlign, fontSize: reduceFontSize && "0.675rem" }}
+      style={{ textAlign: textAlign, fontSize: reduceFontSize && "0.775rem" }}
     ></input>
   );
 };
