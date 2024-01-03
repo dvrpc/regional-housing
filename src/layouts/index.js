@@ -13,9 +13,9 @@ const Layout = (props) => {
   }, [isHome, props.path, setSubmarketFilter]);
 
   useEffect(() => {
-    const sidebar = document.querySelector(".sidebar");
+    const sidebar = document.querySelector("#sidebar");
     if (sidebar) sidebar.scrollTop = 0;
-  }, []);
+  }, [props.path]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

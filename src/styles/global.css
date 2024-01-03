@@ -144,7 +144,7 @@ body {
   height: 29px;
   width: 29px;
   right: 10px;
-  top: 50%;
+  top: calc(1% + 97px);
   padding: 5px;
   cursor: pointer;
   z-index: 10;

@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from "react";
-import Map, { Source, Layer, Popup } from "react-map-gl";
+import Map, { Source, Layer, Popup, NavigationControl } from "react-map-gl";
 import { LngLatBounds } from "mapbox-gl";
 import { boundaryLayers, fillLayer, highlightLayer } from "../map-layers";
 import AppContext from "../utils/AppContext";
@@ -141,7 +141,6 @@ const DVRPCMap = (props) => {
       if (activeFeature && mapRef.current) {
         if (activeFeature.geometry.type !== "MultiPolygon") {
           const coords = activeFeature.geometry.coordinates[0];
-          console.log(activeFeature.geometry);
           const bounds = new LngLatBounds(coords[0], coords[0]);
           for (const coord of coords) {
             bounds.extend(coord);
@@ -237,7 +236,10 @@ const DVRPCMap = (props) => {
     <div className="md:flex h-[85vh]">
       <div className="sidebar overflow-auto h-[35vh] md:h-[85vh] md:w-[35vw] md:float-left">
         {props.children && (
-          <div className="overflow-y-auto h-full bg-white z-[999] p-4 md:px-10 md:py-8 md:border-r-2 border-[#f05a22] top-0">
+          <div
+            id="sidebar"
+            className="overflow-y-auto h-full bg-white z-[999] p-4 md:px-10 md:py-8 md:border-r-2 border-[#f05a22] top-0"
+          >
             {props.children}
           </div>
         )}
@@ -255,6 +257,7 @@ const DVRPCMap = (props) => {
           onMouseLeave={onMouseLeave}
           minZoom={8}
         >
+          <NavigationControl />
           <div
             id="default-extent-btn"
             className="overlays shadow"

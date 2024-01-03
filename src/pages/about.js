@@ -1,11 +1,6 @@
 import React from "react";
-import DVRPC from "../images/dvrpc.svg";
 import Hero from "../images/hero.jpg";
-import Facebook from "../images/facebook.svg";
-import Instagram from "../images/instagram.svg";
-import Linkedin from "../images/linkedin.svg";
-import Twitter from "../images/twitter.svg";
-import Youtube from "../images/youtube.svg";
+import Footer from "../components/Footer";
 
 const AboutPage = () => {
   return (
@@ -15,7 +10,7 @@ const AboutPage = () => {
           className="p-4 md:px-36 md:py-6 text-center bg-left md:mt-0 bg-cover"
           style={{ backgroundImage: `url(${Hero})` }}
         />
-        <div className="bg-white about-text mx-auto md:flex px-16 py-8">
+        <div className="bg-white about-text mx-auto md:flex px-16 py-8 pb-4">
           <p className="text-2xl md:w-[30%] text-gray-600">
             The market for housing in Greater Philadelphia is complex and
             dynamic. The relative affordability of housing varies significantly
@@ -80,7 +75,11 @@ const AboutPage = () => {
               environment. As such, achieving better housing outcomes is
               critical to realizing the equity, sustainability, and resiliency
               goals set in the{" "}
-              <a className="underline" href="https://www.dvrpc.org/plan/">
+              <a
+                className="underline"
+                target="_blank"
+                href="https://www.dvrpc.org/plan/"
+              >
                 Long Range Plan
               </a>
               .
@@ -95,7 +94,7 @@ const AboutPage = () => {
             </p>
             <p className="text-gray-600">
               More information on this initiative can be found at:{" "}
-              <a className="underline" href="">
+              <a className="underline" href="" target="_blank">
                 www.dvrpc.org/housing/regionalhousinginitiative
               </a>
               .
@@ -112,100 +111,18 @@ const AboutPage = () => {
               For more information about DVRPC’s other housing-related work,
               please visit:
               <br />
-              <a className="underline" href="">
+              <a
+                className="underline"
+                href="https://www.dvrpc.org/housing/"
+                target="_blank"
+              >
                 www.dvrpc.org/housing
               </a>
               .
             </p>
           </span>
         </div>
-        <footer>
-          <div className="bg-[#6C9CCD] flex flex-col-reverse md:flex-row p-4 md:px-36 md:py-14 justify-start md:divide-x justify-center w-full items-center md:items-start">
-            <span className="w-1/2">
-              <a href="https://www.dvrpc.org">
-                <img
-                  src={DVRPC}
-                  alt="dvrpc logo"
-                  className="h-24 mt-1 object-scale-down pr-10"
-                  align="right"
-                />
-              </a>
-            </span>
-            <p className="text-white md:pl-10 text-center md:text-left w-1/2">
-              190 N Independence Mall West
-              <br /> 8th Floor
-              <br /> Philadelphia PA 19106-1520
-              <br /> 215.592.1800
-              <br />{" "}
-              <a
-                href="https://www.dvrpc.org"
-                target="_blank"
-                className="underline"
-              >
-                www.dvrpc.org
-              </a>
-              <div className="flex md:flex-row flex-col items-center">
-                <span className="font-bold py-1 md:py-0">Connect With Us!</span>
-                <span className="flex [&>*]:px-2 divide-x items-center">
-                  <a
-                    key="facebook"
-                    href="https://www.facebook.com/DVRPC"
-                    label="Facebook"
-                    target="_blank"
-                    className="!pl-0 md:!pl-2"
-                  >
-                    <img
-                      src={Facebook}
-                      alt="facebook logo"
-                      className="h-4 w-4"
-                    />
-                  </a>
-                  <a
-                    key="twitter"
-                    href="https://www.twitter.com/DVRPC"
-                    label="Twitter"
-                    target="_blank"
-                  >
-                    <img src={Twitter} alt="twitter logo" className="h-4 w-4" />
-                  </a>
-                  <a
-                    key="instagram"
-                    href="https://www.instagram.com/dvrpc/"
-                    label="Instagram"
-                    target="_blank"
-                  >
-                    <img
-                      src={Instagram}
-                      alt="instagram logo"
-                      className="h-4 w-4"
-                      target="_blank"
-                    />
-                  </a>
-                  <a
-                    key="linkedin"
-                    href="http://www.linkedin.com/company/delaware-valley-regional-planning-commission"
-                    label="LinkedIn"
-                    target="_blank"
-                  >
-                    <img
-                      src={Linkedin}
-                      alt="linkedin logo"
-                      className="h-4 w-4"
-                    />
-                  </a>
-                  <a
-                    key="youtube"
-                    href="https://www.youtube.com/channel/UCEU8UI5_iGkVypHP93b5jLA"
-                    label="YouTube"
-                    target="_blank"
-                  >
-                    <img src={Youtube} alt="youtube logo" className="h-4 w-4" />
-                  </a>
-                </span>
-              </div>
-            </p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );
