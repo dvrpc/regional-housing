@@ -42,7 +42,15 @@ const AboutPage = () => {
               a resource that could be easily understood by a range of
               stakeholders, including elected officials, government staff, and
               community members. For more information on DVRPC’s methodology,
-              data inputs, and data sources, please visit this page.
+              data inputs, and data sources, please visit{" "}
+              <a
+                className="underline"
+                target="_blank"
+                href="https://github.com/dvrpc/housing_initiative_submarkets/blob/main/README.md"
+              >
+                this
+              </a>{" "}
+              page.
             </p>
             <p className="text-gray-600">
               This type of submarket analysis has been conducted by a number of
@@ -95,7 +103,11 @@ const AboutPage = () => {
             </p>
             <p className="text-gray-600">
               More information on this initiative can be found at:{" "}
-              <a className="underline" href="" target="_blank">
+              <a
+                className="underline"
+                href="https://www.dvrpc.org/housing/regionalhousinginitiative"
+                target="_blank"
+              >
                 www.dvrpc.org/housing/regionalhousinginitiative
               </a>
               .
