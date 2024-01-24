@@ -48,9 +48,8 @@ const AboutPage = () => {
                 target="_blank"
                 href="https://github.com/dvrpc/housing_initiative_submarkets/blob/main/README.md"
               >
-                this
+                the project's Github page.
               </a>{" "}
-              page.
             </p>
             <p className="text-gray-600">
               This type of submarket analysis has been conducted by a number of
