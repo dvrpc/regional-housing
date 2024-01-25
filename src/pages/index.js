@@ -157,7 +157,7 @@ const IndexPage = () => {
                     body: new URLSearchParams({
                       Email: data.get("email"),
                       Subject: "Regional Housing Comment",
-                      ReplyTo: "thachadorian@dvrpc.org",
+                      ReplyTo: "asvekla@dvrpc.org",
                       Name: `${data.get("first")} ${data.get("last")}`,
                       Message: data.get("comment"),
                     }),
