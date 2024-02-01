@@ -12,7 +12,9 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "build:prod": "gatsby build --prefix-paths",
+    "serve:prod": "gatsby serve --prefix-paths"
   },
   "dependencies": {
     "@mdx-js/react": "^2.3.0",

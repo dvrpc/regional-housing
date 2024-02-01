@@ -6,6 +6,7 @@ module.exports = {
     title: `regional-housing`,
     siteUrl: `https://www.yourdomain.tld`,
   },
+  pathPrefix: `/housing/submarkets`,
   plugins: [
     "gatsby-plugin-postcss",
     "gatsby-plugin-mdx",
