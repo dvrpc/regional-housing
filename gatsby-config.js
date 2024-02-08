@@ -8,6 +8,7 @@ module.exports = {
   },
   pathPrefix: `/housing/submarkets`,
   plugins: [
+    "gatsby-plugin-react-helmet",
     "gatsby-plugin-postcss",
     "gatsby-plugin-mdx",
     {
@@ -20,5 +21,20 @@ module.exports = {
     `gatsby-plugin-layout`,
     `gatsby-transformer-remark`,
     `gatsby-plugin-netlify`,
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: "DVRPC Regional Housing Application",
+        short_name: "Regional Housing",
+        start_url: "/",
+        icon: "src/images/bug-highres.png",
+      },
+    },
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: "UA-9825778-1",
+      },
+    },
   ],
 };
