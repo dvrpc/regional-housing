@@ -124,7 +124,11 @@ export default function Submarket(props) {
           </Tooltip> */}
         </div>
       )}
-      <p className="text-right py-4">
+      <p className="text-right py-4 text-[#5A5A5A]">
+        <p className="m-0 italic text-xs">
+          Source: The Warren Group, 2021; U.S. Census Bureau, American Community
+          Survey 5-Year Estimates, 2016-2020
+        </p>
         <a
           className="underline italic"
           target="_blank"

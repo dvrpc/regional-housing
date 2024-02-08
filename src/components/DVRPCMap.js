@@ -353,7 +353,13 @@ const DVRPCMap = (props) => {
                       </>
                     )}
                   <Layer
+                    source="dvrpc-municipal"
+                    beforeId={"admin-0-boundary-disputed"}
+                    {...layer}
+                  />
+                  <Layer
                     id={`highlight-${source.id}-line`}
+                    beforeId={"admin-0-boundary-disputed"}
                     type="line"
                     source="dvrpc-municipal"
                     source-layer={source.id}
@@ -366,11 +372,6 @@ const DVRPCMap = (props) => {
                         0,
                       ],
                     }}
-                  />
-                  <Layer
-                    source="dvrpc-municipal"
-                    beforeId={`highlight-${source.id}-line`}
-                    {...layer}
                   />
                 </>
               );
