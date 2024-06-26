@@ -250,7 +250,7 @@ const DVRPCMap = (props) => {
           ref={mapRef}
           initialViewState={{ bounds: maxExtent }}
           mapStyle="mapbox://styles/crvanpollard/clmqidmqj04uh01ma2mkla3yz"
-          mapboxAccessToken="pk.eyJ1IjoibW1vbHRhIiwiYSI6ImNqZDBkMDZhYjJ6YzczNHJ4cno5eTcydnMifQ.RJNJ7s7hBfrJITOBZBdcOA"
+          mapboxAccessToken="pk.eyJ1IjoiY3J2YW5wb2xsYXJkIiwiYSI6ImNseHVpZmprazI4bWoycXB2MTljMWF1YjUifQ.jLMaSXqIUV5N2IxYlk5ZiQ"
           onLoad={onMapLoad}
           onClick={onClick}
           onMouseMove={onHover}
