@@ -2,7 +2,8 @@ import React from "react";
 
 const getPercent = (x, value) => {
   const range = 25;
-  let ret = (value < 1 ? value * 100 : value) / (2 * x);
+  if (x === 0) return 45;
+  let ret = value / (2 * x);
   ret *= 100;
   let diff = ret - 50;
   if ((diff < range + 5 && diff > 0) || (diff > range * -1 - 5 && diff < 0)) {
@@ -13,17 +14,23 @@ const getPercent = (x, value) => {
   return ret - 5;
 };
 
-const MedianViz = ({ property, result, hex }) => {
-  const record = result.records[0][property];
-  let value = parseFloat(record.replace(/[^0-9\.]+/g, ""));
-  const regionalAverage = parseFloat(
-    result.records[result.records.length - 1][property].replace(
-      /[^0-9\.]+/g,
-      ""
-    )
-  );
+const parseValue = (value) =>
+  typeof value === "number"
+    ? value
+    : parseFloat(String(value ?? "").replace(/[^0-9.\-]+/g, ""));
 
-  if (value < 100) value /= 100;
+const MedianViz = ({ property, result, hex }) => {
+  const records = result?.records ?? [];
+  const record = records.find((item) => Number(item.submarket) !== 9);
+  const regionalRecord = records.find((item) => Number(item.submarket) === 9);
+  const value = parseValue(record?.[property]);
+  const regionalAverage = parseValue(regionalRecord?.[property]);
+
+  if (!Number.isFinite(value) || !Number.isFinite(regionalAverage)) {
+    return <div className="text-gray-500">Data unavailable</div>;
+  }
+
+  const isPercent = property === "pct_diff";
   const plotValue = parseInt(getPercent(regionalAverage, value));
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -36,7 +43,7 @@ const MedianViz = ({ property, result, hex }) => {
     <div className="col-span-2 relative text-sm">
       <div className="w-6 absolute left-[45%] -mt-6 flex flex-col items-center">
         <span className="text-gray-500 text-sm">
-          {value > 1
+          {!isPercent
             ? formatter.format(regionalAverage)
             : (regionalAverage / 100).toLocaleString(undefined, {
                 style: "percent",
@@ -50,12 +57,12 @@ const MedianViz = ({ property, result, hex }) => {
         style={{ left: `${plotValue}%` }}
       >
         <span className="text-sm" style={{ color: hex }}>
-          {value > 1
+          {!isPercent
             ? formatter.format(value)
-            : value.toLocaleString(undefined, {
+            : (value / 100).toLocaleString(undefined, {
                 style: "percent",
                 minimumFractionDigits: 1,
-              }) || 0}
+              })}
         </span>
         <div
           className="h-6 w-6 rounded-full bg-white"

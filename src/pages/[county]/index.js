@@ -69,9 +69,9 @@ export async function getServerData(context) {
 
   try {
     const res = await fetch(
-      `https://catalog.dvrpc.org/api/3/action/datastore_search_sql?sql=SELECT * from "f88e8831-7d04-4b41-9c1d-29645cac400c" WHERE name ='${titleCase(
-        county
-      )}'`
+      `https://catalog.dvrpc.org/api/3/action/datastore_search?resource_id=f88e8831-7d04-4b41-9c1d-29645cac400c&filters=%7B%22name%22%3A%22${titleCase(
+        county,
+      )}%22%7D`,
     );
 
     if (!res.ok) {

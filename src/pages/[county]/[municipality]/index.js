@@ -13,6 +13,10 @@ const MunicipalityPage = (props) => {
   } = data;
   const submarkets = generateSubmarketObj(edges);
 
+  console.log(
+    `https://catalog.dvrpc.org/api/3/action/datastore_search?resource_id=f15d2421-0e62-4cfd-ae0f-251a4fe432da&filters={%22name%22%3A%22${titleCase(municipality)}%22,%22county%22%3A%22${titleCase(county)}%22}`,
+  );
+
   return (
     <div>
       {county && municipality && (
@@ -70,9 +74,7 @@ export async function getServerData(context) {
 
   try {
     const res = await fetch(
-      `https://catalog.dvrpc.org/api/3/action/datastore_search_sql?sql=SELECT * from "f15d2421-0e62-4cfd-ae0f-251a4fe432da" WHERE county ='${titleCase(
-        county
-      )}' AND name = '${titleCase(municipality)}'`
+      `https://catalog.dvrpc.org/api/3/action/datastore_search?resource_id=f15d2421-0e62-4cfd-ae0f-251a4fe432da&filters={%22name%22%3A%22${titleCase(municipality)}%22,%22county%22%3A%22${titleCase(county)}%22}`,
     );
 
     if (!res.ok) {

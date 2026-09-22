@@ -163,7 +163,9 @@ export async function getServerData(context) {
 
   try {
     const res = await fetch(
-      `https://catalog.dvrpc.org/api/3/action/datastore_search_sql?sql=SELECT * from %220cc1c4e2-f2c5-46bf-80aa-929ef6a53cda%22 WHERE submarket = ${id} OR submarket = 9`
+      `https://catalog.dvrpc.org/api/3/action/datastore_search?resource_id=0cc1c4e2-f2c5-46bf-80aa-929ef6a53cda&filters=${encodeURIComponent(
+        JSON.stringify({ submarket: [Number(id), 9] })
+      )}&sort=submarket%20asc`
     );
 
     if (!res.ok) {
